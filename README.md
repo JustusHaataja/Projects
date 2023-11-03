@@ -1,0 +1,4 @@
+- 👋 Hi, I’m @JustusHaataja
+- 👀 I’m interested in coding, cyber security/hacking and data analysis.
+- 🌱 I’m currently learning multiple coding languages.
+- 💻 I will upload my projects here as I progress in my coding career.
