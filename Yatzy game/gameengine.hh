@@ -1,13 +1,3 @@
-/*
- * Course: COMP.CS.110 Programming 2: structures
- * Project 4: Yatzy
- * Name: Justus Haataja
- * Student ID: H291931
- * Username: xfjuha
- * E-mail: justus.haataja@tuni.fi
- *
- */
-
 #ifndef GAMEENGINE_HH
 #define GAMEENGINE_HH
 #include "ui_mainwindow.h"
