@@ -1,10 +1,3 @@
-
-Course: COMP.CS.110 Programming 2: structures
-Name: Justus Haataja
-Student ID: H291931
-Username: xfjuha
-E-mail: justus.haataja@tuni.fi
-
 Yatzy rules:
 
 The player can lock the dice they want, and only the unlocked dice will be rolled again in the next rolling turn.
