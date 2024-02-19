@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather app</title>
+</head>
+    
+<body>
+
+    <div class="container">
+        <div class="search_box">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" placeholder="Enter location">
+            <button class="fa-solid fa-magnifying-glass"></button>
+        </div>
+
+        <div class="location_not_found">
+            <img src="images\error.png">
+            <p>Couldn't find location, try again!</p>
+        </div>
+
+        <div class="weather_box">
+            <img src="">
+            <p class="temperature"></p>
+            <p class="description"></p>
+        </div>
+
+        <div class="weather_details">
+            <div class="humidity">
+                <i class="fa-solid fa-droplet"></i>
+                <div class="text">
+                    <span></span>
+                    <p>Humidity</p>
+                </div>
+            </div>
+            <div class="wind">
+                <i class="fa-solid fa-wind"></i>
+                <div class="text">
+                    <span></span>
+                    <p>Wind speed</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="AppBackEnd.js"></script>
+
+</body>
+</html>
