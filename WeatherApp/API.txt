@@ -1,7 +1,0 @@
-OpenWeather: 1048e98be6279a00f7852a3127316ab4
-weatherapi: 78c0b4d617bc400e84f184252241402
-
-
-API url:
-https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}
-https://api.weatherapi.com/v1/current.json?key=78c0b4d617bc400e84f184252241402&q=Tampere&aqi=no
