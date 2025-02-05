@@ -1,0 +1,47 @@
+Installation and Setup
+
+To set up the project and run the game locally, follow these steps:
+
+1. Install Node.js and npm
+
+Make sure you have Node.js installed. npm (Node Package Manager) comes with Node.js.
+
+Check if npm is installed:
+
+npm -v
+
+If npm is not installed, install it by downloading Node.js from the official website.
+
+2. Initialize the project
+
+Run the following command in your project folder to create a package.json file:
+
+npm init -y
+
+3. Install lite-server
+
+Lite-server is a lightweight development server for running the project.
+
+npm install --save-dev lite-server
+
+4. Update package.json
+
+Modify the scripts section in package.json to include a start command:
+
+"scripts": {
+  "start": "lite-server"
+}
+
+5. Compile TypeScript
+
+Compile the TypeScript file into JavaScript using:
+
+tsc filename.ts
+
+To watch for changes and recompile automatically:
+
+tsc filename.ts --watch
+
+6. Start the Development Server
+
+Run the following command to start the server and open the game in the browser:
