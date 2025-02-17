@@ -2,6 +2,8 @@ Wordle Clone (Wordle from Wish)
 
 A browser-based Wordle clone built with TypeScript, HTML, and CSS.
 
+Here is a link to the live demo:
+https://justushaataja.github.io/Wordle/
 
 Features
 
