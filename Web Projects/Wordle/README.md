@@ -1,4 +1,4 @@
-Wordle Clone (Wordle from Wish)
+Wordle Clone
 
 A browser-based Wordle clone built with TypeScript, HTML, and CSS.
 
@@ -8,6 +8,8 @@ https://justushaataja.github.io/Wordle/
 Features
 
 Word Guessing: Players guess a hidden 5-letter word within a limited number of attempts.
+
+Languages: English + Finnish, managed by language toggle button.
 
 Keyboard Interaction: Supports on-screen input.
 
