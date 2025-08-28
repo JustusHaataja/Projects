@@ -1,0 +1,22 @@
+.array-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    padding: 3px;
+    max-height: 500px;
+    max-width: 600px;
+    margin: 20px;
+    border: 3px solid white;
+    border-radius: 5px;
+}
+
+.array-bar {
+    width: 60px;
+    transition: height 0.1s, background-color 0.1s;
+    background: green;
+}
+
+.array-bar.active {
+    background: white;
+}

@@ -1,0 +1,12 @@
+.controls-container {
+    background: #0D0D0D;
+    margin: 12px 0;
+}
+
+.selector, .sort-button{
+    background-color: #0D0D0D;
+    color: #FFF;
+    border: 2px solid #FFF;
+    border-radius: 5px;
+    margin: 5px;
+}

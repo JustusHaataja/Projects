@@ -1,0 +1,38 @@
+body {
+    line-height: 0.5;
+}
+
+.banner-container {
+    max-width: 600px;
+    font-size: 20px;
+    padding-block: 2px;
+    border-block: 3px solid;
+    overflow: hidden;
+    user-select: none;
+
+    --gap: 32px;
+    display: flex;
+    gap: var(--gap);
+}
+
+.banner-container ul { 
+    list-style: none;
+    flex-shrink: 0;
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap);
+
+    animation: scroll 20s linear infinite;
+}
+
+.banner-container:hover ul {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    to { 
+        transform: translate(calc(-100% - var(--gap)));
+    }
+}
