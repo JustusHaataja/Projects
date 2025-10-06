@@ -5,27 +5,27 @@ I'm a passionate **software engineering student** and developer with a strong in
 ---
 
 ## 🌐 Web Development
-I focus on creating **UI/UX-driven websites** that are not only visually appealing but also **performant and smooth**. My projects often combine modern frontend technologies with clean, maintainable code.
+Creating **UI/UX-driven websites** that are visually appealing and highly **performant**.  
 
 **Key areas:**
 - Responsive and intuitive UI/UX
-- High-performance and optimized websites
+- High-performance websites
 - Modern frontend stacks (React, TypeScript, HTML/CSS, JavaScript)
 
 ---
 
 ## 🤖 Machine Learning
-I work on **AI development**, building models that **predict, recognize, and analyze** data. I love exploring new tools and frameworks to stay on the cutting edge of AI research.
+Building models that **predict, recognize, and analyze** data with cutting-edge AI tools.  
 
 **Key areas:**
-- Predictive modeling & data-driven insights
+- Predictive modeling & insights
 - Computer vision and pattern recognition
-- Integration of AI tools in real projects
+- AI integration in real projects
 
 ---
 
 ## 📊 Data Analysis
-I transform **real-world big data** into insights that are **easy to read and interpret**, helping to inform decisions and strategies.  
+Transforming **real-world big data** into insights that are **easy to read and interpret**.  
 
 **Key areas:**
 - Data cleaning, processing, and visualization
@@ -35,22 +35,28 @@ I transform **real-world big data** into insights that are **easy to read and in
 ---
 
 ## ⚡ Tools & Technologies
-- **Languages:** Python, TypeScript, JavaScript, SQL, C++
-- **Frameworks:** React, FastAPI, Pandas, NumPy, Scikit-learn
-- **Tools:** Git, GitHub, VSCode, AI & ML libraries (TensorFlow, PyTorch, OpenAI tools)
+![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square)
+![SQL](https://img.shields.io/badge/-SQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white)
 
 ---
 
 ## 🚀 AI Integration
-I actively experiment with **modern AI tools**, integrating them into my projects to **enhance functionality, performance, and user experience**.  
+I actively integrate **modern AI tools** into projects to enhance functionality, performance, and user experience.
 
 ---
 
-💼 **LinkedIn & Contact:**  
-I am **open to work opportunities and collaborations** in software development, web, ML, and data projects. Feel free to **connect or contact me** via LinkedIn:  
-[https://www.linkedin.com/in/justushaataja/](https://www.linkedin.com/in/justushaataja/)  
+## 💼 LinkedIn & Contact
+I am **open to work and collaborations** in software development, web, ML, and data projects. Feel free to connect or contact me via LinkedIn:  
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/justushaataja/)
+
+![Open to Work](https://img.shields.io/badge/Open%20to%20Work-Yes-brightgreen?style=flat-square)
 
 ---
+
 
 ✨ *"Turning data into insights, code into experiences, and AI into real-world solutions."*
-
