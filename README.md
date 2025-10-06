@@ -1,4 +1,4 @@
-# Hi, I'm Jusu Haataja 👋
+# Hi, I'm Justus Haataja 👋
 
 I'm a passionate **software engineering student** and developer with a strong interest in **web development**, **machine learning**, and **data analysis**. I enjoy turning complex ideas into smooth, beautiful, and functional solutions.  
 
