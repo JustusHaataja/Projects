@@ -1,11 +1,13 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from . import models, database, crud, schemas
+from routes import routes_auth
 from .database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="E-commerce Backend")
+app.include_router(routes_auth.router, prefix="/auth")
 
 @app.get("/products")
 def get_products(db: Session = Depends(get_db)):
