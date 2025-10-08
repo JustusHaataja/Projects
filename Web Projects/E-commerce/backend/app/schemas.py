@@ -7,6 +7,11 @@ class UserCreate(BaseModel):
     password: str   # Plain text input, we will hash it
 
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+    
 class UserOut(BaseModel):
     id: int
     name: str
