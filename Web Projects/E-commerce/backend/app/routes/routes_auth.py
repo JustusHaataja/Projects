@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, Cookie
+from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
 from auth import hash_password, verify_password, create_jwt, verify_jwt
@@ -20,7 +20,10 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     query = sqlalchemy.text("SELECT * FROM users WHERE email = :email")
     result = db.execute(query, {"email": user.email}).fetchone()
     if result:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered"
+            )
     
     hashed = hash_password(user.password)
     insert = sqlalchemy.text("INSERT INTO users (name,email,password_hash) VALUES (:name,:email,:password)")
@@ -34,7 +37,10 @@ def login(user: UserLogin, response: Response, db: Session = Depends(get_db)):
     query = sqlalchemy.text("SELECT * FROM users WHERE email = :email")
     result = db.execute(query, {"email": user.email}).fetchone()
     if not result or not verify_password(user.password, result.password_hash):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials"
+            )
     
     token = create_jwt(result.id)
     response.set_cookie(
@@ -44,7 +50,7 @@ def login(user: UserLogin, response: Response, db: Session = Depends(get_db)):
         secure=True,
         samesite="lax",
         max_age=3600*24*7
-    )
+        )
     return {"message": "Logged in succesfully"}
 
 

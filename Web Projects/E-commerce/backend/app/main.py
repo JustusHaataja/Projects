@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from . import models, database, crud, schemas
 from routes import routes_auth, routes_products, routes_cart
@@ -21,7 +21,10 @@ def get_products(db: Session = Depends(get_db)):
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered"
+            )
     return crud.create_user(db, name=user.name, email=user.email, password=user.password)
 
 
@@ -40,5 +43,8 @@ def get_cart(user_id: int, db: Session = Depends(database.get_db)):
 def remove_cart_item(cart_item_id: int, db: Session = Depends(database.get_db)):
     item = crud.remove_from_cart(db, cart_item_id)
     if not item:
-        raise HTTPException(status_code=400, detail="Item not found")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Item not found"
+            )
     return item
