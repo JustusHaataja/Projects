@@ -50,16 +50,18 @@ class Product(ProductBase):
         orm_mode = True
 
 
-class CartItemCreate(BaseModel):
+class CartItemBase(BaseModel):
     product_id: int
     quantity: int
 
 
-class CartItemOut(BaseModel):
+class CartItemCreate(CartItemBase):
+    pass
+
+
+class CartItem(CartItemBase):
     id: int
     user_id: int
-    product_id: int
-    quantity: int
 
     class Config:
         orm_mode = True

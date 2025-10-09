@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status
+from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status, Request
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
 from auth import hash_password, verify_password, create_jwt, verify_jwt
@@ -58,3 +58,29 @@ def login(user: UserLogin, response: Response, db: Session = Depends(get_db)):
 def logout(response: Response):
     response.delete_cookie("access_token")
     return {"message": "Logged out"}
+
+
+def get_current_user(access_token: str = Cookie(None), db: Session = Depends(get_db)):
+    if not access_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing access token"
+            )
+    
+    user_id = verify_jwt(access_token)
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+            )
+    
+    query = sqlalchemy.text("SELECT * FROM users WHERE id = :id")
+    user = db.execute(query, {"id": user_id}).fetchone()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    return user

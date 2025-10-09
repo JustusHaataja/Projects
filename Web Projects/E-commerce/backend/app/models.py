@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, Numeric, DateTime
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime, timezone
+from typing import Optional
 from .database import Base
 
 
@@ -37,7 +38,12 @@ class User(Base):
 class CartItem(Base):
     __tablename__ = "cart_items"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    guest_id: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="cart_items")
+    product = relationship("Product")
