@@ -8,8 +8,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="E-commerce Backend")
 app.include_router(routes_auth.router, prefix="/auth")
-app.include_router(routes_products.router, prefix="/products", tags=["Products"])
-app.include_router(routes_cart.router, prefix="/cart", tags=["Cart"])
+app.include_router(routes_products.router, prefix="/products")
+app.include_router(routes_cart.router, prefix="/cart")
 
 @app.get("/products")
 def get_products(db: Session = Depends(get_db)):

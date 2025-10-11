@@ -6,7 +6,7 @@ from schemas import Product
 from typing import List
 
 
-router = APIRouter()
+router = APIRouter(tags=["Products"])
 
 def get_db():
     db = SessionLocal()
@@ -15,7 +15,7 @@ def get_db():
     finally:
         db.close()
 
-
+# ---- Routes ----
 @router.get("/", response_model=List[Product])
 def get_products(db: Session = Depends(get_db)):
     return db.query(ProductModel).all()

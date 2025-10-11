@@ -7,32 +7,32 @@ from .database import Base
 
 class Product(Base):
     __tablename__ = "products"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    description = Column(Text)
-    price = Column(Numeric)
-    sale_price = Column(Numeric)
-    category_id = Column(Integer, ForeignKey("categories.id"))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    description: Mapped[Text] = mapped_column(Text)
+    price: Mapped[Numeric] = mapped_column(Numeric)
+    sale_price: Mapped[Numeric] = mapped_column(Numeric)
+    category_id: Mapped[int] = mapped_column(Integer, ForeignKey("categories.id"))
 
     images = relationship("ProductImage", back_populates="product")
 
 
 class ProductImage(Base):
     __tablename__ = "product_images"
-    id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"))
-    image_url = Column(Text)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    product_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
+    image_url: Mapped[Text] = mapped_column(Text)
 
     product = relationship("Product", back_populates="images")
 
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    email = Column(String, nullable=False, unique=True)
-    password_hash = Column(String, nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[DateTime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 
 class CartItem(Base):
