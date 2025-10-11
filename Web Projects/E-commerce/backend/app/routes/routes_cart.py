@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status, Cookie
 from sqlalchemy.orm import Session
-from database import SessionLocal, get_db
+from database import SessionLocal
 from routes_auth import get_current_user
 from models import CartItem, Product
 import uuid
@@ -8,7 +8,7 @@ import uuid
 
 router = APIRouter()
 
-def get_db_session():
+def get_db():
     db = SessionLocal()
     try:
         yield db
