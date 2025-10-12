@@ -2,7 +2,10 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from . import models, database, crud, schemas
 from routes import routes_auth, routes_products, routes_cart
-from .database import engine, get_db
+from .database import engine, get_db, SessionLocal
+from apscheduler.schedulers.background import BackgroundScheduler
+from background_tasks import clean_old_guests
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -48,3 +51,19 @@ def remove_cart_item(cart_item_id: int, db: Session = Depends(database.get_db)):
             detail="Item not found"
             )
     return item
+
+
+# ---- Background tasks ----
+scheduler = BackgroundScheduler()
+
+def scheduled_guest_cleanup():
+    db = SessionLocal()
+    try:
+        count = clean_old_guests(db)
+        if count > 0:
+            print(f"[CLEANUP] Removed {count} old guest cart items.")
+    finally:
+        db.close()
+
+scheduler.add_job(scheduled_guest_cleanup, "interval", hours=48)    # clean up every other day
+scheduler.start()
