@@ -28,7 +28,7 @@ def get_or_create_guest(response: Response, guest_id: Optional[str]) -> str:
             httponly=True,
             secure=True,
             samesite="lax",
-            max_age= 60 * 60 * 24 * 30
+            max_age= 60 * 60 * 24 * 14
         )
     return guest_id
 
