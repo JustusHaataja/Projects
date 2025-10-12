@@ -34,6 +34,8 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
+    cart_items = relationship("CartItem", back_populates="user", cascade="all, delete-orphan")
+
 
 class CartItem(Base):
     __tablename__ = "cart_items"

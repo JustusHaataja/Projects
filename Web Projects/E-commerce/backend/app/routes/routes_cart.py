@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status, Cookie
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from routes_auth import get_current_user
-from models import CartItem, Product
+from .routes_auth import get_current_user
+from ..database import SessionLocal
+from ..models import CartItem, Product
 from typing import Optional
 from datetime import datetime, timezone
 import uuid

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from models import Product as ProductModel
-from schemas import Product
+from ..database import SessionLocal
+from ..models import Product as ProductModel
+from ..schemas import Product
 from typing import List
 
 
