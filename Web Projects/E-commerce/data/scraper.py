@@ -145,5 +145,5 @@ def save_to_csv(products, filename="products.csv"):
 
 if __name__ == "__main__":
     products = scrape_all()
-    save_to_csv(products)
+    # save_to_csv(products)
     print("Done! Scraped", len(products), "products.")

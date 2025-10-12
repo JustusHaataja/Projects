@@ -15,7 +15,6 @@ def get_db():
         db.close()
 
 
-
 # ---- Helper ----
 def get_current_user(access_token: str | None = Cookie(None), db: Session = Depends(get_db)):
     if not access_token:
@@ -61,7 +60,7 @@ def login(credentials: UserLogin, response: Response,
             detail="Invalid credentials"
         )
     
-    # create JWT and set HttpOnly cookie
+    # create JWT and set cookie
     token = create_jwt(user.id)
     response.set_cookie(
         key="access_token",
@@ -90,7 +89,7 @@ def login(credentials: UserLogin, response: Response,
                     g.guest_id = None
             db.commit()
         
-        # remove guesti cookie after merge
+        # remove guest_id cookie after merge
         response.delete_cookie("guest_id")
 
     return {"message": "Logged in succesfully"}
