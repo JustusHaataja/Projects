@@ -15,7 +15,7 @@ print("Status code:", resp.status_code)
 print("Register:", resp.json())
 
 # 2: Create a guest cart item (not logged in yet)
-guest_add_data = {"product_id": 1, "quantity": 2}
+guest_add_data = {"product_id": 65, "quantity": 2}
 resp = session.post(f"{BASE_URL}/cart/add", params=guest_add_data)
 print("Guest add to cart:", resp.json())
 
@@ -25,7 +25,7 @@ print("Guest ID cookie:", guest_id)
 
 # 3: Login as the registered user and merge guest cart
 login_data = {
-    "username": "Alice",
+    "email": "alice@example.com",
     "password": "password123",
     "guest_id": guest_id
 }
@@ -39,10 +39,10 @@ print("User cart after merge:", resp.json())
 # 5: List products (with optional pagination/filtering)
 params = {"skip": 0, "limit": 5}
 resp = session.get(f"{BASE_URL}/products", params=params)
-print("Products:", resp.json())
+# print("Products:", resp.json())
 
 # 6: Add another product to user cart
-add_data = {"product_id": 2, "quantity": 1}
+add_data = {"product_id": 70, "quantity": 1}
 resp = session.post(f"{BASE_URL}/cart/add", params=add_data)
 print("Add product to user cart:", resp.json())
 
