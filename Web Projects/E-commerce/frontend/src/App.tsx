@@ -1,15 +1,17 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
 
 function App() {
-
   return (
     <Router>
-      <div className="app">
+      <Header />
+
+      <main>
         <Routes>
-          <Route path="/" element={<h1>Welcome to the E-commerce App</h1>} />
-          {/* add more routes here */}
+          <Route path="/" element={<HomePage />} />
         </Routes>
-      </div>
+      </main>
     </Router>
   )
 }
