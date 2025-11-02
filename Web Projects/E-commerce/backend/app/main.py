@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from . import models, database, crud, schemas
-from .routes import routes_auth, routes_products, routes_cart
-from .database import engine, get_db, SessionLocal
+import models, database, crud, schemas
+from routes import routes_auth, routes_products, routes_cart
+from database import engine, get_db, SessionLocal
 from apscheduler.schedulers.background import BackgroundScheduler
-from .background_tasks import clean_old_guests
+from background_tasks import clean_old_guests
 
 
 models.Base.metadata.create_all(bind=engine)
