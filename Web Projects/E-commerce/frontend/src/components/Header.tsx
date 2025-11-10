@@ -1,10 +1,13 @@
 // import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png"
 
 const Header = () => {
     return (
         <header style={{ padding: "1rem", backgroundColor: "#ee" }}>
-            <h1>Puhdasta</h1>
+            <Link to="/">
+            <img src={logo} alt="Store logo" style={{ height: "150px"}} />
+            </Link>
             <nav>
                 <Link to="/" style={{ marginRight: "1rem"}}>Home</Link>
                 <Link to="/products" style={{ marginRight: "1rem" }}>Products</Link>
