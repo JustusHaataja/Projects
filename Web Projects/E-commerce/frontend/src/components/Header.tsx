@@ -10,6 +10,7 @@ const Header = () => {
             </Link>
             <nav>
                 <Link to="/products" style={{ marginRight: "1rem" }}>Products</Link>
+                <Link to="/about" style={{ marginRight: "1rem" }}>About us</Link>
                 <Link to="/cart" style={{ marginRight: "1rem" }}>Cart</Link>
             </nav>
         </header>
