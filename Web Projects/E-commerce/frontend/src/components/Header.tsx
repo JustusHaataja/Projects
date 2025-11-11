@@ -9,9 +9,8 @@ const Header = () => {
             <img src={logo} alt="Store logo" style={{ height: "150px"}} />
             </Link>
             <nav>
-                <Link to="/" style={{ marginRight: "1rem"}}>Home</Link>
                 <Link to="/products" style={{ marginRight: "1rem" }}>Products</Link>
-                <Link to="/cart"></Link>
+                <Link to="/cart" style={{ marginRight: "1rem" }}>Cart</Link>
             </nav>
         </header>
     )
