@@ -3,8 +3,11 @@ import Hero from "../components/Hero"
 
 const HomePage = () => {
     return (
-        <div>
-            {/* <h2>Welcome to the Home Page!</h2> */}
+        <div style={{ 
+            height: "1000px",
+            paddingTop: "112px"
+            }}
+        >
             <Hero />
         </div>
     )

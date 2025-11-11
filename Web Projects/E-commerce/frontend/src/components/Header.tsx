@@ -4,14 +4,34 @@ import logo from "../assets/logo.png"
 
 const Header = () => {
     return (
-        <header style={{ padding: "1rem", backgroundColor: "#ee" }}>
+        <header 
+            style={{
+                position: "fixed",
+                top: "0",
+                left: "0",
+                right: "0",
+                display: "flex",
+                alignItems: "center",
+                padding: "8px",
+                backgroundColor: "#eee",
+
+            }}
+        >
             <Link to="/">
-            <img src={logo} alt="Store logo" style={{ height: "150px"}} />
+                <img src={logo} alt="Store logo" style={{ height: "100px"}} />
             </Link>
-            <nav>
-                <Link to="/products" style={{ marginRight: "1rem" }}>Tuotteet</Link>
-                <Link to="/about" style={{ marginRight: "1rem" }}>Meistä</Link>
-                <Link to="/cart" style={{ marginRight: "1rem" }}>Ostoskori</Link>
+
+            <nav
+                style={{
+                    display: "flex",
+                    gap: "8px",
+                    fontSize: "16px"
+                }}
+            >
+                <Link to="/products">Tuotteet</Link>
+                <Link to="/about">Meistä</Link>
+                <Link to="/profile">Profiili</Link>
+                <Link to="/cart">Ostoskori</Link>
             </nav>
         </header>
     )
