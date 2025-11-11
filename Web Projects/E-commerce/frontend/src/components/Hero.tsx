@@ -1,29 +1,49 @@
+import { Swiper, SwiperSlide} from "swiper/react"
+import "swiper/css"
 import products1 from "../assets/products1.jpg"
 import products2 from "../assets/products2.jpg"
 import products3 from "../assets/products3.jpg"
 
+const slides = [
+    {
+        image: products1,
+        text: "Puhdasta energiaa päivään",
+        button: "Osta nyt"
+    },
+    {
+        image: products2,
+        text: "Löydä suosikki juomasi",
+        button: "Juomat"
+    },
+    {
+        image: products3,
+        text: "Nesteytys urheilun aikana",
+        button: "Elektrolyytit"
+    },
+]
+
 const Hero = () => {
     return (
-        <div style={{
-            width: "100%",
-            height: "400px",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-        }}>
-            <div style={{
-                gridColumn: "1",
-                display: "grid",
-                gridTemplateRows: "1fr 1fr 1fr",
-            }}>
-                <div></div>
-                <p>Puhdasta energiaa päivään</p>
-                <button>This is button</button>
-            </div>
-            <img src={products1} alt="" style={{
-                gridColumn: "2",
-                width: "80%"
-                }}/>
-        </div>
+        <Swiper spaceBetween={50} slidesPerView={1} loop autoplay>
+            {slides.map((slide, i) => (
+                <SwiperSlide key={i}>
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        height: "400px",
+                        alignItems: "center",
+                    }}>
+                        <div>
+                            <p>{slide.text}</p>
+                            <button>{slide.button}</button>
+                        </div>
+                        <img src={slide.image} alt="" style={{
+                            width: "80%", borderRadius: "10px"
+                        }}/>
+                    </div>
+                </SwiperSlide>
+            ))}
+        </Swiper>
     )
 }
 
