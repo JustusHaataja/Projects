@@ -1,11 +1,11 @@
-// import React from "react";
-import Hero from "../components/Hero"
+import Hero from '../components/Hero';
 
 const HomePage = () => {
     return (
-        <div style={{ 
-            height: "1000px",
-            paddingTop: "112px"
+        <div 
+            style={{ 
+                height: "1000px",
+                paddingTop: "120px"
             }}
         >
             <Hero />
