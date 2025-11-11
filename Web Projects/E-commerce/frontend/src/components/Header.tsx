@@ -14,7 +14,7 @@ const Header = () => {
                 alignItems: "center",
                 padding: "8px",
                 backgroundColor: "#eee",
-
+                zIndex: "1000"
             }}
         >
             <Link to="/">
