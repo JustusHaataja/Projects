@@ -22,7 +22,7 @@ const slides = [
         image: products3,
         text: "Nesteytys urheilun aikana",
         button: "Elektrolyytit"
-    },
+    }
 ]
 
 const Hero = () => {
