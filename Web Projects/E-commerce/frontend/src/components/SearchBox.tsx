@@ -1,8 +1,14 @@
+import React, { type ChangeEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 
-const SearchBox = ({ value, onChange }) => {
+interface SearchBoxProps {
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SearchBox: React.FC<SearchBoxProps> = ({ value, onChange }) => {
     return (
         <div
             style={{
@@ -13,6 +19,7 @@ const SearchBox = ({ value, onChange }) => {
             <FontAwesomeIcon 
                 icon={faMagnifyingGlass}
                 style={{
+                    height: "16px",
                     position: "absolute",
                     left: "8px",
                     top: "50%",
@@ -26,6 +33,7 @@ const SearchBox = ({ value, onChange }) => {
                 placeholder="Hae tuotteita..."
                 value={value}
                 onChange={onChange}
+                aria-label="Search products"
                 style={{
                     paddingLeft: "32px",
                     height: "24px",

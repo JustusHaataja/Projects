@@ -1,11 +1,19 @@
+import { useState, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo1.avif';
 import SearchBox from './SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faTruck } from '@fortawesome/free-regular-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import shoppingcart from '../assets/shoppingcart.svg';
 
 
 const Header = () => {
+    const [search, setSearch] = useState('');
+
+    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    }
+
     return (
         <header 
             style={{
@@ -40,9 +48,17 @@ const Header = () => {
                     <FontAwesomeIcon icon={faUser}/>
                 </Link>
                 <Link to="/cart">
-                    <FontAwesomeIcon icon={faTruck}/>
+                    <img 
+                        src={shoppingcart}
+                        alt="shopping cart icon" 
+                        style={{
+                            width: "20px",
+                            height: "20px",
+                            marginTop: "2px"
+                        }}
+                    />
                 </Link>
-                <SearchBox />
+                <SearchBox value={search} onChange={handleSearch}/>
             </nav>
         </header>
     )
