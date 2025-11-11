@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo1.avif';
+import SearchBox from './SearchBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faTruck } from '@fortawesome/free-regular-svg-icons';
+
 
 const Header = () => {
     return (
@@ -32,8 +36,13 @@ const Header = () => {
             >
                 <Link to="/products">Tuotteet</Link>
                 <Link to="/about">Meistä</Link>
-                <Link to="/profile">Profiili</Link>
-                <Link to="/cart">Ostoskori</Link>
+                <Link to="/profile">
+                    <FontAwesomeIcon icon={faUser}/>
+                </Link>
+                <Link to="/cart">
+                    <FontAwesomeIcon icon={faTruck}/>
+                </Link>
+                <SearchBox />
             </nav>
         </header>
     )
