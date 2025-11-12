@@ -32,7 +32,7 @@ const Hero = () => {
             slidesPerView={1}
             loop={true}
             autoplay={{ delay: 5000, disableOnInteraction: false}}
-            speed={600}
+            speed={800}
             navigation={true}
         >
             {slides.map((slide, i) => (
@@ -45,12 +45,29 @@ const Hero = () => {
                         background: "red"
                     }}>
                         <div>
-                            <p>{slide.text}</p>
-                            <button>{slide.button}</button>
+                            <p
+                                style={{
+                                    fontSize: "32px",
+                                    fontWeight: "600"
+                                }}
+                            >{slide.text}</p>
+                            <button
+                                style={{
+                                    width: "200px",
+                                    fontSize: "24px",
+                                    borderRadius: "8px",
+                                    border: "1px solid #ccc"
+                                }}
+                            >{slide.button}</button>
                         </div>
-                        <img src={slide.image} alt="" style={{
-                            width: "75%", borderRadius: "10px"
-                        }}/>
+                        <img 
+                            src={slide.image}
+                            alt="Product pictures"
+                            style={{
+                                marginLeft: "15%",
+                                width: "75%"
+                            }}
+                        />
                     </div>
                 </SwiperSlide>
             ))}
