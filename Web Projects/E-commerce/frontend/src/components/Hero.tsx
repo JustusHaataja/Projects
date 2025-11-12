@@ -3,27 +3,31 @@ import products1 from '../assets/products1.jpg';
 import products2 from '../assets/products2.jpg';
 import products3 from '../assets/products3.jpg';
 
+import { useState } from 'react';
 import { Swiper, SwiperSlide} from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const slides = [
     {
         image: products1,
         text: "Puhdasta energiaa päivään",
-        button: "Osta nyt"
+        button: "Osta nyt",
+        link: "/"
     },
     {
         image: products2,
         text: "Löydä suosikki juomasi",
-        button: "Juomat"
+        button: "Juomat",
+        link: "/products"
     },
     {
         image: products3,
         text: "Nesteytys urheilun aikana",
-        button: "Elektrolyytit"
+        button: "Elektrolyytit",
+        link: "/"
     }
 ]
 
@@ -66,14 +70,25 @@ const Hero = () => {
                                     width: "200px",
                                     fontSize: "24px",
                                     borderRadius: "8px",
-                                    border: "1px solid #ccc"
+                                    border: "1px solid #ccc",
                                 }}
-                            >
-                                {slide.button}
+                            >   
+                                <Link
+                                    to={slide.link}
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "inherit",
+                                    }}
+                                >
+                                    {slide.button}
+                                </Link>
                             </button>
 
                         </div>
-                        <ScaleTransition src={slide.image} active={i === activeIndex} />
+                        <ScaleTransition
+                            src={slide.image}
+                            active={i === activeIndex} 
+                        />
                     </div>
                 </SwiperSlide>
             ))}
