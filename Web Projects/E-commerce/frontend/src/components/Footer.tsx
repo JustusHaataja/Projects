@@ -20,17 +20,33 @@ const Footer = () => {
                     gridTemplateColumns: "1fr 1fr 1fr"
                 }}>
                 <div>
-                    <p>Koira</p>
+                    <p
+                        style={{
+                            fontWeight: "600",
+                            fontSize: "16px"
+                        }}
+                    >
+                        Yhteystiedot
+                    </p>
+                    <p>
+                        puh. 010 338 8700 <br /> ark. 9.00 - 16.00 <br /> 
+                        asiakaspalvelu@puhdistamo.fi
+                    </p>
                 </div>
 
                 <div>
                     <p>© {new Date().getFullYear()} My E-Commerce Store</p>
                 </div>
 
-                <div
-                    style={{
+                <div>
+                    <p 
+                        style={{
+                            fontSize: "16px",
+                            fontWeight: "600"
+                        }}>
+                            Meidät löydät myös
+                    </p>
 
-                    }}>
                     <Link to="https://www.puhdistamo.fi/"
                         style={{
                             textDecoration: "none",
@@ -40,6 +56,7 @@ const Footer = () => {
                         }}>
                             Puhdistamo.fi
                     </Link>
+
                     <div>
                         <Link to="https://www.instagram.com/puhdistamo/"
                             style={{ textDecoration: "none", color: "inherit" }}>
@@ -73,6 +90,7 @@ const Footer = () => {
                     style={{
                         margin: "0",
                         marginBottom: "8px",
+                        fontSize: "16px",
                         fontWeight: "600"
                     }}
                 >
@@ -81,15 +99,46 @@ const Footer = () => {
                 <div
                     style={{
                         display: "flex",
-                        gap: "16px",
+                        gap: "24px",
                         alignItems: "center",
                         // paddingTop: "8px"
                     }}
                 >
-                    <FontAwesomeIcon icon={faApplePay} style={{ fontSize: "40px" }}/>
-                    <FontAwesomeIcon icon={faGooglePay} style={{ fontSize: "40px" }}/>
-                    <FontAwesomeIcon icon={faPaypal} style={{ fontSize: "24px" }}/>
-                    <FontAwesomeIcon icon={faPiggyBank} style={{ fontSize: "24px" }}/>
+                    <FontAwesomeIcon icon={faApplePay}
+                        style={{
+                            fontSize: "40px",
+                            paddingLeft: "8px",
+                            paddingRight: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid"
+                        }} 
+                    />
+                    <FontAwesomeIcon icon={faGooglePay}
+                        style={{
+                            fontSize: "40px",
+                            paddingLeft: "8px",
+                            paddingRight: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid"
+                        }}
+                    />
+                    <FontAwesomeIcon icon={faPaypal}
+                        style={{
+                            fontSize: "32px",
+                            padding: "4px",
+                            borderRadius: "4px",
+                            border: "1px solid"
+                        }}
+                    />
+                    <FontAwesomeIcon icon={faPiggyBank}
+                        style={{
+                            fontSize: "36px",
+                            paddingLeft: "8px",
+                            paddingRight: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid"
+                        }}
+                    />
                 </div>
             </div>
         </footer>
