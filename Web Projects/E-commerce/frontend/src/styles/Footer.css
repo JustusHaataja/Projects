@@ -1,0 +1,10 @@
+.social-icon {
+    transition: transform 160ms ease, color 160ms ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.social-icon:hover {
+    transform: translateY(-4px) scale(1.05);
+    color: rgb(184,209,145);
+}

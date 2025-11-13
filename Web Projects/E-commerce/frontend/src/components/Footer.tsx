@@ -1,3 +1,4 @@
+import '../styles/Footer.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTiktok, faGithub, faApplePay, faGooglePay, faPaypal, faCcVisa } from '@fortawesome/free-brands-svg-icons';
@@ -6,11 +7,11 @@ const Footer = () => {
     return (
         <footer 
             style={{
-                height:"300px",
+                height:"280px",
                 width:"100%",
                 backgroundColor: "#eee",
                 display: "grid",
-                gridTemplateRows: "auto 100px",
+                gridTemplateRows: "auto 80px",
                 textAlign: "center"
             }}>
             <div
@@ -110,20 +111,49 @@ const Footer = () => {
                             gap: "16px"
                         }}>
                         <Link to="https://www.instagram.com/puhdistamo/"
-                            style={{ textDecoration: "none", color: "inherit" }}>
-                                <FontAwesomeIcon icon={faInstagram} style={{fontSize: "40px"}}/>
+                            style={{
+                                textDecoration: "none",
+                                color: "inherit"
+                            }}>
+                                <FontAwesomeIcon 
+                                    icon={faInstagram}
+                                    className="social-icon"
+                                    style={{
+                                        fontSize: "40px",
+                                        
+                                    }}
+                                />
                         </Link>
                         <Link to="https://www.tiktok.com/@puhdistamoofficial"
-                            style={{ textDecoration: "none", color: "inherit" }}>
-                                <FontAwesomeIcon icon={faTiktok} style={{fontSize: "40px"}}/>
+                            style={{
+                                textDecoration: "none",
+                                color: "inherit"
+                            }}>
+                                <FontAwesomeIcon 
+                                    icon={faTiktok}
+                                    className="social-icon"
+                                    style={{
+                                        fontSize: "40px"
+                                    }}
+                                />
                         </Link>
                         <Link to="https://github.com/JustusHaataja/Projects"
-                            style={{ textDecoration: "none", color: "inherit" }}>
-                                <FontAwesomeIcon icon={faGithub} style={{fontSize: "40px"}}/>
+                            style={{
+                                textDecoration: "none",
+                                color: "inherit"
+                            }}>
+                                <FontAwesomeIcon 
+                                    icon={faGithub}
+                                    className="social-icon"
+                                    style={{
+                                        fontSize: "40px"
+                                    }}
+                                />
                         </Link>
                     </div>
                     
                     <div 
+                        className="social-icon"
                         style={{ padding: "16px"}}>
                         <Link to="https://www.puhdistamo.fi/"
                             style={{
