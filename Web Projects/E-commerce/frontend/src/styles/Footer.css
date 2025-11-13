@@ -1,7 +1,35 @@
+footer {
+    height: 280px;
+    width: 100%;
+    background-color: #eee;
+    display: grid;
+    grid-template-rows: auto 80px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.banking-icon {
+    font-size: 40px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px;
+    border: 1px solid;
+}
+
+.social-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .social-icon {
     transition: transform 160ms ease, color 160ms ease;
     cursor: pointer;
     display: inline-block;
+    font-size: 40px;
 }
 
 .social-icon:hover {

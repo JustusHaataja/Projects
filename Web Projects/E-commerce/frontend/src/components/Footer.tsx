@@ -5,29 +5,16 @@ import { faInstagram, faTiktok, faGithub, faApplePay, faGooglePay, faPaypal, faC
 
 const Footer = () => {
     return (
-        <footer 
-            style={{
-                height:"280px",
-                width:"100%",
-                backgroundColor: "#eee",
-                display: "grid",
-                gridTemplateRows: "auto 80px",
-                textAlign: "center"
-            }}>
+        <footer>
             <div
                 style={{
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr 1fr"
                 }}>
                 <div>
-                    <p
-                        style={{
-                            fontWeight: "600",
-                            fontSize: "16px"
-                        }}
-                    >
+                    <h1>
                         Yhteystiedot
-                    </p>
+                    </h1>
                     <p>
                         010 338 8700 <br /> ark. 9.00 - 16.00
                     </p>
@@ -37,71 +24,41 @@ const Footer = () => {
                 </div>
 
                 <div>
-                    <p
-                        style={{
-                            marginBottom: "8px",
-                            fontSize: "16px",
-                            fontWeight: "600"
-                        }}
-                    >
+                    <h1>
                         Maksutavat
-                    </p>
+                    </h1>
                     <div
                         style={{
                             display: "flex",
                             gap: "16px",
-                            paddingTop: "8px",
+                            paddingTop: "12px",
                             alignItems: "center",
                             justifyContent: "center"
                         }}
                     >
-                        <FontAwesomeIcon icon={faApplePay}
-                            style={{
-                                fontSize: "40px",
-                                paddingLeft: "8px",
-                                paddingRight: "8px",
-                                borderRadius: "4px",
-                                border: "1px solid"
-                            }} 
+                        <FontAwesomeIcon 
+                            icon={faApplePay}
+                            className="banking-icon"
                         />
-                        <FontAwesomeIcon icon={faGooglePay}
-                            style={{
-                                fontSize: "40px",
-                                paddingLeft: "8px",
-                                paddingRight: "8px",
-                                borderRadius: "4px",
-                                border: "1px solid"
-                            }}
+                        <FontAwesomeIcon 
+                            icon={faGooglePay}
+                            className="banking-icon"
                         />
-                        <FontAwesomeIcon icon={faCcVisa}
-                            style={{
-                                fontSize: "40px",
-                                paddingLeft: "8px",
-                                paddingRight: "8px",
-                                borderRadius: "4px",
-                                border: "1px solid"
-                            }}
+                        <FontAwesomeIcon 
+                            icon={faCcVisa}
+                            className="banking-icon"
                         />
-                        <FontAwesomeIcon icon={faPaypal}
-                            style={{
-                                fontSize: "40px",
-                                paddingLeft: "8px",
-                                paddingRight: "8px",
-                                borderRadius: "4px",
-                                border: "1px solid"
-                            }}
+                        <FontAwesomeIcon 
+                            icon={faPaypal}
+                            className="banking-icon"
                         />
                     </div>
                 </div>
 
                 <div>
-                    <p 
-                        style={{
-                            fontSize: "16px",
-                            fontWeight: "600"
-                        }}>
-                            Meidät löydät myös
-                    </p>
+                    <h1>
+                        Meidät löydät myös
+                    </h1>
 
                     <div
                         style={{
@@ -110,50 +67,36 @@ const Footer = () => {
                             padding: "1px",
                             gap: "16px"
                         }}>
-                        <Link to="https://www.instagram.com/puhdistamo/"
-                            style={{
-                                textDecoration: "none",
-                                color: "inherit"
-                            }}>
+                        <Link 
+                            to="https://www.instagram.com/puhdistamo/" 
+                            className="social-link"
+                            >
                                 <FontAwesomeIcon 
                                     icon={faInstagram}
                                     className="social-icon"
-                                    style={{
-                                        fontSize: "40px",
-                                        
-                                    }}
                                 />
                         </Link>
-                        <Link to="https://www.tiktok.com/@puhdistamoofficial"
-                            style={{
-                                textDecoration: "none",
-                                color: "inherit"
-                            }}>
+                        <Link 
+                            to="https://www.tiktok.com/@puhdistamoofficial"
+                            className="social-link"
+                            >
                                 <FontAwesomeIcon 
                                     icon={faTiktok}
                                     className="social-icon"
-                                    style={{
-                                        fontSize: "40px"
-                                    }}
                                 />
                         </Link>
-                        <Link to="https://github.com/JustusHaataja/Projects"
-                            style={{
-                                textDecoration: "none",
-                                color: "inherit"
-                            }}>
+                        <Link 
+                            to="https://github.com/JustusHaataja/Projects"
+                            className="social-link"
+                            >
                                 <FontAwesomeIcon 
                                     icon={faGithub}
                                     className="social-icon"
-                                    style={{
-                                        fontSize: "40px"
-                                    }}
                                 />
                         </Link>
                     </div>
                     
                     <div 
-                        className="social-icon"
                         style={{ padding: "16px"}}>
                         <Link to="https://www.puhdistamo.fi/"
                             style={{
