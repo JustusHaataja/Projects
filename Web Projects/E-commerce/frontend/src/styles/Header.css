@@ -8,3 +8,20 @@ header {
     background-color: #eee;
     z-index: 1000;
 }
+
+.store-logo {
+    height: 100px;
+    padding-right: 16px;
+}
+
+nav {
+    display: flex;
+    gap: 16px;
+    font-size: 16px;
+}
+
+.shoppingcart-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}

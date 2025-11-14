@@ -18,20 +18,14 @@ const Header = () => {
     return (
         <header>
             <Link to="/">
-                <img src={logo} alt="Store logo" 
-                    style={{ 
-                        height: "100px",
-                        paddingRight: "16px"
-                    }} />
+                <img 
+                    src={logo}
+                    alt="Store logo"
+                    className="store-logo"
+                />
             </Link>
 
-            <nav
-                style={{
-                    display: "flex",
-                    gap: "16px",
-                    fontSize: "16px",
-                }}
-            >
+            <nav>
                 <Link to="/products">Tuotteet</Link>
                 <Link to="/about">Meistä</Link>
                 <Link to="/profile">
@@ -40,12 +34,8 @@ const Header = () => {
                 <Link to="/cart">
                     <img 
                         src={shoppingcart}
-                        alt="shopping cart icon" 
-                        style={{
-                            width: "20px",
-                            height: "20px",
-                            marginTop: "2px"
-                        }}
+                        alt="shopping cart icon"
+                        className="shoppingcart-icon"
                     />
                 </Link>
                 <SearchBox value={search} onChange={handleSearch}/>

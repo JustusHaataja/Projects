@@ -7,9 +7,43 @@ footer {
     text-align: center;
 }
 
+.footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.footer-bottom {
+    background: #555;
+    color: #fff;
+    justify-content: center;
+    align-content: center;
+    padding: 16px;
+}           
+
+.banking-container {
+    display: flex;
+    gap: 16px;
+    padding-top: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-container {
+    display: flex;
+    justify-content: center;
+    padding: 9px;
+    gap: 16px;
+}
+
+
 h1 {
     font-size: 16px;
     font-weight: 600;
+}
+
+.website-link {
+    text-decoration: none;
+    color: inherit;
 }
 
 .banking-icon {

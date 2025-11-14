@@ -6,11 +6,7 @@ import { faInstagram, faTiktok, faGithub, faApplePay, faGooglePay, faPaypal, faC
 const Footer = () => {
     return (
         <footer>
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr 1fr"
-                }}>
+            <div className="footer-top" >
                 <div>
                     <h1>
                         Yhteystiedot
@@ -27,15 +23,7 @@ const Footer = () => {
                     <h1>
                         Maksutavat
                     </h1>
-                    <div
-                        style={{
-                            display: "flex",
-                            gap: "16px",
-                            paddingTop: "12px",
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
-                    >
+                    <div className="banking-container" >
                         <FontAwesomeIcon 
                             icon={faApplePay}
                             className="banking-icon"
@@ -60,13 +48,7 @@ const Footer = () => {
                         Meidät löydät myös
                     </h1>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            padding: "1px",
-                            gap: "16px"
-                        }}>
+                    <div className="social-container" >
                         <Link 
                             to="https://www.instagram.com/puhdistamo/" 
                             className="social-link"
@@ -96,31 +78,16 @@ const Footer = () => {
                         </Link>
                     </div>
                     
-                    <div 
-                        style={{ padding: "16px"}}>
-                        <Link to="https://www.puhdistamo.fi/"
-                            style={{
-                                textDecoration: "none",
-                                color: "inherit",
-                                fontSize: "24px",
-                                fontWeight: "600"
-                            }}>
-                                Puhdistamo.fi
+                    <div>
+                        <Link to="https://www.puhdistamo.fi/" className="website-link" >
+                            <h2>Puhdistamo.fi</h2>
                         </Link>
                     </div>
                 </div>
   
             </div>
 
-            <div
-                style={{
-                    background: "#555",
-                    color: "white",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    padding: "16px"
-                }}
-            >
+            <div className="footer-bottom" >
                 © {new Date().getFullYear()} Tämä ei ole Puhdistamon virallinen nettisivu.
             </div>
         </footer>
