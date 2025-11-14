@@ -1,3 +1,4 @@
+import '../styles/Header.css';
 import { useState, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo1.avif';
@@ -15,18 +16,7 @@ const Header = () => {
     }
 
     return (
-        <header 
-            style={{
-                position: "fixed",
-                top: "0",
-                left: "0",
-                right: "0",
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#eee",
-                zIndex: "1000"
-            }}
-        >
+        <header>
             <Link to="/">
                 <img src={logo} alt="Store logo" 
                     style={{ 
