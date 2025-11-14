@@ -1,3 +1,4 @@
+import '../styles/Hero.css';
 import ScaleTransition from './ScaleTransition';
 import products1 from '../assets/products1.jpg';
 import products2 from '../assets/products2.jpg';
@@ -46,39 +47,16 @@ const Hero = () => {
         >
             {slides.map((slide, i) => (
                 <SwiperSlide key={i}>
-                    <div 
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "1fr 1fr",
-                            height: "600px",
-                            alignItems: "center",
-                            backgroundColor: "rgb(184,209,145)"
-                        }}
-                    >
+                    <div className="hero-container" >
                         <div>
-                            <p
-                                style={{
-                                    fontSize: "32px",
-                                    fontWeight: "600"
-                                }}
-                            >
+                            <p className="slider-text" >
                                 {slide.text}
                             </p>
 
-                            <button
-                                style={{
-                                    width: "200px",
-                                    fontSize: "24px",
-                                    borderRadius: "8px",
-                                    border: "1px solid #ccc",
-                                }}
-                            >   
+                            <button className="slider-button" >   
                                 <Link
                                     to={slide.link}
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "inherit",
-                                    }}
+                                    className="link-button"
                                 >
                                     {slide.button}
                                 </Link>
