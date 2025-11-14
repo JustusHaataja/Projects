@@ -1,9 +1,12 @@
+.hero-wrapper {
+    transition: background-color 400ms ease;
+}
+
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 600px;
     align-items: center;
-    background-color: rgb(184,209,145);
 }
 
 .slider-text {
@@ -11,18 +14,10 @@
     font-weight: 600;
 }
 
-.slider-button {
-    width: 200px;
+.link-button {
     font-size: 24px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.slider-button:hover {
-    
-}
-
-.link-button {
+    color: #fff;
+    background-color: #000;
     text-decoration: none;
-    color: inherit;
 }

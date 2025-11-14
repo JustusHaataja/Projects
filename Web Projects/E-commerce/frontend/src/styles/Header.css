@@ -1,5 +1,7 @@
 header {
     position: fixed;
+    margin: 0px;
+    height: 100px;
     top: 0;
     left: 0;
     right: 0;
@@ -10,6 +12,7 @@ header {
 }
 
 .store-logo {
+    margin-top: 4px;
     height: 100px;
     padding-right: 16px;
 }
