@@ -1,34 +1,19 @@
-import '../styles/keyframes.css';
-import { useEffect, useRef } from "react";
+import '../styles/ScaleTransition.css';
 
 interface ScaleTransitionProps {
     src: string;
-    style?: React.CSSProperties;
     active?: boolean;
 }
 
-const ScaleTransition: React.FC<ScaleTransitionProps> = ({ src, style, active }) => {
-    const imgRef = useRef<HTMLImageElement>(null);
-
-    useEffect(() => {
-        if (!imgRef.current || !active) return;
-        const img = imgRef.current;
-
-        img.style.animation = "none";
-        void img.offsetHeight;
-        img.style.animation = "zoomOut 4000ms ease-out forwards"
-    }, [active]);
-
+const ScaleTransition: React.FC<ScaleTransitionProps> = ({ src, active = false }) => {
     return (
-        <img
-            ref={imgRef}
-            src={src}
-            style={{ 
-                width: "80%",
-                transformOrigin: "center",
-                ...style
-            }}
-        />
+        <div className="image-wrap" >
+            <div
+                className={`image-bg ${active ? 'zoomed' : ''}`}
+                style={{ backgroundImage: `url(${src})` }}
+                aria-hidden="true"
+            />
+        </div>
     )
 }
 

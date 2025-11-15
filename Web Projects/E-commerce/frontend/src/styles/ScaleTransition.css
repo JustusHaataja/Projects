@@ -1,0 +1,22 @@
+.image-wrap {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-bg {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 110%;
+    transition: background-size 4000ms ease, transform 4000ms ease;
+    will-change: background-size;
+}
+
+.image-bg.zoomed {
+    background-size: 100%;
+}

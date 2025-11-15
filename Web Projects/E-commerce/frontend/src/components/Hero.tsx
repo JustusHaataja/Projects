@@ -69,10 +69,12 @@ const Hero = () => {
                                 </Link>
 
                             </div>
-                            <ScaleTransition
-                                src={slide.image}
-                                active={i === activeIndex} 
-                            />
+                            <div className="image-wrapper" >
+                                <ScaleTransition
+                                    src={slide.image}
+                                    active={i === activeIndex}
+                                />
+                            </div>
                         </div>
                     </SwiperSlide>
                 ))}

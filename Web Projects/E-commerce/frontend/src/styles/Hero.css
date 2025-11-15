@@ -1,12 +1,15 @@
 .hero-wrapper {
     transition: background-color 400ms ease;
+    height: 50vh;
+    margin-top: 10vh;
+    overflow: hidden;
 }
 
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 600px;
-    align-items: center;
+    height: 100%;
+    align-items: stretch;
 }
 
 .slider-text {
@@ -16,8 +19,17 @@
 
 .link-button {
     font-size: 24px;
+    padding: 16px;
     border-radius: 8px;
     color: #fff;
     background-color: #000;
     text-decoration: none;
+}
+
+.image-wrapper {
+    height: 50vh;
+    /* overflow: hidden; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

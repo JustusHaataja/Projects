@@ -5,7 +5,6 @@ const HomePage = () => {
         <div 
             style={{ 
                 height: "1000px",
-                paddingTop: "100px"
             }}
         >
             <Hero />
