@@ -5,8 +5,9 @@ export interface Product {
     name: string;
     description: string;
     price: number;
-    images: string[];
+    sale_price?: number | null;
     categoryId: number;
+    images: string[];
 }
 
 export const fetchAllProducts = async (): Promise<Product[]> => {
