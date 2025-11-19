@@ -36,8 +36,9 @@
 }
 
 .link-button:hover {
-    transition: background-color 200ms ease-out;
-    background-color: var(--primary-green);
+    transition: background-color 100ms ease-out;
+    color: #000;
+    background-color: #fff;
 }
 
 .hero-right {
