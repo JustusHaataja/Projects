@@ -58,4 +58,4 @@ class Category(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
 
-    products = relationship("Product", back_populates="category")
+    product = relationship("Product", back_populates="category")
