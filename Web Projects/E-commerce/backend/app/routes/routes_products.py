@@ -57,3 +57,10 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             detail="Product not found"
             )
     return product
+
+
+@router.get("/categories", response_model=List[int])
+def get_categories(db: Session = Depends(get_db)):
+    categories = db.query(ProductModel.category_id).distinct().all()
+    # distinct() returns a list of tuples like [(1,), (2,), ...]
+    return [c[0] for c in categories]
