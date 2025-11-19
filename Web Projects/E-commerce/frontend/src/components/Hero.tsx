@@ -13,25 +13,28 @@ import { Link } from 'react-router-dom';
 
 const slides = [
     {
-        image: products1,
-        text: "Puhdasta energiaa päivään",
-        button: "Osta nyt",
-        link: "/",
-        bgColor: "rgb(243, 204, 198)"
-    },
-    {
         image: products2,
         text: "Löydä suosikki juomasi",
         button: "Juomat",
         link: "/products",
-        bgColor: "rgb(226, 120, 69)"
+        bgColor: "rgb(226, 120, 69)",
+        position: "center 60%"
     },
     {
         image: products3,
         text: "Puhdasta voimaa",
         button: "Elektrolyytit",
         link: "/",
-        bgColor: "rgb(173, 237, 242)"   // rgb(96, 188, 189)
+        bgColor: "rgb(173, 237, 242)",
+        position: "center"
+    },
+    {
+        image: products1,
+        text: "Puhdasta energiaa päivään",
+        button: "Osta nyt",
+        link: "/",
+        bgColor: "rgb(243, 204, 198)",
+        position: "center 90%"
     }
 ]
 
@@ -72,6 +75,7 @@ const Hero = () => {
                                 <ScaleTransition
                                     src={slide.image}
                                     active={i === activeIndex}
+                                    position={slide.position}
                                 />
                             </div>
                         </div>
