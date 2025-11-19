@@ -1,7 +1,7 @@
 footer {
     height: 280px;
     width: 100%;
-    background-color: #eee;
+    background-color: var(--background-color);
     display: grid;
     grid-template-rows: auto 80px;
     text-align: center;
@@ -68,5 +68,5 @@ h1 {
 
 .social-icon:hover {
     transform: translateY(-4px) scale(1.05);
-    color: rgb(184,209,145);
+    color: var(--primary-green);
 }

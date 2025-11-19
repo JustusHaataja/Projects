@@ -24,7 +24,7 @@ const slides = [
         text: "Löydä suosikki juomasi",
         button: "Juomat",
         link: "/products",
-        bgColor: "rgb(219, 101, 149)"
+        bgColor: "rgb(226, 120, 69)"
     },
     {
         image: products3,
@@ -40,7 +40,7 @@ const Hero = () => {
 
     return (
         <div 
-            className="hero-wrapper"
+            className="hero-container"
             style={{ backgroundColor: slides[activeIndex].bgColor }}
         >
             <Swiper
@@ -53,12 +53,12 @@ const Hero = () => {
                 onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             >
                 {slides.map((slide, i) => (
-                    <SwiperSlide key={i}>
-                        <div className="hero-container" >
-                            <div>
+                    <SwiperSlide key={i} >
+                        <div className="slide-grid">
+                            <div className="hero-left">
                                 <p className="slider-text" >
                                     {slide.text}
-                                </p>  
+                                </p>
 
                                 <Link
                                     to={slide.link}
@@ -67,9 +67,8 @@ const Hero = () => {
                                 >
                                     {slide.button}
                                 </Link>
-
                             </div>
-                            <div className="image-wrapper" >
+                            <div className="hero-right" >
                                 <ScaleTransition
                                     src={slide.image}
                                     active={i === activeIndex}
