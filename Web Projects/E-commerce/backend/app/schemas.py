@@ -50,6 +50,14 @@ class Product(ProductBase):
         orm_mode = True
 
 
+class Category(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
 class CartItemBase(BaseModel):
     product_id: int
     quantity: int

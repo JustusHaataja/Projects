@@ -25,6 +25,7 @@ class Product(Base):
     sale_price: Mapped[Optional[Numeric]] = mapped_column(Numeric, nullable=True)
     category_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("categories.id"), nullable=True)
 
+    category = relationship("Category", back_populates="product")
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
     images = relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
 
@@ -50,3 +51,11 @@ class CartItem(Base):
 
     user = relationship("User", back_populates="cart_items")
     product = relationship("Product", back_populates="cart_items")
+
+
+class Category(Base):
+    __tablename__ = "categories"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+
+    products = relationship("Product", back_populates="category")

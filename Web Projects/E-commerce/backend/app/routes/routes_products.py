@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import Product as ProductModel
-from schemas import Product
+from models import Product as ProductModel, Category as CategoryModel
+from schemas import Product, Category
 from typing import List
 
 
@@ -48,6 +48,13 @@ def get_products(db: Session = Depends(get_db),
     return products
 
 
+@router.get("/categories", response_model=List[Category])
+def get_categories(db: Session = Depends(get_db)):
+    categories = db.query(CategoryModel).all()
+    
+    return categories
+
+
 @router.get("/{product_id}", response_model=Product)
 def get_product(product_id: int, db: Session = Depends(get_db)):
     product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
@@ -57,10 +64,3 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
             detail="Product not found"
             )
     return product
-
-
-@router.get("/categories", response_model=List[int])
-def get_categories(db: Session = Depends(get_db)):
-    categories = db.query(ProductModel.category_id).distinct().all()
-    # distinct() returns a list of tuples like [(1,), (2,), ...]
-    return [c[0] for c in categories]
