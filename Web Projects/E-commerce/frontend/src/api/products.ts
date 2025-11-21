@@ -1,4 +1,4 @@
-import { getJSON } from './apiClient';
+import apiClient from './apiClient';
 
 export interface Product {
     id: number;
