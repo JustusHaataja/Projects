@@ -5,11 +5,21 @@ from routes import routes_auth, routes_products, routes_cart
 from database import engine, get_db, SessionLocal
 from apscheduler.schedulers.background import BackgroundScheduler
 from background_tasks import clean_old_guests
+from fastapi.middleware.cors import CORSMiddleware
 
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="E-commerce Backend")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(routes_auth.router, prefix="/auth")
 app.include_router(routes_products.router, prefix="/products")
 app.include_router(routes_cart.router, prefix="/cart")
