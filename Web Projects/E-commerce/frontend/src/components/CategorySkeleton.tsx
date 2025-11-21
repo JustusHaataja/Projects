@@ -13,7 +13,7 @@ const CategorySkeleton = () => {
                     style={{
                         width: "120px",
                         height: "40px",
-                        background: "#dd2e2eff",
+                        background: "#7a7a7a",
                         animation: "pulse 1.5s infinite"
                     }}
                 />
@@ -22,7 +22,7 @@ const CategorySkeleton = () => {
                 {`
                     @keyframes pulse {
                         0% { opacity: 1; }
-                        50% { opacity: 0.5; }
+                        50% { opacity: 0.4; }
                         100% { opacity: 1; }
                     }
                 `}

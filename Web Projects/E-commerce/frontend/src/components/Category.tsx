@@ -28,11 +28,14 @@ const Categories = () => {
         <div>
             <h2>Kategoriat</h2>
 
-            <div>
+            <div
+                style={{
+                    display: "flex"
+                }}
+            >
                 {categories?.map((cat) => (
                     <div
                         key={cat.id}
-
                     >
                         {cat.name}
                     </div>
