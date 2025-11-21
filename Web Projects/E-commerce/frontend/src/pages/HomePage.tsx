@@ -1,15 +1,15 @@
 import Hero from '../components/Hero';
-import Categories from '../components/Categories';
+import Category from '../components/Category';
 
 const HomePage = () => {
     return (
         <div 
             style={{ 
-                // height: "1000px",
+                height: "1000px",
             }}
         >
             <Hero />
-            <Categories />
+            <Category />
         </div>
     )
 }

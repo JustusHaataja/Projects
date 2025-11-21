@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchCategories, type Category } from '../api/categories';
-import CategoriesSkeleton from './CategoriesSkeleton';
+import CategorySkeleton from './CategorySkeleton';
 
 const Categories = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
@@ -15,14 +15,15 @@ const Categories = () => {
                 setLoading(false);
             })
             .catch((err) => {
-                console.error(err);
-                setLoading(false);
-            });
+                if (err.name == "CanceledError") return;    // axios abort
+                console.error("fetchCategories failed:", err);
+            })
+            .finally(() => setLoading(false));
         
         return () => controller.abort();
     }, []);
 
-    if (loading) return <CategoriesSkeleton />;
+    if (loading) return <CategorySkeleton />;
 
     return (
         <div>
