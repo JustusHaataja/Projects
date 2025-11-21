@@ -7,16 +7,15 @@ const Categories = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // AbortController allows us to cancel the API request if the component
+        //  is removed from the DOM (no longer needed)
         const controller = new AbortController();
 
         fetchCategories(controller.signal)
-            .then((data) => {
-                setCategories(data);
-                setLoading(false);
-            })
+            .then((data) => setCategories(data))
             .catch((err) => {
-                if (err.name == "CanceledError") return;    // axios abort
-                console.error("fetchCategories failed:", err);
+                if (err.name === "CanceledError") return;
+                else { console.error(err) }
             })
             .finally(() => setLoading(false));
         
