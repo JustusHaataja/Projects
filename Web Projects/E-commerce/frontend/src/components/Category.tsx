@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchCategories, type Category } from '../api/categories';
+import { Link } from 'react-router-dom';
 import CategorySkeleton from './CategorySkeleton';
 import '../styles/Category.css';
 
@@ -59,10 +60,7 @@ const Categories = () => {
 
             <div className="category-container" >
                 {categories?.map((cat) => (
-                    <div 
-                        className="category"
-                        key={cat.id}
-                    >
+                    <Link to={``} className="category-link">
                         <div className="image-frame">
                             <img 
                                 className="category-image"
@@ -76,7 +74,7 @@ const Categories = () => {
                         >
                             {capitalize(cat.name)}
                         </p>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
