@@ -79,8 +79,11 @@ const Footer = () => {
                     </div>
                     
                     <div>
-                        <Link to="https://www.puhdistamo.fi/" className="website-link" >
-                            <h2>Puhdistamo.fi</h2>
+                        <Link 
+                            to="https://www.puhdistamo.fi/"
+                            className="website-link"
+                        >
+                            Puhdistamo.fi
                         </Link>
                     </div>
                 </div>

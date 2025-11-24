@@ -52,19 +52,27 @@ const Categories = () => {
 
     return (
         <div className="category-section" >
-            <h2>Kategoriat</h2>
+            <h2 className="category-header" >Kategoriat</h2>
 
             <div className="category-container" >
                 {categories?.map((cat) => (
-                    <div className="category"
+                    <div 
+                        className="category"
                         key={cat.id}
                     >
-                        <img 
-                            className="category-image"
-                            src={getGategoryImage(cat.id)}
-                            alt={`Image of ${cat.name}`}
-                        />
-                        {cat.name}
+                        <div className="image-frame">
+                            <img 
+                                className="category-image"
+                                src={getGategoryImage(cat.id)}
+                                alt={`Image of ${cat.name}, on click move to ${cat.name} page`}
+                            />
+                        </div>
+                        <p 
+                            className="category-text"
+                            aria-label={`On click move to ${cat.name} page`}
+                        >
+                            {cat.name}
+                        </p>
                     </div>
                 ))}
             </div>

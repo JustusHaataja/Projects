@@ -44,6 +44,8 @@ h1 {
 .website-link {
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
+    font-size: 24px;
 }
 
 .banking-icon {
