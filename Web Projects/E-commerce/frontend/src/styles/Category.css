@@ -1,10 +1,11 @@
 .category-section {
-    padding: 0;
+    padding: 16px;
     justify-items: center;
 }
 
 .category-header {
-    margin-top: 16px;
+    margin: 0;
+    padding-bottom: 16px;
     font-size: 32px;
 }
 
@@ -35,6 +36,10 @@
     object-fit: cover;
     border-radius: 50%;
     transition: transform 0.4s ease;
+}
+
+.category-text {
+    font-weight: 500;
 }
 
 .category-image:hover {
