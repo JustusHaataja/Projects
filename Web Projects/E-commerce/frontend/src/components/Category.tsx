@@ -48,7 +48,7 @@ const Categories = () => {
         return () => controller.abort();
     }, []);
 
-    if (error) return <CategorySkeleton />;
+    if (!error) return <CategorySkeleton />;
 
     return (
         <div className="category-section" >
