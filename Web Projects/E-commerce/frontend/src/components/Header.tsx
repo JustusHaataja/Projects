@@ -36,7 +36,10 @@ const Header = () => {
 
             <div className="header-right" >
                 <Link to="/profile" >
-                    <FontAwesomeIcon icon={faUser} />
+                    <FontAwesomeIcon
+                        className="profile-icon"
+                        icon={faUser} 
+                    />
                 </Link>
                 <Link to="/cart" >
                     <img 
