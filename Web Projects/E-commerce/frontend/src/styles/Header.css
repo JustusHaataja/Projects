@@ -26,6 +26,7 @@
     display: flex;
     gap: 24px;
     font-size: 16px;
+    font-weight: 400;
     padding: 24px;
 }
 

@@ -12,7 +12,8 @@ interface SearchBoxProps {
 const SearchBox: React.FC<SearchBoxProps> = ({ value, onChange }) => {
     return (
         <div className="searchbox-container" >
-            <input className="search-input-box"
+            <input 
+                className="search-input-box"
                 type="text"
                 placeholder="Hae tuotteita..."
                 value={value}
