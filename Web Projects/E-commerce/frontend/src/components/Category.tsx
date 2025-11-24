@@ -20,6 +20,9 @@ const getGategoryImage = (id: number) => {
     return CATEGORY_IMAGES[id];
 }
 
+const capitalize = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
 
 const Categories = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
@@ -48,7 +51,7 @@ const Categories = () => {
         return () => controller.abort();
     }, []);
 
-    if (!error) return <CategorySkeleton />;
+    if (error) return <CategorySkeleton />;
 
     return (
         <div className="category-section" >
@@ -71,7 +74,7 @@ const Categories = () => {
                             className="category-text"
                             aria-label={`On click move to ${cat.name} page`}
                         >
-                            {cat.name}
+                            {capitalize(cat.name)}
                         </p>
                     </div>
                 ))}
