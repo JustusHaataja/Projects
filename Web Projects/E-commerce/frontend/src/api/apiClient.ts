@@ -10,6 +10,13 @@ const apiClient = axios.create({
 export default apiClient;
 
 export const getJSON = async <T>(url: string, signal?: AbortSignal): Promise<T> => {
-    const res = await apiClient.get<T>(url, { signal });
-    return res.data;
+    try {
+        const res = await apiClient.get<T>(url, { signal });
+        return res.data;
+    } catch (err: unknown) {
+        if (axios.isCancel(err)) {
+            return Promise.resolve(undefined as unknown as T);
+        }
+        throw err;
+    }
 }

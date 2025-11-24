@@ -45,3 +45,7 @@
 .category-text:hover {
     cursor: pointer;
 }
+
+.category-link:hover .category-image {
+    transform: scale(1.05);
+}

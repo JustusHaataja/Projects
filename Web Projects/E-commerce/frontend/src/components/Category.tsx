@@ -6,7 +6,7 @@ import '../styles/Category.css';
 
 import electrolytes from '../assets/electrolytes3.jpg';
 import kombucha from '../assets/kombucha3.jpg';
-import energydrink from '../assets/pineapple.jpg';
+import energydrink from '../assets/energydrink.jpg';
 import protein from '../assets/protein.jpg';
 
 
@@ -27,32 +27,30 @@ const capitalize = (str: string) =>
 
 const Categories = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // AbortController allows us to cancel the API request if the component
         // is removed from the DOM (no longer needed)
         const controller = new AbortController();
 
-        setError(null);
+        setLoading(true);
+        // setError(null);
 
         fetchCategories(controller.signal)
-            .then((data) => {
-                setCategories(data)
-            })
-            .catch((err: any) => {
-                if (err.name === "CanceledError") return;
-                console.error(err)
-                setError("Error loading categories")
-            })
-            .finally(() => {
-
-            });
+            .then((data) => setCategories(data))
+            // .catch((err: any) => {
+            //     if (err.name === "CanceledError") return;
+            //     console.error(err)
+            //     setError("Error loading categories")
+            // })
+            .finally(() => setLoading(false));
         
         return () => controller.abort();
     }, []);
 
-    if (error) return <CategorySkeleton />;
+    if (loading) return <CategorySkeleton />;
 
     return (
         <div className="category-section" >
@@ -60,7 +58,7 @@ const Categories = () => {
 
             <div className="category-container" >
                 {categories?.map((cat) => (
-                    <Link to={``} className="category-link">
+                    <Link to={``} className="category-link" key={cat.id}>
                         <div className="image-frame">
                             <img 
                                 className="category-image"
