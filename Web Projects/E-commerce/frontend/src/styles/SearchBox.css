@@ -1,0 +1,22 @@
+.searchbox-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-icon {
+    height: 16px;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    pointer-events: "none";
+}
+
+.search-input-box {
+    padding-left: 32px;
+    height: 24px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 12rem;
+}

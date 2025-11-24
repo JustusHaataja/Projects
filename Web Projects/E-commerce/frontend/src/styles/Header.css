@@ -15,11 +15,11 @@
     position: relative;
     margin-top: 4px;
     height: 10vh;
-    padding-right: 16px;
 }
 
 .header-links {
     display: flex;
+    padding: 16px;
     gap: 24px;
     font-size: 16px;
 }
