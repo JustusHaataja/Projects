@@ -66,7 +66,7 @@ const Categories = () => {
                     >
                         <img 
                             src={getGategoryImage(cat.id)}
-                            alt={cat.name}
+                            alt={`Image of ${cat.name}`}
                             style={{
                                 width: "120px",
                                 height: "120px",
