@@ -1,4 +1,5 @@
 import '../styles/ScaleTransition.css';
+import { useEffect, useState } from 'react';
 
 interface ScaleTransitionProps {
     src: string;
@@ -7,10 +8,21 @@ interface ScaleTransitionProps {
 }
 
 const ScaleTransition: React.FC<ScaleTransitionProps> = ({ src, active = false, position }) => {
+    const [mountedActive, setMountedActive] = useState(false);
+
+    useEffect(() => {
+        if (active) {
+            const timer = setTimeout(() => setMountedActive(true), 50);
+            return () => clearTimeout(timer);
+        } else {
+            setMountedActive(false);
+        }
+    }, [active]);
+
     return (
         <div className="image-container" >
             <div
-                className={`image-bg ${active ? 'zoomed' : ''}`}
+                className={`image-bg ${mountedActive ? 'zoomed' : ''}`}
                 style={{ backgroundImage: `url(${src})`, backgroundPosition: position}}
                 aria-hidden="true"
             />
