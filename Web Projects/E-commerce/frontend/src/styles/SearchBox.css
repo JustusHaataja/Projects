@@ -1,22 +1,24 @@
 .searchbox-container {
     position: relative;
-    display: inline-block;
-}
-
-.search-icon {
-    height: 16px;
-    position: absolute;
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #555;
-    pointer-events: "none";
+    flex: 1;
+    max-width: 50vw;
+    justify-content: center;
 }
 
 .search-input-box {
     padding-left: 32px;
-    height: 24px;
-    border-radius: 8px;
+    height: 32px;
+    border-radius: 16px;
     border: 1px solid #ccc;
-    width: 12rem;
+    width: 100%;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    pointer-events: none;
 }

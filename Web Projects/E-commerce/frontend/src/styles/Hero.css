@@ -1,6 +1,6 @@
 .hero-container {
     height: 60vh;
-    margin-top: 10vh;
+    margin-top: 100px;
     display: flex;
     transition: background-color 400ms ease;
 }

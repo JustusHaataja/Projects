@@ -17,21 +17,24 @@ const Header = () => {
 
     return (
         <header className="header" >
-            <Link to="/" >
-                <img 
-                    className="store-logo"
-                    src={logo}
-                    alt="Store logo"
-                />
-            </Link>
+            <div className="header-left" >
+                <Link to="/" className="logo-link">
+                    <img 
+                        className="store-logo"
+                        src={logo}
+                        alt="Store logo"
+                    />
+                </Link>
 
-            <nav className="header-links" >
-                <Link to="/products" >Tuotteet</Link>
-                <Link to="/about" >Meistä</Link>
-            </nav>
-            
+                <nav className="header-links" >
+                    <Link to="/products" >Tuotteet</Link>
+                    <Link to="/about" >Meistä</Link>
+                </nav>
+            </div>
+
+            <SearchBox value={search} onChange={handleSearch} />
+
             <div className="header-right" >
-                <SearchBox value={search} onChange={handleSearch} />
                 <Link to="/profile" >
                     <FontAwesomeIcon icon={faUser} />
                 </Link>

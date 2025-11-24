@@ -1,33 +1,39 @@
 .header {
     position: fixed;
-    margin: 0px;
-    height: 10vh;
     top: 0;
     left: 0;
     right: 0;
+    height: 100px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 24px;
     background-color: var(--background-color);
     z-index: 1000;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
 .store-logo {
-    position: relative;
     margin-top: 4px;
-    height: 10vh;
+    height: 100px;
 }
 
 .header-links {
     display: flex;
-    padding: 16px;
     gap: 24px;
     font-size: 16px;
+    padding: 24px;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     gap: 24px;
+    padding: 24px;
 }
 
 .shoppingcart-icon {

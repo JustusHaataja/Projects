@@ -12,16 +12,16 @@ interface SearchBoxProps {
 const SearchBox: React.FC<SearchBoxProps> = ({ value, onChange }) => {
     return (
         <div className="searchbox-container" >
-            <FontAwesomeIcon 
-                className="search-icon"
-                icon={faMagnifyingGlass}
-            />
             <input className="search-input-box"
                 type="text"
                 placeholder="Hae tuotteita..."
                 value={value}
                 onChange={onChange}
                 aria-label="Search products"
+            />
+            <FontAwesomeIcon 
+                className="search-icon"
+                icon={faMagnifyingGlass}
             />
         </div>
     )
