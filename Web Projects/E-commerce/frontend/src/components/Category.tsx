@@ -4,25 +4,32 @@ import CategorySkeleton from './CategorySkeleton';
 
 const Categories = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // AbortController allows us to cancel the API request if the component
         //  is removed from the DOM (no longer needed)
         const controller = new AbortController();
 
+        setError(null);
+
         fetchCategories(controller.signal)
-            .then((data) => setCategories(data))
-            .catch((err) => {
-                if (err.name === "CanceledError") return;
-                else { console.error(err) }
+            .then((data) => {
+                setCategories(data)
             })
-            .finally(() => setLoading(false));
+            .catch((err: any) => {
+                if (err.name === "CanceledError") return;
+                console.error(err)
+                setError("Error loading categories")
+            })
+            .finally(() => {
+
+            });
         
         return () => controller.abort();
     }, []);
 
-    if (loading) return <CategorySkeleton />;
+    if (error) return <CategorySkeleton />;
 
     return (
         <div>
