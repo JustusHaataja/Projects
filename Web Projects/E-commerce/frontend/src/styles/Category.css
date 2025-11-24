@@ -1,0 +1,20 @@
+.category-section {
+    justify-items: center;
+}
+
+.category-container {
+    display: flex;
+    gap: 40px;
+}
+
+.category {
+    display: grid;
+    justify-items: center;
+}
+
+.category-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}

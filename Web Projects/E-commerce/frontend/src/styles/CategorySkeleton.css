@@ -1,0 +1,33 @@
+.category-container {
+    justify-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.h2 {
+    font-size: 64px;
+}
+
+.skeleton-container {
+    display: flex;
+    gap: 40px;
+}
+
+.skeleton {
+    justify-items: center;
+    animation: pulse 1.5s infinite;
+}
+
+.image-skeleton {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--skeleton-color);
+}
+
+.text-skeleton {
+    width: 104px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--skeleton-color);
+}

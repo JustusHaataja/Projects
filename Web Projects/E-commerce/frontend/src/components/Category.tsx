@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchCategories, type Category } from '../api/categories';
 import CategorySkeleton from './CategorySkeleton';
+import '../styles/Category.css';
 
 import electrolytes from '../assets/electrolytes3.jpg';
 import kombucha from '../assets/kombucha3.jpg';
@@ -50,33 +51,18 @@ const Categories = () => {
     if (error) return <CategorySkeleton />;
 
     return (
-        <div
-            style={{
-                justifyItems: "center"
-            }}
-        >
+        <div className="category-section" >
             <h2>Kategoriat</h2>
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "40px"
-                }}
-            >
+            <div className="category-container" >
                 {categories?.map((cat) => (
-                    <div
+                    <div className="category"
                         key={cat.id}
-                        style={{ display: "grid", justifyItems: "center"}}
                     >
                         <img 
+                            className="category-image"
                             src={getGategoryImage(cat.id)}
                             alt={`Image of ${cat.name}`}
-                            style={{
-                                width: "120px",
-                                height: "120px",
-                                objectFit: "cover",
-                                borderRadius: "50%"
-                            }}
                         />
                         {cat.name}
                     </div>
