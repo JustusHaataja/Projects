@@ -2,31 +2,41 @@ const CategorySkeleton = () => {
     return (
         <div
             style={{
-                display: "flex",
+                justifyItems: "center",
                 gap: "1rem",
                 marginTop: "1rem"
             }}
         >
-            {[...Array(5)].map((_, i) => (
-                <div
-                    key={i}
-                    style={{
-                        width: "120px",
-                        height: "40px",
-                        background: "#7a7a7a",
-                        animation: "pulse 1.5s infinite"
-                    }}
-                />
-            ))}
-            <style>
-                {`
-                    @keyframes pulse {
-                        0% { opacity: 1; }
-                        50% { opacity: 0.4; }
-                        100% { opacity: 1; }
-                    }
-                `}
-            </style>
+            <h2>Kategoriat</h2>
+            <div
+                style={{
+                    display: "flex",
+                    gap: "40px",
+                }}
+            >
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} style={{ justifyItems: "center" }}>
+                        <div
+                            style={{
+                                width: "120px",
+                                height: "120px",
+                                borderRadius: "50%",
+                                background: "#7a7a7a",
+                                animation: "pulse 1.5s infinite"
+                            }}
+                        />
+                        <div
+                            style={{
+                                width: "104px",
+                                height: "24px",
+                                borderRadius: "8px",
+                                background: "#7a7a7a",
+                                animation: "pulse 1.5s infinite"
+                            }}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

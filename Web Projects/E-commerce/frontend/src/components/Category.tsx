@@ -50,13 +50,17 @@ const Categories = () => {
     if (error) return <CategorySkeleton />;
 
     return (
-        <div>
+        <div
+            style={{
+                justifyItems: "center"
+            }}
+        >
             <h2>Kategoriat</h2>
 
             <div
                 style={{
                     display: "flex",
-                    gap: "24px"
+                    gap: "40px"
                 }}
             >
                 {categories?.map((cat) => (
