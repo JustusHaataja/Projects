@@ -19,9 +19,9 @@ const Header = () => {
         <header>
             <Link to="/">
                 <img 
+                    className="store-logo"
                     src={logo}
                     alt="Store logo"
-                    className="store-logo"
                 />
             </Link>
 
@@ -33,9 +33,9 @@ const Header = () => {
                 </Link>
                 <Link to="/cart">
                     <img 
+                        className="shoppingcart-icon"
                         src={shoppingcart}
                         alt="shopping cart icon"
-                        className="shoppingcart-icon"
                     />
                 </Link>
                 <SearchBox value={search} onChange={handleSearch}/>
