@@ -22,6 +22,7 @@
 .slider-text {
     font-size: 40px;
     font-weight: 600;
+    cursor: default;
 }
 
 .link-button {
@@ -45,6 +46,12 @@
     height: 100%;
 }
 
+@media screen and (max-width: 992px) {
+    .slider-text {
+        font-size: 32px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .hero-container {
         height: 50vh;
@@ -66,5 +73,39 @@
 @media screen and (max-width: 480px) {
     .hero-container {
         margin-top: 80px;
+    }
+
+    .slide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-right {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+
+    .hero-left {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+        z-index: 2;
+        padding: 16px;
+    }
+
+    .slider-text {
+        color: transparent;
+    }
+
+    .link-button {
+        transform: translateY(96px);
+        color: #000;
+        background-color: #fff;
+    }
+
+    .link-button:hover {
+        color: #fff;
+        background-color: #000;
     }
 }

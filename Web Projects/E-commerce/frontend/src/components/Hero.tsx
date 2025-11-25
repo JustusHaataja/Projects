@@ -23,7 +23,7 @@ const slides = [
     {
         image: products3,
         text: "Puhdasta voimaa",
-        button: "Elektrolyytit",
+        button: "Proteiinit",
         link: "/",
         bgColor: "rgb(173, 237, 242)",
         position: "center"
@@ -31,7 +31,7 @@ const slides = [
     {
         image: products1,
         text: "Puhdasta energiaa päivään",
-        button: "Osta nyt",
+        button: "Nesteytys",
         link: "/",
         bgColor: "rgb(243, 204, 198)",
         position: "center 90%"
