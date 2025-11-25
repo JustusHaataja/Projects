@@ -5,7 +5,7 @@ const HomePage = () => {
     return (
         <div 
             style={{ 
-                height: "1000px",
+                gridTemplateColumns: "1fr"
             }}
         >
             <Hero />
