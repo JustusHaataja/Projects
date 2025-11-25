@@ -31,7 +31,15 @@ const Header = () => {
                 <nav className={`header-links ${menuOpen ? 'open' : ''}`} >
                     <Link to="/products" >Tuotteet</Link>
                     <Link to="/about" >Meistä</Link>
+                    <Link to="/">Ota yhteyttä</Link>
                 </nav>
+                <button
+                    className="hamburger-btn"
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    aria-label="Toggle menu"
+                >
+                    <FontAwesomeIcon icon={menuOpen ? faX : faBars} />
+                </button>
             </div>
 
             <SearchBox value={search} onChange={handleSearch} />
@@ -50,13 +58,6 @@ const Header = () => {
                         alt="shopping cart icon"
                     />
                 </Link>
-                <button
-                    className="hamburger-btn"
-                    onClick={() => setMenuOpen((prev) => !prev)}
-                    aria-label="Toggle menu"
-                >
-                    <FontAwesomeIcon icon={menuOpen ? faX : faBars} />
-                </button>
             </div>
         </header>
     )

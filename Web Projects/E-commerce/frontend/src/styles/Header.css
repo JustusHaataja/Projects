@@ -34,7 +34,7 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    padding: 24px;
+    padding-right: 56px;
 }
 
 .profile-icon {
@@ -60,6 +60,7 @@
 @media screen and (max-width: 768px) {
     .header-right {
         gap: 24px;
+        padding: 24px;
     }
 
     .header-links {
@@ -76,11 +77,14 @@
     }
 
     .header-links.open {
+        margin-top: 16px;
         display: flex;
     }
 
     .hamburger-btn {
         display: block;
+        padding: 0;
+        margin: 24px;
     }
 
     .searchbox-container {
