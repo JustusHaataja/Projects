@@ -5,11 +5,6 @@ export interface Category {
     name: string;
 }
 
-// export const fetchCategories = async (signal?: AbortSignal): Promise<Category[]> => {
-//     return await getJSON<Category[]>("/products/categories", signal);
-// }
-
-export async function fetchCategories(signal?: AbortSignal) {
-    await new Promise(r => setTimeout(r, 5000)); // simulate slow loading
+export const fetchCategories = async (signal?: AbortSignal): Promise<Category[]> => {
     return await getJSON<Category[]>("/products/categories", signal);
 }
