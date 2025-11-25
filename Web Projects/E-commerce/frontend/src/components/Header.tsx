@@ -5,11 +5,13 @@ import logo from '../assets/logo1.avif';
 import SearchBox from './SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import shoppingcart from '../assets/shoppingcart.svg';
 
 
 const Header = () => {
     const [search, setSearch] = useState('');
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -26,7 +28,7 @@ const Header = () => {
                     />
                 </Link>
 
-                <nav className="header-links" >
+                <nav className={`header-links ${menuOpen ? 'open' : ''}`} >
                     <Link to="/products" >Tuotteet</Link>
                     <Link to="/about" >Meistä</Link>
                 </nav>
@@ -48,6 +50,13 @@ const Header = () => {
                         alt="shopping cart icon"
                     />
                 </Link>
+                <button
+                    className="hamburger-btn"
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    aria-label="Toggle menu"
+                >
+                    <FontAwesomeIcon icon={menuOpen ? faX : faBars} />
+                </button>
             </div>
         </header>
     )

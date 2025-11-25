@@ -17,9 +17,11 @@ const CATEGORY_IMAGES: Record<number, string> = {
     4: protein
 }
 
+
 const getGategoryImage = (id: number) => {
     return CATEGORY_IMAGES[id];
 }
+
 
 const capitalize = (str: string) =>
     str.charAt(0).toUpperCase() + str.slice(1);
@@ -28,29 +30,41 @@ const capitalize = (str: string) =>
 const Categories = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
     const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // AbortController allows us to cancel the API request if the component
         // is removed from the DOM (no longer needed)
         const controller = new AbortController();
 
-        setLoading(true);
-        // setError(null);
+        const loadCategories = async () => {
+            try {
+                setLoading(true);
+                setError(null);
 
-        fetchCategories(controller.signal)
-            .then((data) => setCategories(data))
-            // .catch((err: any) => {
-            //     if (err.name === "CanceledError") return;
-            //     console.error(err)
-            //     setError("Error loading categories")
-            // })
-            .finally(() => setLoading(false));
+                const data = await fetchCategories(controller.signal);
+                setCategories(data);
+            } catch (err: unknown) {
+                if (err instanceof Error && err.name === "AbortError") return;
+
+                console.error("Failed to load categories", err);
+                setError("Failed to load categories.");
+            } finally {
+                if (!controller.signal.aborted) {
+                    setLoading(false);
+                }
+            }
+        }
+
+        loadCategories();
         
+        // Cleanup function: cancels request if component unmounts
         return () => controller.abort();
     }, []);
 
     if (loading) return <CategorySkeleton />;
+    if (error) return <div className="error-message">{error}</div>
+    if (!categories) return null;
 
     return (
         <div className="category-section" >
