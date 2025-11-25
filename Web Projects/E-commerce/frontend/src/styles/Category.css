@@ -54,3 +54,30 @@
 .category-link:hover .category-image {
     transform: scale(1.05);
 }
+
+@media screen and (max-width: 992px) {
+    .image-frame {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .category-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 64px;
+    }
+
+    .image-frame {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .category-container {
+        grid-template-columns: 1fr;
+    }
+    
+}
