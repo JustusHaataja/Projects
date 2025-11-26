@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.about-container {
+    height: 100%;
+    background-image: url('../assets/energydrink2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.rolling-header {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    font-size: 4rem;
+    overflow: hidden;
+    padding: 32px;
+}
+
+.letter {
+    display: inline-block;
+    opacity: 0;
+    /* color: var(--primary-green); */
+    transform: translateY(-100%); /* Start from above */
+    animation: rollIn 0.5s forwards;
+}
+
+.letter:nth-child(1) { animation-delay: 0.1s; }
+.letter:nth-child(2) { animation-delay: 0.2s; }
+.letter:nth-child(3) { animation-delay: 0.3s; }
+.letter:nth-child(4) { animation-delay: 0.4s; }
+.letter:nth-child(5) { animation-delay: 0.5s; }
+.letter:nth-child(6) { animation-delay: 0.6s; }
+.letter:nth-child(7) { animation-delay: 0.7s; }
+.letter:nth-child(8) { animation-delay: 0.8s; }
+.letter:nth-child(9) { animation-delay: 0.9s; }
+.letter:nth-child(10) { animation-delay: 1.0s; }
+
+@keyframes rollIn {
+    0% {
+        opacity: 0.5;
+        transform: translateY(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
