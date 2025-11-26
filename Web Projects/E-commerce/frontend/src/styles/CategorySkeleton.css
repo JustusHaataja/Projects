@@ -1,6 +1,7 @@
 .category-skeleton-container {
     justify-items: center;
     gap: 1rem;
+    padding-bottom: 32px;
 }
 
 .skeleton-header {
