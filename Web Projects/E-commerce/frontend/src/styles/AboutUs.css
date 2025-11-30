@@ -74,6 +74,19 @@
     background: #fff;
     border-radius: 16px;
     text-align: center;
+    animation: fadeIn both;
+    animation-timeline: view(50% 5%);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10vw) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
 }
 
 h1 {
@@ -87,7 +100,8 @@ h1 {
 .value-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
+    gap: 32px;
+    padding: 16px;
 }
 
 .value-box {

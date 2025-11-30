@@ -46,7 +46,9 @@ const AboutUs = () => {
             />
 
             <div className="quality-container" >
-                <h1>Laatulupaus</h1>
+                <h1>
+                    Laatulupaus
+                </h1>
                 <p>
                     Perustamisestamme lähtien meitä on ohjannut järkkymätön tahto 
                     tarjota asiakkaillemme vain ja ainoastaan laadukkaimpia 
