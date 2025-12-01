@@ -18,7 +18,6 @@ const Breadcrumbs = () => {
     return (
         <nav className="breadcrumbs" aria-label="breadcrumb">
             <ol>
-                {/* Home Link */}
                 <li>
                     <Link to="/">Etusivu</Link>
                 </li>
@@ -38,7 +37,7 @@ const Breadcrumbs = () => {
                                 <Link to={to}>{displayName}</Link>
                             )}
                         </li>
-                    );
+                    )
                 })}
             </ol>
         </nav>
