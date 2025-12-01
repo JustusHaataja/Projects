@@ -26,6 +26,7 @@
 }
 
 .link-button {
+    margin-top: 32px;
     font-size: 24px;
     font-weight: 300;
     text-transform: uppercase;
