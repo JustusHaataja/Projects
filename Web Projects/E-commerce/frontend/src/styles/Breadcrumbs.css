@@ -1,0 +1,37 @@
+.breadcrumbs ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.breadcrumbs li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #666;
+    text-transform: capitalize;
+    transition: color 0.2s;
+}
+
+.breadcrumbs a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.breadcrumbs .separator {
+    margin: 0 8px;
+    color: #ccc;
+}
+
+.breadcrumbs .current {
+    color: #000;
+    font-weight: 600;
+    text-transform: capitalize;
+    cursor: default;
+}

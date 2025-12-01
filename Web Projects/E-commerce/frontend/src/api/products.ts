@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import { getJSON} from './apiClient';
 
 export interface Product {
     id: number;
@@ -16,4 +16,8 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
 
 export const fetchProductById = async (id: number): Promise<Product> => {
     return getJSON<Product>(`products/${id}`);
+}
+
+export const fetchProductsByCategory = async (categoryId: number): Promise<Product[]> => {
+    return getJSON<Product[]>(`/products/?categoryId=${categoryId}&limit=100`)
 }
