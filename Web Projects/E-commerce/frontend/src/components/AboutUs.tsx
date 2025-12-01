@@ -6,6 +6,8 @@ import { faSeedling, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
 import bg1 from '../assets/energydrink2.jpg';
 import bg2 from '../assets/watermelon.jpg';
+import ed_img from '../assets/energydrinks.jpg';
+import superfood_img from '../assets/superfood.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AboutUs = () => {
@@ -87,6 +89,81 @@ const AboutUs = () => {
                     </p>
                 </div>
             </div>
+
+            <div className="info-container">
+                <div className="text-side">
+                    <h1 className="info-header" >Juomat</h1>
+                    <p>
+                        Kaikkia Puhdistamon juomatuotteita yhdistävät seuraavat tekijät.
+                    </p>
+
+                    <h2>Laadukkaat ja luontaiset raaka-aineet</h2>
+                    <p>
+                        Ei synteettisiä ainesosia - esimerkiksi energiajuomiemme 
+                        kofeiini saadaan vihreätee-, guarana- ja yerba mate -uutteista.
+                    </p>
+
+                    <h2>Ei turhia lisäaineita</h2>
+                    <p>
+                        Vain tarvittavat ainesosat - tämän vuoksi emme esimerkiksi 
+                        käytä juomissamme lainkaan väriaineita.
+                    </p>
+                    <h2>Luontainen makeutus</h2>
+                    <p>
+                        Käytämme joko steviasta valmistettua makeutusainetta tai 
+                        luomu ruokosokeria, emmekä esimerkiksi asesulfaami K:ta, 
+                        aspartaamia tai sukraloosia.
+                    </p>
+                    <h2>Herkullinen maku</h2>
+                    <p>
+                        Panostamme raikkaisiin ja aitoihin makuelämyksiin, 
+                        jotka erottuvat positiivisesti perinteisistä vaihtoehdoista.
+                    </p>
+                    <h2>Käytettävyys</h2>
+                    <p>
+                        Juomillamme on pitkä ja perinteinen historia sekä moderni käyttötarkoitus.
+                    </p>
+                </div>
+                <div className="image-side">
+                    <img 
+                        className="info-image"
+                        src={ed_img}
+                        alt="Picture of energydrinks" 
+                    />
+                </div>
+            </div>
+
+            <div className="info-container">
+                <div className="image-side">
+                    <img
+                        className="info-image"
+                        src={superfood_img}
+                        alt="Picture of superfood" />
+                </div>
+                <div className="text-side">
+                    <h1 className="info-header">Superfoodit</h1>
+                    <p>
+                        Kaikkia Puhdistamon superfoodeja yhdistävät seuraavat tekijät.
+                    </p>
+                    <h2>Laadukkaat ja luontaiset raaka-aineet</h2>
+                    <p>
+                        Ei synteettisiä tai heikkolaatuisia ainesosia.
+                    </p>
+                    <h2>Käytettävyys</h2>
+                    <p>
+                        Superfoodeillamme on pitkä ja perinteinen historia sekä moderni käyttötarkoitus.
+                    </p>
+                    <h2>Luotettavat toimittajat</h2>
+                    <p>
+                        Hankimme raaka-aineemme ainoastaan tarkkaan valituilta kumppaneilta.
+                    </p>
+                    <h2>Ravintorikkaus</h2>
+                    <p>
+                        Kaikki superfoodimme sisältävät runsaan määrän ravinteita tiiviissä paketissa.
+                    </p>
+                </div>
+            </div>
+
         </div>
     )
 }

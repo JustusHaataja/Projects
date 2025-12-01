@@ -22,7 +22,7 @@
 .letter {
     display: inline-block;
     opacity: 0;
-    transform: translateY(-100%); /* Start from above */
+    transform: translateY(-100%);
     animation: rollIn 0.5s forwards;
 }
 
@@ -86,8 +86,8 @@
     background: #fff;
     border-radius: 16px;
     text-align: center;
-    /* animation: fadeIn both;
-    animation-timeline: view(50% 5%); */
+    animation: fadeIn both;
+    animation-timeline: view(50% 5%);
 }
 
 @keyframes fadeIn {
@@ -128,4 +128,47 @@ h1 {
 .value-icon {
     font-size: 40px;
     color: var(--primary-green)
+}
+
+.info-container {
+    width: 90vw;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: rgb(247, 247, 249);
+    margin-top: 32px;
+}
+
+.text-side {
+    padding: 0 16px 0 32px;
+}
+
+.image-side {
+    width: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.info-image {
+    object-fit: cover;
+    display: block;
+}
+
+.info-header {
+    font-size: 40px;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 20px;
+    margin: 0;
+    padding-top: 16px;
+}
+
+p {
+    font-size: 16px;
+    margin: 0;
+    padding: 8px 0;
 }
