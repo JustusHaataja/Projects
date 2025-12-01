@@ -19,35 +19,59 @@ const ProductsHero = () => {
             <div className="slider" style={{ "--quantity": 8} as React.CSSProperties} >
                 <div className="item" 
                     style={{ "--position": 1} as React.CSSProperties} >
-                        <img src={productImages.energy_drink1} alt=""/>
+                        <img 
+                            src={productImages.energy_drink1} 
+                            alt="Picture of energy drink"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 2} as React.CSSProperties} >
-                        <img src={productImages.electrolyte1} alt="" />
+                        <img 
+                            src={productImages.electrolyte1} 
+                            alt="Picture of electrolytes"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 3} as React.CSSProperties} >
-                        <img src={productImages.kombucha1} alt="" />
+                        <img 
+                            src={productImages.kombucha1} 
+                            alt="Picture of kombucha"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 4} as React.CSSProperties} >
-                        <img src={productImages.protein1} alt="" />
+                        <img 
+                            src={productImages.protein1} 
+                            alt="Picture of protein bag"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 5} as React.CSSProperties} >
-                        <img src={productImages.energy_drink2} alt="" />
+                        <img 
+                            src={productImages.energy_drink2} 
+                            alt="Picture of energy drink"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 6} as React.CSSProperties} >
-                        <img src={productImages.electrolyte2} alt="" />
+                        <img 
+                            src={productImages.electrolyte2} 
+                            alt="Picture of electrolytes"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 7} as React.CSSProperties} >
-                        <img src={productImages.kombucha2} alt="" />
+                        <img 
+                            src={productImages.kombucha2} 
+                            alt="Picture of kombucha"
+                        />
                     </div>
                 <div className="item" 
                     style={{ "--position": 8} as React.CSSProperties} >
-                        <img src={productImages.protein2} alt="" />
+                        <img 
+                            src={productImages.protein2} 
+                            alt="Picture of protein bag"
+                        />
                     </div>
             </div>
             <h1 className="prod-header" >Tuotteet</h1>
