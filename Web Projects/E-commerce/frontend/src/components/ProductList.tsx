@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchAllProducts, type Product } from '../api/products';
 import ProductCard from './ProductCard';
+import ProductListSkeleton from './ProductListSkeleton';
 import '../styles/ProductList.css';
 
 const ProductList = () => {
@@ -23,7 +24,7 @@ const ProductList = () => {
         loadProducts();
     }, []);
 
-    if (loading) return <div id="loading" >Ladataan tuotteita</div> // TODO: add skeleton
+    if (loading) return <div id="loading" ><ProductListSkeleton/></div> // TODO: add skeleton
     if (error) return <div id="error" >{error}</div>
 
     return (
