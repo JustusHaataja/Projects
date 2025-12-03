@@ -6,15 +6,26 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    const imageURL = product.images.length > 0 ? product.images[0].image_url : "";
+    const defaultImage = product.images.length > 0 ? product.images[0].image_url : "";
+    const hoverImage = product.images.length > 1 ? product.images[1].image_url : null;
+
     return (
         <div className="product-card" >
             <div className="image-container" >
                 <img
-                    src={imageURL}
-                    alt="product image"
+                    src={defaultImage}
+                    alt={product.name}
                     loading="lazy"
+                    className="product-image default"
                 />
+                {hoverImage && (
+                    <img 
+                        src={hoverImage} 
+                        alt={product.name}
+                        loading="lazy"
+                        className="product-image hover"
+                    />
+                )}
             </div>
             <div className="card-details" >
                 <h3>{product.name}</h3>
