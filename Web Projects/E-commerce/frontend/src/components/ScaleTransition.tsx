@@ -20,7 +20,7 @@ const ScaleTransition: React.FC<ScaleTransitionProps> = ({ src, active = false, 
     }, [active]);
 
     return (
-        <div className="image-container" >
+        <div className="slide-image-container" >
             <div
                 className={`image-bg ${mountedActive ? 'zoomed' : ''}`}
                 style={{ backgroundImage: `url(${src})`, backgroundPosition: position}}

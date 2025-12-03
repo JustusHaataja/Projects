@@ -10,7 +10,7 @@
     transition: all 0.3 ease;
 }
 
-.image-container {
+.product-image-container {
     width: 100%;
     aspect-ratio: 4/5;
     overflow: hidden;

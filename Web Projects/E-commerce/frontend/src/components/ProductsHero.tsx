@@ -16,7 +16,7 @@ const productImages = {
 const ProductsHero = () => {
     return (
         <div className="prod-hero-container" >
-            <div className="slider" style={{ "--quantity": 8} as React.CSSProperties} >
+            <div className="prod-slider" style={{ "--quantity": 8} as React.CSSProperties} >
                 <div className="item" 
                     style={{ "--position": 1} as React.CSSProperties} >
                         <img 

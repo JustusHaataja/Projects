@@ -11,7 +11,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
     return (
         <div className="product-card" >
-            <div className="image-container" >
+            <div className="product-image-container" >
                 <img
                     src={defaultImage}
                     alt={product.name}
