@@ -9,7 +9,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return (
         <div className="product-card" >
             <div className="image-container" >
-
+                <img 
+                    src={product.images[0]}
+                    alt="" 
+                />
             </div>
             <div className="card-details" >
                 <h3>{product.name}</h3>

@@ -1,4 +1,10 @@
-import { getJSON} from './apiClient';
+import { getJSON } from './apiClient';
+
+export interface ProductImage {
+    id: number;
+    product_id: number;
+    image_url: string;
+}
 
 export interface Product {
     id: number;
@@ -7,17 +13,35 @@ export interface Product {
     price: number;
     sale_price?: number | null;
     categoryId: number;
-    images: string[];
+    images: ProductImage[];
 }
 
-export const fetchAllProducts = async (): Promise<Product[]> => {
-    return getJSON<Product[]>('/products/?skip=0&limit=100')
-}
 
 export const fetchProductById = async (id: number): Promise<Product> => {
-    return getJSON<Product>(`products/${id}`);
+    const product = await getJSON<Product>(`products/${id}`);
+    return sanitizeProduct(product);
 }
 
+
+export const fetchAllProducts = async (): Promise<Product[]> => {
+    const products = await getJSON<Product[]>('/products/?skip=0&limit=100');
+    return products.map(sanitizeProduct);
+}
+
+
 export const fetchProductsByCategory = async (categoryId: number): Promise<Product[]> => {
-    return getJSON<Product[]>(`/products/?categoryId=${categoryId}&limit=100`)
+    const products = await getJSON<Product[]>(`/products/?categoryId=${categoryId}&limit=100`);
+    return products.map(sanitizeProduct)
+}
+
+
+const sanitizeProduct = (product: Product): Product => {
+    if (!product.images) return product;
+
+    const sanitizedImages = product.images.map(img => ({
+        ...img,
+        image_url: img.image_url.trim().replace("https//", "https://")
+    }));
+
+    return { ...product, images: sanitizedImages };
 }
