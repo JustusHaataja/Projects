@@ -17,3 +17,10 @@
     padding: 16px 8px;
     cursor: default;
 }
+
+#error {
+    color: var(--text-color);
+    font-size: 40px;
+    font-weight: 600;
+    padding: 40px;
+}
