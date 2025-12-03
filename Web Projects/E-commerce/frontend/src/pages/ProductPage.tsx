@@ -1,11 +1,13 @@
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductsHero from '../components/ProductsHero';
+import ProductList from '../components/ProductList';
 
 const ProductPage = () => {
     return (
         <div style={{ marginTop: "100px", height: "1000px"}}>
             <Breadcrumbs />
             <ProductsHero />
+            <ProductList />
         </div>
     )
 }
