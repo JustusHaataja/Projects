@@ -41,7 +41,7 @@ const sanitizeProduct = (product: Product): Product => {
     const sanitizedImages = product.images.map(img => ({
         ...img,
         image_url: img.image_url.trim().replace("https//", "https://")
-    }));
+    })).sort((a, b) => a.id - b.id);
 
     return { ...product, images: sanitizedImages };
 }
