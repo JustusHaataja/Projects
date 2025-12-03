@@ -40,11 +40,11 @@
     opacity: 0;
 }
 
-.image-container:hover .product-image.hover {
+.product-image-container:hover .product-image.hover {
     opacity: 1;
 }
 
-.image-container:hover .product-image.default {
+.product-image-container:hover .product-image.default {
     opacity: 0;
 }
 
@@ -90,10 +90,17 @@
     color: var(--text-color);
     border: 1px solid var(--text-color);
     border-radius: 16px;
+    transition: 0.4s ease;
 }
 
 .add-btn:hover {
-    background: var(--text-color);
+    background: var(--primary-green);
+    border: 1px solid var(--primary-green);
     color: #FFF;
+    cursor: pointer;
+}
+
+.product-image:hover,
+.card-details h3 {
     cursor: pointer;
 }
