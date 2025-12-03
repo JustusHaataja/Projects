@@ -23,11 +23,12 @@ const ProductList = () => {
         loadProducts();
     }, []);
 
-    if (loading) return <div>Ladataan tuotteita</div> // TODO: add skeleton
-    if (error) return <div>{error}</div>
+    if (loading) return <div id="loading" >Ladataan tuotteita</div> // TODO: add skeleton
+    if (error) return <div id="error" >{error}</div>
 
     return (
         <div className="product-list-container" >
+            <p className="product-count" >{products.length} tuotetta</p>
             <div className="product-grid" >
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />

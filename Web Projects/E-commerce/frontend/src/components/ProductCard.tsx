@@ -12,7 +12,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <div className="image-container" >
                 <img
                     src={imageURL}
-                    alt=""
+                    alt="product image"
                     loading="lazy"
                 />
             </div>
