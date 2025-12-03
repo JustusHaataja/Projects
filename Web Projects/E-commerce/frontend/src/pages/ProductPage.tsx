@@ -4,7 +4,7 @@ import ProductList from '../components/ProductList';
 
 const ProductPage = () => {
     return (
-        <div style={{ marginTop: "100px", height: "1000px"}}>
+        <div style={{ marginTop: "100px"}}>
             <Breadcrumbs />
             <ProductsHero />
             <ProductList />

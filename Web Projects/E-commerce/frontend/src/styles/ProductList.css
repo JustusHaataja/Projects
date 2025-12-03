@@ -9,3 +9,9 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 32px;
 }
+
+.loading, .error {
+    text-align: center;
+    padding: 40px;
+    font-size: 40px;
+}

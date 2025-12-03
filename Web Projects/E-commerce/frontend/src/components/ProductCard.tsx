@@ -6,12 +6,14 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+    const imageURL = product.images.length > 0 ? product.images[0].image_url : "";
     return (
         <div className="product-card" >
             <div className="image-container" >
-                <img 
-                    src={product.images[0]}
-                    alt="" 
+                <img
+                    src={imageURL}
+                    alt=""
+                    loading="lazy"
                 />
             </div>
             <div className="card-details" >

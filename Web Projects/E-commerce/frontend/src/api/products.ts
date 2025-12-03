@@ -25,7 +25,7 @@ export const fetchProductById = async (id: number): Promise<Product> => {
 
 export const fetchAllProducts = async (): Promise<Product[]> => {
     const products = await getJSON<Product[]>('/products/?skip=0&limit=100');
-    return products.map(sanitizeProduct);
+    return products.map(sanitizeProduct).sort((a, b) => a.id - b.id);
 }
 
 
