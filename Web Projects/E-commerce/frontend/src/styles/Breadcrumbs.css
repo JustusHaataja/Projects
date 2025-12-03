@@ -6,6 +6,7 @@
     margin: 8px;
     font-size: 0.9rem;
     color: #666;
+    z-index: 10;
 }
 
 .breadcrumbs li {

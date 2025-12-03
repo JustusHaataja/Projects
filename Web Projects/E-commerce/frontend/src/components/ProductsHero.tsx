@@ -74,7 +74,7 @@ const ProductsHero = () => {
                         />
                     </div>
             </div>
-            <h1 className="prod-header" >Tuotteet</h1>
+            <h1 className="prod-header" >TUOTTEET</h1>
         </div>
     )
 }

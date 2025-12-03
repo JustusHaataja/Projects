@@ -1,3 +1,4 @@
+import Breadcrumbs from '../components/Breadcrumbs';
 import AboutUs from "../components/AboutUs";
 
 const AboutPage = () => {
@@ -5,6 +6,7 @@ const AboutPage = () => {
         <div
             style={{ marginTop: "100px" }}
         >
+            <Breadcrumbs />
             <AboutUs />
         </div>
     )
