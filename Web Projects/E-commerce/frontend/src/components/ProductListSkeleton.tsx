@@ -5,7 +5,7 @@ const ProductListSkeleton = () => {
     const loadingText = "Etsitään tuotteita...".split("");
     
     return (
-        <div className="skeleton-container" >
+        <div className="product-skeleton-container" >
             <div className="skeleton-header" >
                 {loadingText.map((char, index) => (
                     <span
