@@ -30,7 +30,7 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
 
 
 export const fetchProductsByCategory = async (categoryId: number): Promise<Product[]> => {
-    const products = await getJSON<Product[]>(`/products/?categoryId=${categoryId}&limit=100`);
+    const products = await getJSON<Product[]>(`/products/?category_id=${categoryId}`);
     return products.map(sanitizeProduct)
 }
 

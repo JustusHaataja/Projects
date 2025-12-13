@@ -63,7 +63,7 @@ const Categories = () => {
     }, []);
 
     if (loading) return <CategorySkeleton />;
-    if (error) return <div className="error-message">{error}</div>
+    if (error) return <div className="error-message" >{error}</div>
     if (!categories) return null;
 
     return (
@@ -72,7 +72,7 @@ const Categories = () => {
 
             <div className="category-container" >
                 {categories?.map((cat) => (
-                    <Link to={``} className="category-link" key={cat.id}>
+                    <Link to={`/products?category_id=${cat.id}`} className="category-link" key={cat.id}>
                         <div className="image-frame">
                             <img 
                                 className="category-image"
