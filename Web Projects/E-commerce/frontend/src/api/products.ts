@@ -31,7 +31,7 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
 
 export const fetchProductsByCategory = async (categoryId: number): Promise<Product[]> => {
     const products = await getJSON<Product[]>(`/products/?category_id=${categoryId}`);
-    return products.map(sanitizeProduct)
+    return products.map(sanitizeProduct).sort((a, b) => a.id - b.id);
 }
 
 
