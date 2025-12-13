@@ -59,6 +59,11 @@
     padding: 16px 16px 0 16px;
 }
 
+.product-title {
+    text-decoration: none;
+    grid-area: title;
+}
+
 .card-details h3 {
     grid-area: title;
     color: var(--text-color);
