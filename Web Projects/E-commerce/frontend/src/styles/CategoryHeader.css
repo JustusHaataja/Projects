@@ -12,6 +12,7 @@
     text-transform: uppercase;
     letter-spacing: -1px;
     color: var(--text-color);
+    font-weight: var(--text-weight);
 }
 
 .category-header p {
