@@ -29,7 +29,7 @@ const ProductPage = () => {
 
     return (
         <div style={{ marginTop: "100px"}}>
-            <Breadcrumbs />
+            <Breadcrumbs ItemName={product?.name} />
 
             <div className="product-detail-container" style={{ display: "grid", gridTemplateColumns: "1fr 1fr"}}>
                 <div className="product-gallery" >
