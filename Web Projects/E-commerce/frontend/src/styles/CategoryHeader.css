@@ -1,0 +1,32 @@
+.category-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.category-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: var(--text-color);
+}
+
+.category-header p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
