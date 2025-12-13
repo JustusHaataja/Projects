@@ -1,0 +1,48 @@
+.monthly-picks-section {
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 40px;
+    margin: 0 auto;
+}
+
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 32px;
+    width: max-content;
+    animation: scroll 50s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.carousel-item {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item {
+        width: 220px;
+    }
+}

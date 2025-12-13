@@ -1,5 +1,6 @@
 import Hero from '../components/Hero';
 import Category from '../components/Category';
+import MonthlyPicks from '../components/MonthlyPicks';
 
 const HomePage = () => {
     return (
@@ -10,6 +11,7 @@ const HomePage = () => {
         >
             <Hero />
             <Category />
+            <MonthlyPicks />
         </div>
     )
 }
