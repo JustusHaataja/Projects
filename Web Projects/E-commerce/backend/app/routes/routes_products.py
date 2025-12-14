@@ -46,11 +46,11 @@ def get_products(db: Session = Depends(get_db),
     return products
 
 
-@router.get("/categories", response_model=List[str])
+@router.get("/categories", response_model=List[Category])
 def get_categories(db: Session = Depends(get_db)):
     categories = db.query(CategoryModel).all()
     
-    return [c.name for c in categories]
+    return categories
 
 
 @router.get("/{product_id}", response_model=Product)
