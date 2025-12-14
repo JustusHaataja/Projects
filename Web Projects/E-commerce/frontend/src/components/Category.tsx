@@ -23,8 +23,10 @@ const getGategoryImage = (id: number) => {
 }
 
 
-const capitalize = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
+const capitalize = (str: string) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
 const Categories = () => {
@@ -72,7 +74,11 @@ const Categories = () => {
 
             <div className="category-container" >
                 {categories?.map((cat) => (
-                    <Link to={`/products?category_id=${cat.id}`} className="category-link" key={cat.id}>
+                    <Link 
+                        to={`/products?category_id=${cat.id}`}
+                        className="category-link" 
+                        key={cat.id}
+                    >
                         <div className="image-frame">
                             <img 
                                 className="category-image"

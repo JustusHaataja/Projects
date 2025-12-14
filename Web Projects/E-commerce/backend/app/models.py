@@ -23,8 +23,8 @@ class Product(Base):
     description: Mapped[Optional[Text]] = mapped_column(Text, nullable=True)
     price: Mapped[Numeric] = mapped_column(Numeric, nullable=False)
     sale_price: Mapped[Optional[Numeric]] = mapped_column(Numeric, nullable=True)
-    nutrition: Mapped[Optional[Text]] = mapped_column(Text, nullable=True)
     category_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("categories.id"), nullable=True)
+    nutrition: Mapped[Optional[Text]] = mapped_column(Text, nullable=True)
 
     category = relationship("Category", back_populates="product")
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
