@@ -13,7 +13,8 @@ const MonthlyPicks = () => {
 
                 const randomPicks = allProducts
                     .sort(() => 0.5 - Math.random())
-                    .slice(0, 10);
+                    .slice(0, 10)
+                    .sort((a, b) => a.id - b.id);
 
                 setPicks(randomPicks);
             } catch (error) {
