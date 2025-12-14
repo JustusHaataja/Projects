@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById, type Product } from '../api/products';
 import Breadcrumbs from '../components/Breadcrumbs';
+import '../styles/ProductDetail.css';
 
 const ProductPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -24,14 +25,14 @@ const ProductPage = () => {
         loadProduct();
     }, [id]);
 
-    if (loading) return <div style={{ marginTop: "100px", textAlign: "center" }}>Ladataan...</div>
-    if (!product) return <div style={{ marginTop: "100px", textAlign: "center" }}>Tuotetta ei löytynyt</div>;
+    if (loading) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >Ladataan...</div>
+    if (!product) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >Tuotetta ei löytynyt</div>;
 
     return (
-        <div style={{ marginTop: "100px"}}>
+        <div className="product-detail-section" >
             <Breadcrumbs ItemName={product?.name} />
 
-            <div className="product-detail-container" style={{ display: "grid", gridTemplateColumns: "1fr 1fr"}}>
+            <div className="product-detail-container" >
                 <div className="product-gallery" >
                     {product.images.map((_, index) => (
                         <img 
@@ -42,9 +43,10 @@ const ProductPage = () => {
                 </div>
 
                 <div className="product-info" >
-                    <h1>{product.name}</h1>
-                    <p>{product.price}</p>
-                    <p>{product.description}</p>
+                    <h1 className="detail-header" >{product.name}</h1>
+                    <p className="detail-price" >{product.price} €</p>
+                    <h2 className="detail-header2" >Tuote lyhyesti</h2>
+                    <p className="detail-desc" >{product.description}</p>
                     <button>Lisää ostoskoriin</button>
                 </div>
             </div>
