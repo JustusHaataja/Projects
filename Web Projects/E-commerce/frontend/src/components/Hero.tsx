@@ -16,7 +16,7 @@ const slides = [
         image: products2,
         text: "Löydä suosikki juomasi",
         button: "Juomat",
-        link: "/products",
+        link: "/products?category_id=1",
         bgColor: "rgb(226, 120, 69)",
         position: "center 60%"
     },
@@ -24,7 +24,7 @@ const slides = [
         image: products3,
         text: "Puhdasta voimaa",
         button: "Proteiinit",
-        link: "/",
+        link: "/products?category_id=4",
         bgColor: "rgb(173, 237, 242)",
         position: "center"
     },
@@ -32,7 +32,7 @@ const slides = [
         image: products1,
         text: "Puhdasta energiaa päivään",
         button: "Nesteytys",
-        link: "/",
+        link: "/products?category_id=2",
         bgColor: "rgb(243, 204, 198)",
         position: "center 90%"
     }

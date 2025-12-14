@@ -48,7 +48,7 @@ const Categories = () => {
                 if (err instanceof Error && err.name === "AbortError") return;
 
                 console.error("Failed to load categories", err);
-                setError("Failed to load categories.");
+                setError("Failed to load categories. Please refresh the page");
             } finally {
                 if (!controller.signal.aborted) {
                     setLoading(false);
