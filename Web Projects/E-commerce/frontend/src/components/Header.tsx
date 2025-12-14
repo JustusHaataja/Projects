@@ -7,15 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import shoppingcart from '../assets/shoppingcart.svg';
+import { useCart } from '../context/CartContext';
 
 
 const Header = () => {
     const [search, setSearch] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
+    const { cartItems } = useCart();
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     }
+
+    const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     return (
         <header className="header" >
@@ -51,12 +55,19 @@ const Header = () => {
                         icon={faUser} 
                     />
                 </Link>
-                <Link to="/cart" >
-                    <img 
-                        className="shoppingcart-icon"
-                        src={shoppingcart}
-                        alt="shopping cart icon"
-                    />
+                <Link to="/cart" className="cart-link">
+                    <div className="cart-icon-wrapper" >
+                        <img 
+                            className="cart-icon"
+                            src={shoppingcart}
+                            alt="shopping cart icon"
+                        />
+                        {cartCount >= 0 && (
+                            <span className="cart-count" >
+                                {cartCount}
+                            </span>
+                        )}
+                    </div>
                 </Link>
             </div>
         </header>

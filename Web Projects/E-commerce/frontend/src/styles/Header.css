@@ -41,10 +41,28 @@
     height: 32px;
 }
 
-.shoppingcart-icon {
+.cart-icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-icon {
     width: 32px;
     height: 28px;
     margin-top: 4px;
+}
+
+.cart-count {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    padding: 0 2px 4px 2px;
+    background-color: var(--primary-green);
+    color: #FFF;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .hamburger-btn {
