@@ -43,7 +43,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 <Link to={productUrl} className="product-title">
                     <h3>{product.name}</h3>
                 </Link>
-                <p className="price" >{product.price}</p>
+                {product.sale_price ? (
+                    <div className="price-container" >
+                        <span className="sale-price" >{product.sale_price}</span>
+                        <span className="original-price" >{product.price}</span>
+                    </div>
+                ) : (
+                    <p className="price" >{product.price}</p>
+                )}
+                
                 <button 
                     className="add-btn"
                     onClick={handleAddToCart}

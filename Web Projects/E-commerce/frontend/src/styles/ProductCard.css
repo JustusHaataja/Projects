@@ -69,6 +69,28 @@
     height: 2.6em;
 }
 
+.price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.sale-price {
+    color: #F74C25;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+    padding: 8px 0;
+    cursor: default;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #757575;
+    font-size: 20px;
+    cursor: default;
+}
+
 .price {
     grid-area: price;
     color: var(--text-color);
@@ -78,7 +100,9 @@
     cursor: default;
 }
 
-.price::after {
+.price::after,
+.sale-price::after,
+.original-price::after {
     content: " €";
     font-weight: var(--text-weight);
 }
