@@ -23,6 +23,15 @@ export const addToCart = async (productID: number, quantity: number = 1): Promis
     });
 }
 
+export const updateCartItem = async (productID: number, quantity: number): Promise<void> => {
+    await apiClient.put("/cart/update", null, {
+        params: {
+            product_id: productID,
+            quantity
+        }
+    });
+}
+
 export const removeFromCart = async (productID: number): Promise<void> => {
     await apiClient.delete("/cart/remove", {
         params: {
