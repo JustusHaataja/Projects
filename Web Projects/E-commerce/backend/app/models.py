@@ -23,6 +23,7 @@ class Product(Base):
     description: Mapped[Optional[Text]] = mapped_column(Text, nullable=True)
     price: Mapped[Numeric] = mapped_column(Numeric, nullable=False)
     sale_price: Mapped[Optional[Numeric]] = mapped_column(Numeric, nullable=True)
+    nutrition: Mapped[Optional[Text]] = mapped_column(Text, nullable=True)
     category_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("categories.id"), nullable=True)
 
     category = relationship("Category", back_populates="product")

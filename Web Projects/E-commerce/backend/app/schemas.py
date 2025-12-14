@@ -39,6 +39,7 @@ class ProductBase(BaseModel):
     description: Optional[str] = None
     price: Optional[float] = None
     sale_price: Optional[float] = None
+    nutrition: Optional[str] = None
     category_id: Optional[int] = None
 
 

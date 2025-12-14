@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from database import SessionLocal
 from models import Product as ProductModel, Category as CategoryModel
 from schemas import Product, Category
@@ -28,20 +29,17 @@ def get_products(db: Session = Depends(get_db),
                 ):
     query = db.query(ProductModel)
 
-    # Define current prices
-    if not ProductModel.sale_price:
-        price = ProductModel.price
-    else:
-        price = ProductModel.sale_price
+    # Calculate current price: use sale_price if available, otherwise price
+    current_price = func.coalesce(ProductModel.sale_price, ProductModel.price)
 
     if category_id:
         query = query.filter(ProductModel.category_id == category_id)
     if search:
         query = query.filter(ProductModel.name.ilike(f"%{search}%"))
     if min_price is not None:
-        query = query.filter(price >= min_price)
+        query = query.filter(current_price >= min_price)
     if max_price is not None:
-        query = query.filter(price <= max_price)
+        query = query.filter(current_price <= max_price)
 
     products = query.offset(skip).limit(limit).all()
 
