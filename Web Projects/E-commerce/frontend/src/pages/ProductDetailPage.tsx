@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById, type Product } from '../api/products';
 import Breadcrumbs from '../components/Breadcrumbs';
+import ProductDescription from '../components/ProductDescription';
+import NutritionTable from '../components/NutritionTable';
 import { useCart } from '../context/CartContext';
 import '../styles/ProductDetail.css';
 
@@ -11,6 +13,7 @@ const ProductPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [quantity, setQuantity] = useState<number>(1);
+    
 
     const { addToCart, loading: cartLoading } = useCart();
 
@@ -40,7 +43,7 @@ const ProductPage = () => {
     if (!product) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >Tuotetta ei löytynyt</div>
     if (error) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >{error}</div>
 
-    const defaultImage = product.images.length > 0 ? product.images[0].image_url : "";
+    // const defaultImage = product.images.length > 0 ? product.images[0].image_url : "";
 
     return (
         <div className="product-detail-page" >
@@ -57,6 +60,7 @@ const ProductPage = () => {
                             <img 
                                 key={index}
                                 src={img.image_url}
+                                alt={`Thumbnail ${index + 1}`}
                             />
                         ))}
                     </div>
@@ -64,10 +68,46 @@ const ProductPage = () => {
 
                 <div className="product-info-section" >
                     <h1 className="detail-header" >{product.name}</h1>
-                    <p className="detail-price" >{product.price} €</p>
-                    <h2 className="detail-header2" >Tuote lyhyesti</h2>
-                    <p className="detail-desc" >{product.description}</p>
-                    <button>Lisää ostoskoriin</button>
+
+                    {/* Price Logic */}
+                    {product.sale_price ? (
+                        <div className="detail-price-container" >
+                            <span>{product.sale_price}</span>
+                            <span>{product.price}</span>
+                        </div>
+                    ) : (
+                        <p>{product.price}</p>
+                    )}
+
+                    {/* Cart actions */}
+                    <div className="purchase-actions" >
+                        <div className="quantity-selector" >
+                            <label htmlFor="quantity">Määrä:</label>
+                            <input
+                                type="number"
+                                id="quantity"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1 ))}
+                            />
+                        </div>
+
+                        <button
+                            className="add-to-cart-btn"
+                            onClick={handleAddToCart}
+                            disabled={cartLoading}
+                        >
+                            {cartLoading ? "Lisätään..." : "Lisää ostoskoriin"}
+                        </button>
+                    </div>
+
+                    {/* Product description */}
+                    <ProductDescription description={product.description} />
+
+                    {/* Nutrition table */}
+                    {product.nutrition && (
+                        <NutritionTable nutritionData={product.nutrition} />
+                    )}
                 </div>
             </div>
         </div>
