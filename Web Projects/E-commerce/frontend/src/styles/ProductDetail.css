@@ -9,6 +9,36 @@
 
 .product-iamge-section {
     width: 50vw;
-    
 }
 
+.product-price {
+    font-family: var(--price-font);
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+    cursor: default;
+}
+
+.product-sale-price {
+    font-family: var(--price-font);
+    color: #F74C25;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+    cursor: default;
+}
+
+.product-price-original {
+    font-family: var(--price-font);
+    text-decoration: line-through;
+    color: #CCCCD5;
+    font-size: 24px;
+    font-weight: 500;
+    cursor: default;
+}
+
+.product-price::after,
+.product-price-original::after {
+    content: " €";
+}

@@ -71,12 +71,12 @@ const ProductPage = () => {
 
                     {/* Price Logic */}
                     {product.sale_price ? (
-                        <div className="detail-price-container" >
-                            <span>{product.sale_price}</span>
-                            <span>{product.price}</span>
+                        <div className="price-container" >
+                            <span className="product-sale-price" >{product.sale_price}</span>
+                            <span className="product-price-original">{product.price}</span>
                         </div>
                     ) : (
-                        <p>{product.price}</p>
+                        <p className="product-price">{product.price}</p>
                     )}
 
                     {/* Cart actions */}

@@ -16,6 +16,12 @@ const NutritionTable: React.FC<NutritionTableProps> = ({ nutritionData }) => {
     const parsedData = useMemo(() => {
         if (!nutritionData) return [];
 
+        const formatValue = (val: string) => {
+            return val
+                .replace(/(\d)(?=[a-zA-Z])/g, "$1 ")    // Digit followed by letter
+                .replace(/([a-zA-Z])(?=\d)/g, "$1 ");   // Letter followed by digit
+        }
+
         // Strategy 1: Standard format (HeaderFI/HeaderSE,Value100/ValuePortion|...)
         if (nutritionData.includes('|')) {
             return nutritionData.split('|').map(row => {
@@ -27,23 +33,10 @@ const NutritionTable: React.FC<NutritionTableProps> = ({ nutritionData }) => {
                 
                 return {
                     label,
-                    per100: values[0] || '-',
-                    perPortion: values[1] || '-'
+                    per100: formatValue(values[0] || '-'),
+                    perPortion: formatValue(values[1] || '-')
                 };
             }).filter((item): item is NutritionRow => item !== null);
-        }
-
-        // Strategy 2: Simple comma-separated list (e.g. "Energy: 100kcal, Fat: 5g")
-        // This is a fallback if the data doesn't match the complex format
-        if (nutritionData.includes(',')) {
-            return nutritionData.split(',').map(row => {
-                const parts = row.split(':');
-                return {
-                    label: parts[0]?.trim() || row,
-                    per100: parts[1]?.trim() || '',
-                    perPortion: '-'
-                };
-            });
         }
 
         return [];
