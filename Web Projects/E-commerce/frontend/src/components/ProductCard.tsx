@@ -1,3 +1,4 @@
+import { useState } from 'react'; // Import useState
 import { Link } from 'react-router-dom';
 import {type Product} from '../api/products';
 import { useCart } from '../context/CartContext';
@@ -8,7 +9,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    const { addToCart, loading } = useCart();
+    const { addToCart } = useCart();
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const defaultImage = product.images.length > 0 ? product.images[0].image_url : "";
     const hoverImage = product.images.length > 1 ? product.images[1].image_url : null;
@@ -18,7 +20,25 @@ const ProductCard = ({ product }: ProductCardProps) => {
     const handleAddToCart = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        await addToCart(product.id);
+
+        if (isAnimating) return;
+
+        setIsAnimating(true);
+
+        // Run API call and Animation timer in parallel
+        // The await Promise.all ensures we wait for whichever takes LONGER:
+        // 1. The actual API call
+        // 2. The 1200ms timer
+        try {
+            await Promise.all([
+                addToCart(product.id),
+                new Promise(resolve => setTimeout(resolve, 1200))
+            ]);
+        } catch (error) {
+            console.error("Failed to add to cart", error);
+        } finally {
+            setIsAnimating(false);
+        }
     }
 
     return (
@@ -53,11 +73,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 )}
                 
                 <button 
-                    className="add-btn"
+                    className={`add-btn ${isAnimating ? 'loading' : ''}`}
                     onClick={handleAddToCart}
-                    disabled={loading} 
+                    disabled={isAnimating} 
                 >
-                    {loading ? "..." : "OSTA"}
+                    {isAnimating ? <div className="spinner" ></div> : "OSTA"}
                 </button>
             </div>
         </div>

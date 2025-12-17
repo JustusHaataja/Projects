@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
-from models import CartItem
+from .models import CartItem # from models import CartItem
 
 
 def clean_old_guests(db: Session):

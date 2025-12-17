@@ -1,11 +1,23 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+# from fastapi import FastAPI, Depends, HTTPException, status
+# from sqlalchemy.orm import Session
+# import models, database, crud, schemas
+# from routes import routes_auth, routes_products, routes_cart
+# from database import engine, get_db, SessionLocal
+# from apscheduler.schedulers.background import BackgroundScheduler
+# from background_tasks import clean_old_guests
+# from fastapi.middleware.cors import CORSMiddleware
+
+# Local hosting imports
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-import models, database, crud, schemas
-from routes import routes_auth, routes_products, routes_cart
-from database import engine, get_db, SessionLocal
-from apscheduler.schedulers.background import BackgroundScheduler
-from background_tasks import clean_old_guests
 from fastapi.middleware.cors import CORSMiddleware
+from apscheduler.schedulers.background import BackgroundScheduler
+
+# FIXED IMPORTS: Use relative imports (dots)
+from . import models, database, crud, schemas
+from .routes import routes_auth, routes_products, routes_cart
+from .database import engine, get_db, SessionLocal
+from .background_tasks import clean_old_guests
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -15,6 +27,7 @@ app = FastAPI(title="E-commerce Backend")
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    # TODO: Frontend hosting URL (Netlify)
 ]
 
 app.add_middleware(

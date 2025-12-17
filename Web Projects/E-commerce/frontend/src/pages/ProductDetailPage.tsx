@@ -4,6 +4,7 @@ import { fetchProductById, type Product } from '../api/products';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductDescription from '../components/ProductDescription';
 import NutritionTable from '../components/NutritionTable';
+import QuantityControls from '../components/QuantityControls'; // Import the component
 import { useCart } from '../context/CartContext';
 import '../styles/ProductDetail.css';
 
@@ -82,13 +83,12 @@ const ProductPage = () => {
                     {/* Cart actions */}
                     <div className="purchase-actions" >
                         <div className="quantity-selector" >
-                            <label htmlFor="quantity">Määrä:</label>
-                            <input
-                                type="number"
-                                id="quantity"
-                                min="1"
-                                value={quantity}
-                                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1 ))}
+                            <label style={{ marginBottom: '8px', display: 'block' }}>Määrä:</label>
+                            <QuantityControls 
+                                quantity={quantity}
+                                onIncrease={() => setQuantity(prev => prev + 1)}
+                                onDecrease={() => setQuantity(prev => Math.max(1, prev - 1))}
+                                disabled={cartLoading}
                             />
                         </div>
 

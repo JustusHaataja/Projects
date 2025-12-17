@@ -1,10 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status, Cookie
 from sqlalchemy.orm import Session
-from routes.routes_auth import get_current_user
-from database import get_db
-from models import CartItem, Product
 from typing import Optional
 import uuid
+
+from .routes_auth import get_current_user
+from ..database import get_db
+from ..models import CartItem, Product
+# from routes.routes_auth import get_current_user
+# from database import get_db
+# from models import CartItem, Product
 
 router = APIRouter(tags=["Cart"])
 
@@ -16,7 +20,7 @@ def ensure_guest_id(response: Response, guest_id: Optional[str]) -> str:
             key="guest_id",
             value=new_guest_id,
             httponly=True,          # JavaScript cannot access it (security)
-            max_age=60*60*24*30,    # 30 days
+            max_age=60*60*24*14,    # 14 days
             samesite="lax",         # Allows localhost communication
             secure=False            # MUST be False for localhost (HTTP)
         )

@@ -69,6 +69,11 @@
     height: 2.6em;
 }
 
+.product-image:hover,
+.card-details h3 {
+    cursor: pointer;
+}
+
 .price-container {
     display: flex;
     align-items: baseline;
@@ -77,7 +82,7 @@
 
 .sale-price {
     font-family: var(--price-font);
-    color: #F74C25;
+    color: var(--sale-color);
     font-weight: 500;
     font-size: 24px;
     margin: 0;
@@ -118,6 +123,13 @@
     border: 1px solid var(--text-color);
     border-radius: 16px;
     transition: 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Ensure fixed width/height so button doesn't resize during loading */
+    min-width: 64px; 
+    min-height: 36px;
 }
 
 .add-btn:hover {
@@ -127,7 +139,27 @@
     cursor: pointer;
 }
 
-.product-image:hover,
-.card-details h3 {
-    cursor: pointer;
+/* Loading Spinner Styles */
+.add-btn.loading {
+    background: var(--primary-green); 
+    border: none;
+    cursor: default;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #FFF;
+    border-top: 3px solid var(--primary-green);
+    border-radius: 50%;
+    animation: spin 1.2s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+    }
+    100% { 
+        transform: rotate(540deg);
+    }
 }
