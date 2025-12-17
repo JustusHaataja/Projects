@@ -5,13 +5,9 @@ export interface CartItem {
     quantity: number;
 }
 
-interface CartResponse {
-    cart: CartItem[];
-}
-
 export const fetchCart = async (): Promise<CartItem[]> => {
-    const response = await apiClient.get<CartResponse>("/cart/");
-    return response.data.cart;
+    const response = await apiClient.get<CartItem[]>("/cart/");
+    return response.data;
 }
 
 export const addToCart = async (productID: number, quantity: number = 1): Promise<void> => {

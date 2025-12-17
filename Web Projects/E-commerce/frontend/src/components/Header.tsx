@@ -19,7 +19,8 @@ const Header = () => {
         setSearch(e.target.value);
     }
 
-    const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const cartCount = Array.isArray(cartItems) ? 
+    cartItems.reduce((total, item) => total + (item.quantity || 0), 0) : 0;
 
     return (
         <header className="header" >
