@@ -23,3 +23,11 @@
         transform: translateY(0);
     }
 }
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 32px;
+    margin: 0 auto;
+    color: var(--text-color);
+}

@@ -1,14 +1,7 @@
 .tips-blog-section {
-    padding: 32px 20px 60px 20px;
+    padding: 48px 20px;
     max-width: 1400px;
     margin: 0 auto;
-}
-
-.tips-blog-section .section-title {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 40px;
-    color: var(--text-color);
 }
 
 /* Grid Layout */

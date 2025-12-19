@@ -70,7 +70,7 @@ const Categories = () => {
 
     return (
         <div className="category-section" >
-            <h2 className="category-header" >Kategoriat</h2>
+            <h2 className="section-title" >Kategoriat</h2>
 
             <div className="category-container" >
                 {categories?.map((cat) => (

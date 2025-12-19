@@ -1,12 +1,6 @@
 .category-section {
-    padding: 32px;
+    padding: 48px 32px 0 32px;
     justify-items: center;
-}
-
-.category-header {
-    margin: 0;
-    padding: 0 0 24px 0;
-    font-size: 32px;
 }
 
 .category-container {

@@ -187,13 +187,13 @@
     padding-top: 16px;
 }
 
-h2 {
+.text-side h2 {
     font-size: 20px;
     margin: 0;
     padding-top: 16px;
 }
 
-p {
+.text-side p {
     font-size: 16px;
     margin: 0;
     padding: 8px 0;
