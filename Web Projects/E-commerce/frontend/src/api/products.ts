@@ -12,7 +12,7 @@ export interface Product {
     description: string;
     price: number;
     sale_price?: number | null;
-    categoryId: number;
+    category_id: number;
     nutrition?: string | null;
     images: ProductImage[];
 }

@@ -22,8 +22,9 @@ const ProductPage = () => {
         const loadProduct = async () => {
             if (!id) return;
             try {
-                const data = await fetchProductById(Number(id));
-                setProduct(data);
+                const product = await fetchProductById(Number(id));
+                setProduct(product);
+
             } catch (err) {
                 setError("Failed to load product details.");
                 console.error(err);
@@ -46,7 +47,10 @@ const ProductPage = () => {
 
     return (
         <div className="product-detail-page" >
-            <Breadcrumbs ItemName={product?.name} />
+            <Breadcrumbs 
+                ItemName={product.name}
+                categoryId={product.category_id}
+            />
 
             <div className="product-detail-container" >
                 <div className="product-hero" >
