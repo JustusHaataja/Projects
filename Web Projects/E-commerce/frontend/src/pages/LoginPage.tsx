@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/LoginPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const LoginPage = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -86,7 +88,14 @@ const LoginPage = () => {
             <div className={`login-container ${isTransitioning ? 'fade-out' : 'fade-in'}`} >
                 <h2>{isLogin ? "Kirjaudu sisään" : "Rekisteröidy"}</h2>
                 {error && <div className="error-message" >{error}</div>}
-                {success && <div className="success-message" >{success}</div>}
+                {success && 
+                    <div className="success-message" >
+                        {success}
+                        <FontAwesomeIcon 
+                            icon={faCircleCheck} 
+                            id="checkmark"
+                        />
+                    </div>}
                 
                 {!success && (
                     <>

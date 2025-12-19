@@ -105,6 +105,22 @@
     text-align: center;
 }
 
+.success-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    color: var(--text-color);
+    font-weight: 300;
+    gap: 8px;
+}
+
+.success-message #checkmark {
+    font-size: 32px;
+    color: #2BA766;
+}
+
 .toggle-text {
     text-align: center;
     margin-top: 16px;
