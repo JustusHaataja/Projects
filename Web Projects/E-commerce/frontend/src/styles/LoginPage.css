@@ -2,54 +2,94 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-    padding-top: 100px; /* Account for fixed header */
+    min-height: 90vh;
+    margin-top: 100px;
 }
 
 .login-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
+    background: #FFF;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #DDD;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: -40px;
     width: 100%;
     max-width: 400px;
+    width: 100%;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.login-container.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+.login-container.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .login-container h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
+    font-size: 32px;
+    color: var(--text-color);
+    margin-bottom: 32px;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
     color: #666;
 }
 
 .form-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+}
+
+.password-hint {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
 }
 
 .submit-btn {
     width: 100%;
-    padding: 0.75rem;
+    padding: 16px;
     background-color: #2BA766;
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-top: 1rem;
+    margin-top: 8px;
 }
 
 .submit-btn:hover {
@@ -59,24 +99,25 @@
 .error-message {
     background-color: #ffebee;
     color: #c62828;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
     text-align: center;
 }
 
 .toggle-text {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 16px;
     color: #666;
 }
 
 .toggle-btn {
+    font-size: 14px;
+    color: #2BA766;
+    font-weight: bold;
+    margin-left: 8px;
+    cursor: pointer;
+    text-decoration: underline;
     background: none;
     border: none;
-    color: #2BA766;
-    cursor: pointer;
-    font-weight: bold;
-    margin-left: 0.5rem;
-    text-decoration: underline;
 }

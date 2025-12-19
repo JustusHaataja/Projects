@@ -19,26 +19,30 @@ const ProfilePage = () => {
     };
 
     if (loading) {
-        return <div className="login-page">Ladataan...</div>;
+        return <div className="login-page" >Ladataan...</div>;
     }
 
     if (!user) {
-        return null; // Will redirect
+        return null;
     }
 
     return (
-        <div className="login-page">
-            <div className="login-container">
+        <div className="login-page" >
+            <div className="login-container" >
                 <h2>Profiili</h2>
-                <div className="form-group">
+                <div className="form-group" >
                     <label>Nimi</label>
                     <p>{user.name}</p>
                 </div>
-                <div className="form-group">
+                <div className="form-group" >
                     <label>Sähköposti</label>
                     <p>{user.email}</p>
                 </div>
-                <button onClick={handleLogout} className="submit-btn" style={{ backgroundColor: '#d32f2f' }}>
+                <button 
+                    onClick={handleLogout}
+                    className="submit-btn"
+                    style={{ backgroundColor: '#d32f2f' }}
+                >
                     Kirjaudu ulos
                 </button>
             </div>
