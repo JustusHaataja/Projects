@@ -54,7 +54,7 @@
         transparent 60%
     );
     color: #FFF;
-    transition: background 1s ease;
+    transition: background 0.5s ease;
 }
 
 .blog-card:hover .blog-card-overlay {
@@ -116,7 +116,7 @@
     overflow-y: auto;
     position: relative;
     animation: slideUp 0.3s ease;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgb(0, 0, 0, 0.3);
 }
 
 @keyframes slideUp {
