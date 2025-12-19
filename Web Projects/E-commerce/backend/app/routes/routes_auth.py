@@ -104,3 +104,10 @@ def login(credentials: UserLogin, response: Response,
 def logout(response: Response):
     response.delete_cookie("access_token")
     return {"message": "Logged out"}
+
+
+@router.get("/me")
+def get_current_user_info(user: User = Depends(get_current_user)):
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    return {"id": user.id, "name": user.name, "email": user.email}

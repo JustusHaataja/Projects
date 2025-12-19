@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import * as cartApi from '../api/cart';
+import { useAuth } from './AuthContext';
 
 interface CartContextType {
     cartItems: cartApi.CartItem[];
@@ -16,6 +17,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [cartItems, setCartItems] = useState<cartApi.CartItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const { user } = useAuth();
 
     const refreshCart = async () => {
         try {
@@ -28,7 +30,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     useEffect(() => {
         refreshCart();
-    }, []);
+    }, [user]);
 
 
     const addToCart = async (productID: number, quantity: number = 1) => {

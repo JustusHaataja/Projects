@@ -8,12 +8,14 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import shoppingcart from '../assets/shoppingcart.svg';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 
 const Header = () => {
     const [search, setSearch] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const { cartItems } = useCart();
+    const { user } = useAuth();
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -50,7 +52,7 @@ const Header = () => {
             <SearchBox value={search} onChange={handleSearch} />
 
             <div className="header-right" >
-                <Link to="/profile" >
+                <Link to={user ? "/profile" : "/login"} >
                     <FontAwesomeIcon
                         className="profile-icon"
                         icon={faUser} 
