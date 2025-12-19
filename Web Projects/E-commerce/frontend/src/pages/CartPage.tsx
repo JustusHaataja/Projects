@@ -62,6 +62,7 @@ const CartPage = () => {
         return (
             <div className="cart-empty-state" >
                 <h2>Ostoskorisi on tyhjä</h2>
+                <p>Löydä omat suosikkisi laajasta valikoimastamme!</p>
                 <Link to="/products" className="continue-shopping-btn" >Selaa tuotteita</Link>
             </div>
         );
