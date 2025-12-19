@@ -44,7 +44,7 @@ const MonthlyPicks = () => {
                     {[...displayItems, ...displayItems].map((product, index) => (
                         <div className="carousel-item" key={index} >
                             {loading ? (
-                                <div className="product-card skeleton-card">
+                                <div className="product-card product-skeleton-card">
                                     <Skeleton skel_width="100%" skel_height="200px" />
                                 </div>
                             ) : (
