@@ -54,7 +54,7 @@ const ProductPage = () => {
                         <img 
                             src={product.images[selectedImage]?.image_url}
                             alt={product.name}
-                            className="main-product-image"
+                            className={`main-product-image ${selectedImage === 0 ? "contain" : "cover"}`}
                         />
                         
                         {/* Thumbnail selector */}
@@ -65,7 +65,7 @@ const ProductPage = () => {
                                         key={index}
                                         src={img.image_url}
                                         alt={`Thumbnail ${index + 1}`}
-                                        className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
+                                        className={`thumbnail ${selectedImage === index ? "active" : ""}`}
                                         onClick={() => setSelectedImage(index)}
                                     />
                                 ))}
