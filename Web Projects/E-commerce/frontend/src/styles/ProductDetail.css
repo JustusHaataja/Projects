@@ -32,7 +32,7 @@
 .product-price-original {
     font-family: var(--price-font);
     text-decoration: line-through;
-    color: #CCCCD5;
+    color: var(--price-color);
     font-size: 24px;
     font-weight: 500;
     cursor: default;
