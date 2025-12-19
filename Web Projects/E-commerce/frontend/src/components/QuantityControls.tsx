@@ -17,7 +17,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({
     min = 1 
 }) => {
     return (
-        <div className="quantity-controls">
+        <div className="quantity-controls" >
             <button 
                 onClick={onDecrease}
                 disabled={disabled || quantity <= min}
@@ -37,4 +37,4 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({
     );
 };
 
-export default QuantityControls;
+export default QuantityControls
