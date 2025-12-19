@@ -23,7 +23,7 @@ footer {
 .banking-container {
     display: flex;
     gap: 16px;
-    padding-top: 8px;
+    padding-top: 32px;
     align-items: center;
     justify-content: center;
 }
