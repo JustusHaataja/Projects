@@ -17,6 +17,10 @@ export interface Product {
     images: ProductImage[];
 }
 
+// Simple in-memory cache
+let productsCache: Product[] | null = null;
+let cacheTimestamp: number | null = null;
+const CACHE_DURATION = 5 * 60 * 1000;   // 5 min
 
 export const fetchProductById = async (id: number): Promise<Product> => {
     const product = await getJSON<Product>(`products/${id}`);
@@ -25,8 +29,20 @@ export const fetchProductById = async (id: number): Promise<Product> => {
 
 
 export const fetchAllProducts = async (): Promise<Product[]> => {
+    const timeNow = Date.now();
+
+    if (productsCache && cacheTimestamp && (timeNow - cacheTimestamp) < CACHE_DURATION) {
+        return productsCache;
+    }
+
     const products = await getJSON<Product[]>('/products/?skip=0&limit=100');
-    return products.map(sanitizeProduct).sort((a, b) => a.id - b.id);
+    const sanitizedProducts = products.map(sanitizeProduct).sort((a, b) => a.id - b.id);
+
+    // update cache
+    productsCache = sanitizedProducts;
+    cacheTimestamp = timeNow;
+
+    return productsCache;
 }
 
 
