@@ -18,6 +18,21 @@ const SearchBox: React.FC<SearchBoxProps> = ({ value, onChange }) => {
     const [loading, setLoading] = useState(false);
     const { addToCart, loading: cartLoading } = useCart();
 
+
+    // Prevent body scroll when search is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup on unmount
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+    
     // Search products when value changes
     useEffect(() => {
         const searchProducts = async () => {
