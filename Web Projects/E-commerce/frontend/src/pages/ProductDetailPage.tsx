@@ -45,13 +45,12 @@ const ProductPage = () => {
     if (error) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }}>{error}</div>
 
     return (
-        <div className="product-detail-page">
+        <div className="product-detail-page" >
             <Breadcrumbs ItemName={product?.name} />
 
-            <div className="product-detail-container">
-                {/* Hero Section: Main Image + Title + Price + Actions */}
-                <div className="product-hero">
-                    <div className="hero-image-container">
+            <div className="product-detail-container" >
+                <div className="product-hero" >
+                    <div className="hero-image-container" >
                         <img 
                             src={product.images[selectedImage]?.image_url}
                             alt={product.name}
@@ -60,7 +59,7 @@ const ProductPage = () => {
                         
                         {/* Thumbnail selector */}
                         {product.images.length > 1 && (
-                            <div className="thumbnail-selector">
+                            <div className="thumbnail-selector" >
                                 {product.images.map((img, index) => (
                                     <img 
                                         key={index}
@@ -74,22 +73,22 @@ const ProductPage = () => {
                         )}
                     </div>
 
-                    <div className="hero-info">
-                        <h1 className="detail-header">{product.name}</h1>
+                    <div className="hero-info" >
+                        <h1 className="detail-header" >{product.name}</h1>
                         
-                        <div className="main-details">
+                        <div className="main-details" >
                             {/* Price Logic */}
                             {product.sale_price ? (
-                                <div className="price-container">
-                                    <span className="product-sale-price">{product.sale_price}</span>
-                                    <span className="product-price-original">{product.price}</span>
+                                <div className="price-container" >
+                                    <span className="product-sale-price" >{product.sale_price}</span>
+                                    <span className="product-price-original" >{product.price}</span>
                                 </div>
                             ) : (
-                                <p className="product-price">{product.price}</p>
+                                <p className="product-price" >{product.price}</p>
                             )}
 
                             {/* Cart actions */}
-                            <div className="purchase-actions">
+                            <div className="purchase-actions" >
                                 <QuantityControls 
                                     quantity={quantity}
                                     onIncrease={() => setQuantity(prev => prev + 1)}
@@ -102,27 +101,27 @@ const ProductPage = () => {
                                     onClick={handleAddToCart}
                                     disabled={cartLoading}
                                 >
-                                    {cartLoading ? "Lisätään..." : "Lisää ostoskoriin"}
+                                    {cartLoading ? "Lisätään..." : "LISÄÄ KORIIN"}
                                 </button>
                             </div>
+                        </div>
+
+                        {/* Description Section */}
+                        <div className="content-section" >
+                            <ProductDescription description={product.description} />
                         </div>
                     </div>
                 </div>
 
-                {/* Description Section */}
-                <div className="content-section">
-                    <ProductDescription description={product.description} />
-                </div>
-
                 {/* Nutrition Section with Image */}
                 {product.nutrition && (
-                    <div className="nutrition-section">
-                        <div className="nutrition-content">
+                    <div className="nutrition-section" >
+                        <div className="nutrition-content" >
                             <NutritionTable nutritionData={product.nutrition} />
                         </div>
                         
                         {product.images[1] && (
-                            <div className="nutrition-image">
+                            <div className="nutrition-image" >
                                 <img 
                                     src={product.images[1].image_url}
                                     alt={`${product.name} - additional view`}

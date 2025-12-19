@@ -3,28 +3,27 @@
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 20px;
+    padding: 0 20px 60px 20px;
 }
 
 .product-detail-container {
-    padding-top: 40px;
+    padding-top: 64px;
     display: flex;
     flex-direction: column;
     gap: 60px;
 }
 
-/* Hero Section: Image + Info Side by Side */
 .product-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 40px;
     align-items: start;
 }
 
 .hero-image-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     position: sticky;
     top: 120px;
 }
@@ -32,13 +31,13 @@
 .main-product-image {
     width: 100%;
     max-width: 500px;
-    height: 500px;
-    object-fit: contain;
-    background: #f5f5f5;
+    height: 600px;
+    object-fit: cover;
     border-radius: 16px;
-    padding: 20px;
+    background: #f5f5f5;
     margin: 0 auto;
     display: block;
+    /* transform: scale(0.85); */
 }
 
 .thumbnail-selector {
@@ -49,12 +48,11 @@
 }
 
 .thumbnail {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    background: #f5f5f5;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     border-radius: 8px;
-    padding: 8px;
+    /* padding: 8px; */
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.3s ease;
@@ -74,7 +72,7 @@
 .hero-info {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
 }
 
 .detail-header {
@@ -90,10 +88,9 @@
     flex-direction: column;
     gap: 24px;
     padding: 24px;
-    background: #f9f9f9;
-    border-radius: 12px;
 }
 
+/* Price */
 .price-container {
     display: flex;
     align-items: center;
@@ -104,7 +101,7 @@
     font-family: var(--price-font);
     color: var(--text-color);
     font-size: 36px;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0;
 }
 
@@ -112,7 +109,7 @@
     font-family: var(--price-font);
     color: var(--sale-color);
     font-size: 36px;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0;
 }
 
@@ -137,15 +134,18 @@
     align-items: center;
 }
 
+/* Cart button */
 .add-to-cart-btn {
-    flex: 1;
-    padding: 16px 32px;
-    background: var(--primary-green);
-    color: white;
+    min-width: 200px;
+    font-size: 14px;
+    font-weight: 400;
+    background: #2CA665;
+    color: #FFF;
+    font-family: var(--button-font);
+    letter-spacing: 1px;
+    padding: 14.5px 32px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -164,8 +164,9 @@
 
 /* Content Section */
 .content-section {
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 32px;
+    background: #f9f9f9;
+    border-radius: 16px;
 }
 
 /* Nutrition Section with Image */
@@ -190,11 +191,10 @@
 .nutrition-image img {
     width: 100%;
     max-width: 500px;
-    height: 500px;
-    object-fit: contain;
-    background: white;
+    height: 600px;
+    object-fit: cover;
+    background: #FFF;
     border-radius: 16px;
-    padding: 20px;
 }
 
 /* Responsive Design */

@@ -1,16 +1,18 @@
 .quantity-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    border: 1px solid #DDD;
+    border-radius: 16px;
+    overflow: hidden;
+    width: fit-content;
 }
 
 .quantity-controls button {
-    width: 32px;
-    height: 32px;
-    border: 1px solid #ddd;
-    background: white;
+    width: 40px;
+    height: 48px;
+    background: #FFF;
+    border: none;
     cursor: pointer;
-    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,17 +23,12 @@
 
 .quantity-controls button:hover:not(:disabled) {
     background-color: #f0f0f0;
-    border-color: #ccc;
-}
-
-.quantity-controls button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: #f9f9f9;
+    /* border-color: #ccc; */
 }
 
 .quantity-controls span {
-    font-weight: 600;
-    min-width: 24px;
+    font-size: 18px;
+    width: 40px;
     text-align: center;
+    user-select: none;
 }

@@ -6,7 +6,8 @@
     --sale-color: #F74C25;
     --price-color: #CCCCD5;
     --text-weight: 400;
-    --price-font: 'Rubik';
+    --price-font: "Rubik";
+    --button-font: "Noto Sans JP";
 }
 
 @keyframes pulse {
