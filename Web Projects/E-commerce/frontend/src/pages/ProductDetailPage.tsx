@@ -44,18 +44,12 @@ const ProductPage = () => {
     if (!product) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >Tuotetta ei löytynyt</div>
     if (error) return <div style={{ height: "100vh", marginTop: "100px", textAlign: "center" }} >{error}</div>
 
-    // const defaultImage = product.images.length > 0 ? product.images[0].image_url : "";
-
     return (
         <div className="product-detail-page" >
             <Breadcrumbs ItemName={product?.name} />
 
             <div className="product-detail-container" >
                 <div className="product-image-section" >
-                    {/* <img 
-                        src={defaultImage} 
-                        alt="main-product-image" 
-                    /> */}
                     <div>
                         {product.images.map((img, index) => (
                             <img 
@@ -74,10 +68,10 @@ const ProductPage = () => {
                     {product.sale_price ? (
                         <div className="price-container" >
                             <span className="product-sale-price" >{product.sale_price}</span>
-                            <span className="product-price-original">{product.price}</span>
+                            <span className="product-price-original" >{product.price}</span>
                         </div>
                     ) : (
-                        <p className="product-price">{product.price}</p>
+                        <p className="product-price" >{product.price}</p>
                     )}
 
                     {/* Cart actions */}

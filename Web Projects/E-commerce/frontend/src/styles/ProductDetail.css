@@ -22,7 +22,7 @@
 
 .product-sale-price {
     font-family: var(--price-font);
-    color: #F74C25;
+    color: var(--sale-color);
     font-size: 24px;
     font-weight: 500;
     margin: 0;
@@ -38,6 +38,7 @@
     cursor: default;
 }
 
+.product-sale-price::after,
 .product-price::after,
 .product-price-original::after {
     content: " €";
