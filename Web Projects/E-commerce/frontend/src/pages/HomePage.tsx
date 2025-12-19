@@ -1,6 +1,7 @@
 import Hero from '../components/Hero';
 import Category from '../components/Category';
 import MonthlyPicks from '../components/MonthlyPicks';
+import TipsBlog from '../components/TipsBlog';
 
 const HomePage = () => {
     return (
@@ -12,6 +13,7 @@ const HomePage = () => {
             <Hero />
             <Category />
             <MonthlyPicks />
+            <TipsBlog />
         </div>
     )
 }
