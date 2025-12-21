@@ -3,12 +3,18 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List
 
-from ..database import SessionLocal
-from ..models import Product as ProductModel, Category as CategoryModel
-from ..schemas import Product, Category
-# from database import SessionLocal
-# from models import Product as ProductModel, Category as CategoryModel
-# from schemas import Product, Category
+from database import SessionLocal
+from models import Product as ProductModel, Category as CategoryModel
+from schemas import Product, Category
+
+# NOTE:
+# The imports below are for local development (localhost execution).
+# Use these when running the file directly.
+# Commented-out relative imports are used when running the app as a package.
+
+# from ..database import SessionLocal
+# from ..models import Product as ProductModel, Category as CategoryModel
+# from ..schemas import Product, Category
 
 
 router = APIRouter(tags=["Products"])

@@ -1,6 +1,14 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from . import models # import models
+
+import models
+
+# NOTE:
+# The import below is for local development (localhost execution).
+# Use this when running the file directly.
+# Commented-out relative import us used when running the app as a package.
+
+from . import models 
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

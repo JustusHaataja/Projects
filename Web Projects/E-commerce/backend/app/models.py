@@ -2,8 +2,15 @@ from sqlalchemy import Integer, String, Text, ForeignKey, Numeric, DateTime
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime, timezone
 from typing import Optional
-from .database import Base # from database import Base
 
+from database import Base
+
+# NOTE:
+# The import below is for local development (localhost execution).
+# Use this when running the file directly.
+# Commented-out relative import is used when running the app as a package.
+
+# from .database import Base 
 
 class User(Base):
     __tablename__ = "users"

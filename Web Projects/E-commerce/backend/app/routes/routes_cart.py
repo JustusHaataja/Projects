@@ -3,12 +3,19 @@ from sqlalchemy.orm import Session
 from typing import Optional
 import uuid
 
-from .routes_auth import get_current_user
-from ..database import get_db
-from ..models import CartItem, Product
-# from routes.routes_auth import get_current_user
-# from database import get_db
-# from models import CartItem, Product
+from routes.routes_auth import get_current_user
+from database import get_db
+from models import CartItem, Product
+
+# NOTE:
+# The imports below are for local development (localhost execution).
+# Use these when running the file directly.
+# Commented-out relative imports are used when running the app as a package.
+
+# from .routes_auth import get_current_user
+# from ..database import get_db
+# from ..models import CartItem, Product
+
 
 router = APIRouter(tags=["Cart"])
 

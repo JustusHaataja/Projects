@@ -1,16 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status
 from sqlalchemy.orm import Session
+import os
 
+# Package imports for production
 from ..database import SessionLocal
 from ..models import User, CartItem
 from ..auth import hash_password, verify_password, create_jwt, verify_jwt
 from ..schemas import UserCreate, UserLogin
+
+# Local imports (comment out for production)
 # from database import SessionLocal
 # from models import User, CartItem
 # from auth import hash_password, verify_password, create_jwt, verify_jwt
 # from schemas import UserCreate, UserLogin
 
 router = APIRouter()
+
+# Environment detection
+IS_PRODUCTION = os.getenv("ENVIRONMENT", "development") == "production"
 
 def get_db():
     db = SessionLocal()
@@ -23,7 +30,7 @@ def get_db():
 # ---- Helper ----
 def get_current_user(access_token: str | None = Cookie(None), db: Session = Depends(get_db)):
     if not access_token:
-        return None     # treat as anonymous; routes can raise if auth required
+        return None
     
     user_id = verify_jwt(access_token)
     if not user_id:
@@ -31,6 +38,28 @@ def get_current_user(access_token: str | None = Cookie(None), db: Session = Depe
     
     user = db.query(User).get(user_id)
     return user
+
+
+# ---- Cookie Settings Helper ----
+def get_cookie_settings():
+    """Returns cookie settings based on environment"""
+    if IS_PRODUCTION:
+        return {
+            "httponly": True,
+            "secure": True,           # HTTPS only
+            "samesite": "none",       # Required for cross-origin in production
+            "max_age": 60 * 60 * 24 * 7,
+            "domain": None            # Let browser handle it
+        }
+    else:
+        # Local development settings
+        return {
+            "httponly": True,
+            "secure": False,          # Allow HTTP for localhost
+            "samesite": "lax",        # More permissive for local
+            "max_age": 60 * 60 * 24 * 7,
+            "domain": None
+        }
 
 
 # ---- Routes ----
@@ -41,7 +70,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     if exists:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            detail="Sähköposti jo käytössä"
         )
     
     hashed = hash_password(user.password)
@@ -51,7 +80,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return {"message": "User registered succesfully"}
+    return {"message": "Käyttäjätili luotu onnistuneesti"}
 
 
 @router.post("/login")
@@ -62,18 +91,17 @@ def login(credentials: UserLogin, response: Response,
     if not user or not verify_password(credentials.password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials"
+            detail="Virheelliset kirjautumistiedot"
         )
     
-    # create JWT and set cookie
+    # Create JWT and set cookie with environment-specific settings
     token = create_jwt(user.id)
+    cookie_settings = get_cookie_settings()
+    
     response.set_cookie(
         key="access_token",
         value=token,
-        httponly=True,
-        secure=True,
-        samesite="lax",
-        max_age= 60 * 60 * 24 * 7
+        **cookie_settings
     )
 
     # Merge guest cart into user's cart if guest_id exists
@@ -94,10 +122,10 @@ def login(credentials: UserLogin, response: Response,
                     g.guest_id = None
             db.commit()
         
-        # remove guest_id cookie after merge
+        # Remove guest_id cookie after merge
         response.delete_cookie("guest_id")
 
-    return {"message": "Logged in succesfully"}
+    return {"message": "Logged in successfully"}
 
 
 @router.post("/logout")
