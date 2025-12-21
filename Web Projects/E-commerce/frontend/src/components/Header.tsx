@@ -38,7 +38,7 @@ const Header = () => {
                 <nav className={`header-links ${menuOpen ? 'open' : ''}`} >
                     <Link to="/products" >Tuotteet</Link>
                     <Link to="/about" >Meistä</Link>
-                    <Link to="/">Ota yhteyttä</Link>
+                    <Link to="/contact" >Ota yhteyttä</Link>
                 </nav>
                 <button
                     className="hamburger-btn"

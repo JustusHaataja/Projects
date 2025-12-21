@@ -6,9 +6,7 @@ import TipsBlog from '../components/TipsBlog';
 const HomePage = () => {
     return (
         <div 
-            style={{ 
-                gridTemplateColumns: "1fr"
-            }}
+            style={{ gridTemplateColumns: "1fr" }}
         >
             <Hero />
             <Category />
