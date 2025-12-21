@@ -121,7 +121,10 @@ const ProductPage = () => {
                 {product.nutrition && (
                     <div className="nutrition-section" >
                         <div className="nutrition-content" >
-                            <NutritionTable nutritionData={product.nutrition} />
+                            <NutritionTable 
+                                nutritionData={product.nutrition}
+                                product_category={product.category_id}    
+                            />
                         </div>
                         
                         {product.images[1] && (
