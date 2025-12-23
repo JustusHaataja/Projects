@@ -38,14 +38,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const register = async (data: authApi.RegisterData) => {
         await authApi.register(data);
-        // Optionally auto-login after register, or redirect to login
-        // For now, let's assume register doesn't auto-login unless backend does it.
-        // Backend register just returns success message.
     };
 
     const logout = async () => {
         await authApi.logout();
         setUser(null);
+        // Trigger a custom event that CartContext can listen to
+        window.dispatchEvent(new Event('user-logged-out'));
     };
 
     return (

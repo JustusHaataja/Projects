@@ -130,7 +130,9 @@ def login(credentials: UserLogin, response: Response,
 
 @router.post("/logout")
 def logout(response: Response):
+    # Clear both access_token and guest_id cookies
     response.delete_cookie("access_token")
+    response.delete_cookie("guest_id")  # Clear guest_id to prevent cart mixing
     return {"message": "Logged out"}
 
 

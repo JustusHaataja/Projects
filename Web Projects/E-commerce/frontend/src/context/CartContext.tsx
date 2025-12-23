@@ -25,26 +25,39 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setCartItems(items);
         } catch (error) {
             console.error("Failed to fetch cart", error);
+            setCartItems([]); // Clear cart on error
         }
     };
 
+    // Refresh cart when user changes (login/logout)
     useEffect(() => {
         refreshCart();
     }, [user]);
 
+    // Listen for logout event to immediately clear cart
+    useEffect(() => {
+        const handleLogout = () => {
+            setCartItems([]); // Immediately clear cart state
+            // Then fetch fresh guest cart
+            refreshCart();
+        };
+
+        window.addEventListener('user-logged-out', handleLogout);
+        return () => window.removeEventListener('user-logged-out', handleLogout);
+    }, []);
 
     const addToCart = async (productID: number, quantity: number = 1) => {
         setLoading(true);
         try {
             await cartApi.addToCart(productID, quantity);
-            await refreshCart();    // Refresh state after changes
+            await refreshCart();
         } catch (error) {
             console.error("Failed to add to cart", error);
+            throw error; // Re-throw so UI can handle it
         } finally {
             setLoading(false);
         }
     };
-
 
     const removeFromCart = async (productID: number) => {
         setLoading(true);
@@ -53,11 +66,11 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             await refreshCart();
         } catch (error) {
             console.error("Failed to remove from cart", error);
+            throw error;
         } finally {
             setLoading(false);
         }
     };
-
 
     const updateQuantity = async (productID: number, quantity: number) => {
         setLoading(true);
@@ -66,6 +79,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             await refreshCart();
         } catch (error) {
             console.error("Failed to update quantity", error);
+            throw error;
         } finally {
             setLoading(false);
         }

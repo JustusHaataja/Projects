@@ -102,17 +102,16 @@ def view_cart(
     guest_id: Optional[str] = Cookie(None),
     db: Session = Depends(get_db)
 ):
-    # Handle guest_id based on login status
+    # This will create a NEW guest_id if user is logged out and has no guest_id
     final_guest_id = ensure_guest_id(response, guest_id, current_user)
 
     if current_user:
-        # Only return items for logged-in user (no guest items)
         items = db.query(CartItem).filter(
             CartItem.user_id == current_user.id,
             CartItem.guest_id.is_(None)
         ).all()
     else:
-        # Return guest cart only if guest_id exists
+        # If no guest_id, return empty (will be set by ensure_guest_id on next request)
         if not final_guest_id:
             return []
         items = db.query(CartItem).filter(
@@ -239,30 +238,3 @@ def update_quantity(
     
     db.commit()
     return {"message": message, "product_id": product_id, "quantity": max(0, quantity)}
-
-
-# @router.delete("/clear", summary="Clear entire cart")
-# def clear_cart(
-#     response: Response,
-#     current_user = Depends(get_current_user),
-#     guest_id: Optional[str] = Cookie(None),
-#     db: Session = Depends(get_db)
-# ):
-#     """Clear all items from the cart"""
-#     final_guest_id = ensure_guest_id(response, guest_id, current_user)
-
-#     if current_user:
-#         deleted_count = db.query(CartItem).filter(
-#             CartItem.user_id == current_user.id,
-#             CartItem.guest_id.is_(None)
-#         ).delete()
-#     else:
-#         if not final_guest_id:
-#             return {"message": "Cart is already empty", "items_removed": 0}
-#         deleted_count = db.query(CartItem).filter(
-#             CartItem.guest_id == final_guest_id,
-#             CartItem.user_id.is_(None)
-#         ).delete()
-    
-#     db.commit()
-#     return {"message": "Cart cleared", "items_removed": deleted_count}
