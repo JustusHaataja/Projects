@@ -36,10 +36,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     // Listen for logout event to immediately clear cart
     useEffect(() => {
-        const handleLogout = () => {
+        const handleLogout = async () => {
+            console.log('Logout event received, clearing cart'); // Debug log
             setCartItems([]); // Immediately clear cart state
+
+            // Small delay to ensure cookies are cleared on backend
+            await new Promise(resolve => setTimeout(resolve, 100));
             // Then fetch fresh guest cart
-            refreshCart();
+            await refreshCart();
         };
 
         window.addEventListener('user-logged-out', handleLogout);

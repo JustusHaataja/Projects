@@ -2,17 +2,17 @@ from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status
 from sqlalchemy.orm import Session
 import os
 
-# Package imports for production
-from ..database import SessionLocal
-from ..models import User, CartItem
-from ..auth import hash_password, verify_password, create_jwt, verify_jwt
-from ..schemas import UserCreate, UserLogin
-
 # Local imports (comment out for production)
-# from database import SessionLocal
-# from models import User, CartItem
-# from auth import hash_password, verify_password, create_jwt, verify_jwt
-# from schemas import UserCreate, UserLogin
+# from ..database import SessionLocal
+# from ..models import User, CartItem
+# from ..auth import hash_password, verify_password, create_jwt, verify_jwt
+# from ..schemas import UserCreate, UserLogin
+
+# Package imports for production
+from database import SessionLocal
+from models import User, CartItem
+from auth import hash_password, verify_password, create_jwt, verify_jwt
+from schemas import UserCreate, UserLogin
 
 router = APIRouter()
 
@@ -130,9 +130,24 @@ def login(credentials: UserLogin, response: Response,
 
 @router.post("/logout")
 def logout(response: Response):
-    # Clear both access_token and guest_id cookies
-    response.delete_cookie("access_token")
-    response.delete_cookie("guest_id")  # Clear guest_id to prevent cart mixing
+    cookie_settings = get_cookie_settings()
+
+    # Clear access_token with same settings
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+        samesite="none",
+        secure=True
+    )
+
+    # Clear guest_id with same settings
+    response.delete_cookie(
+        key="guest_id",
+        path="/",
+        samesite="none",
+        secure=True
+    )
+    
     return {"message": "Logged out"}
 
 
