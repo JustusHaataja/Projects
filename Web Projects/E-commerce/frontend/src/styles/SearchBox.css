@@ -236,7 +236,6 @@
 @media (max-width: 768px) {
     .searchbox-container.open {
         max-width: 95%;
-        top: 10px;
     }
 
     .search-results {
@@ -249,5 +248,78 @@
 
     .result-price .sale-price {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 520px) {
+    .search-input-box {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .searchbox-container {
+        max-width: 70vw;
+    }
+
+    .searchbox-container.open {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 95vw;
+        width: 95vw;
+        top: 20px;
+        z-index: 3001;
+    }
+
+    .search-input-wrapper {
+        width: 100%;
+    }
+
+    .search-input-box {
+        width: calc(100% - 58px);
+        padding-left: 40px;
+        padding-right: 18px;
+        font-size: 14px;
+    }
+
+    .search-results {
+        max-height: 70vh;
+    }
+
+    .result-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .result-info h4 {
+        font-size: 11px;
+    }
+
+    .result-price {
+        font-size: 12px;
+    }
+
+    .result-price .sale-price {
+        font-size: 12px;
+    }
+
+    .result-price .original-price {
+        font-size: 10px;
+    }
+
+    .result-add-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+    }
+
+    .search-result-item {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .result-info {
+        padding-left: 4px;
     }
 }
