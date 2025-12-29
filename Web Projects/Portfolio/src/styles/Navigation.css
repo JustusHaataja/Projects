@@ -43,8 +43,5 @@
   opacity: 1;
   color: var(--accent_red);
   font-weight: bold;
-}
-
-.nav-item.active::before {
-  width: 3rem;
+  -webkit-box-reflect: below -18px linear-gradient(transparent,var(--accent_red));
 }

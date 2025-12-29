@@ -20,6 +20,28 @@
   margin-left: 2px;
 }
 
+.hero-header {
+  animation: glow 5s linear infinite;
+}
+
+@keyframes glow {
+  0%,18%,20%,50.1%,60%,65.1%,80%,90.1%,92%
+  {
+    color: var(--accent_red);
+    text-shadow: none;
+  }
+  0%,18.1%,20.1%,30%,50%,60.1%,65%,80.1%,90%,92.1%,100%
+  {
+    color: var(--light_text);
+    text-shadow: 
+      0 0 2px var(--accent_red),
+      0 0 4px var(--accent_red),
+      0 0 6px var(--light_blue),
+      0 0 8px var(--accent_red),
+      0 0 10px var(--light_text);
+  }
+}
+
 @keyframes blink {
   0%,
   50% {

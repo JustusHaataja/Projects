@@ -61,13 +61,14 @@ const Hero = () => {
     }, charIndex === 0 && textIndex === 0 && !isDeleting && hasMistake ? 1000 : 0);
 
     return () => clearTimeout(initialDelay);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charIndex, isDeleting, textIndex, hasMistake]);
 
   return (
-    <div className="hero-container">
-      <h1 className="hero-title">
-        Hello, I'm <br/><span className="highlight typewriter">
-          {displayedText}<span className="cursor">|</span></span>
+    <div className="hero-container" >
+      <h1 className="hero-title" >
+        <span className="hero-header" >Hello, I'm</span> <br/><span className="highlight typewriter" >
+          {displayedText}<span className="cursor" >|</span></span>
       </h1>
     </div>
   );
