@@ -208,3 +208,177 @@
 .end-header {
     font-size: 32px;
 }
+
+/* Tablet styles */
+@media screen and (max-width: 992px) {
+    .rolling-header {
+        font-size: 80px;
+        letter-spacing: -6px;
+        padding: 24px;
+    }
+
+    .quality-container {
+        width: 70vw;
+        bottom: 5%;
+    }
+
+    .quality-header {
+        font-size: 20px;
+    }
+
+    .value-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding: 48px 16px 24px 16px;
+    }
+
+    .value-box {
+        width: auto;
+        height: 25vh;
+    }
+
+    .info-container {
+        width: 95vw;
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .text-side {
+        padding: 24px;
+        order: 2;
+    }
+
+    .image-side {
+        order: 1;
+        height: 50vh;
+    }
+
+    .info-header {
+        font-size: 32px;
+    }
+
+    .end-container {
+        width: 90vw;
+        padding: 48px 0;
+    }
+
+    .end-header {
+        font-size: 28px;
+    }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .rolling-header {
+        font-size: 60px;
+        letter-spacing: -4px;
+        padding: 16px;
+    }
+
+    .about-hero {
+        margin-top: -150px;
+    }
+
+    .quality-container {
+        width: 85vw;
+        padding: 16px;
+        bottom: 3%;
+    }
+
+    .quality-header {
+        font-size: 18px;
+    }
+
+    .value-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 32px 16px;
+    }
+
+    .value-box {
+        height: auto;
+        width: auto;
+        padding: 24px;
+    }
+
+    .value-header {
+        font-size: 20px;
+    }
+
+    .value-icon {
+        font-size: 32px;
+    }
+
+    .info-container {
+        width: 95vw;
+        margin-top: 24px;
+    }
+
+    .text-side {
+        padding: 16px;
+    }
+
+    .info-header {
+        font-size: 28px;
+    }
+
+    .text-side h2 {
+        font-size: 18px;
+    }
+
+    .text-side p {
+        font-size: 14px;
+    }
+
+    .end-header {
+        font-size: 24px;
+    }
+}
+
+/* Small mobile styles */
+@media screen and (max-width: 480px) {
+    .rolling-header {
+        font-size: 40px;
+        letter-spacing: -2px;
+        padding: 12px;
+    }
+
+    .about-hero {
+        margin-top: -100px;
+    }
+
+    .quality-container {
+        width: 90vw;
+        padding: 12px;
+    }
+
+    .quality-header {
+        font-size: 16px;
+    }
+
+    .value-box {
+        padding: 16px;
+    }
+
+    .image-side {
+        height: 40vh;
+    }
+
+    .info-header {
+        font-size: 24px;
+    }
+
+    .text-side h2 {
+        font-size: 16px;
+    }
+
+    .end-container {
+        width: 95vw;
+        padding: 32px 0;
+    }
+
+    .end-header {
+        font-size: 20px;
+    }
+}
