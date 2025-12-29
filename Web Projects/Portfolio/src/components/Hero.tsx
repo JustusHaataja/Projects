@@ -7,6 +7,7 @@ const Hero = () => {
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const texts = ['Justus Haataja', 'Full-Stack Developer'];
 
   useEffect(() => {
