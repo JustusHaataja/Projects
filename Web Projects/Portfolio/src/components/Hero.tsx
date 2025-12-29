@@ -6,64 +6,71 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
+  const [hasMistake, setHasMistake] = useState(false);
   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const texts = ['Justus Haataja', 'Full-Stack Developer'];
+  const mistakes = ['Justus Haastaja', 'Full-Stack Develper']; // Intentional typos
+  
+  // Find where the mistake starts
+  const getMistakeIndex = (textIdx: number) => {
+    const correct = texts[textIdx];
+    const wrong = mistakes[textIdx];
+    for (let i = 0; i < Math.min(correct.length, wrong.length); i++) {
+      if (correct[i] !== wrong[i]) return i;
+    }
+    return Math.min(correct.length, wrong.length);
+  };
 
   useEffect(() => {
-    // Wait 1 second before starting typewriter
     const initialDelay = setTimeout(() => {
-      const currentText = texts[textIndex];
+      const currentText = hasMistake ? mistakes[textIndex] : texts[textIndex];
+      const mistakeStartIndex = getMistakeIndex(textIndex);
       
       const timer = setTimeout(() => {
         if (!isDeleting && charIndex < currentText.length) {
           // Typing
           setDisplayedText(currentText.slice(0, charIndex + 1));
           setCharIndex(charIndex + 1);
-        } else if (!isDeleting && charIndex === currentText.length) {
-          // Pause at end before deleting
+        } else if (!isDeleting && charIndex === currentText.length && hasMistake) {
+          // Pause, then delete only to the mistake point
+          setTimeout(() => setIsDeleting(true), 750);
+        } else if (!isDeleting && charIndex === currentText.length && !hasMistake) {
+          // Pause at end before deleting everything
           setTimeout(() => setIsDeleting(true), 2000);
-        } else if (isDeleting && charIndex > 0) {
-          // Deleting
+        } else if (isDeleting && hasMistake && charIndex > mistakeStartIndex) {
+          // Delete only back to where mistake starts
           setDisplayedText(currentText.slice(0, charIndex - 1));
           setCharIndex(charIndex - 1);
-        } else if (isDeleting && charIndex === 0) {
-          // Move to next text
+        } else if (isDeleting && hasMistake && charIndex === mistakeStartIndex) {
+          // Now type the correct version from this point
           setIsDeleting(false);
+          setHasMistake(false);
+        } else if (isDeleting && !hasMistake && charIndex > 0) {
+          // Delete everything
+          setDisplayedText(currentText.slice(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        } else if (isDeleting && !hasMistake && charIndex === 0) {
+          // Move to next text and introduce mistake
+          setIsDeleting(false);
+          setHasMistake(true);
           setTextIndex((textIndex + 1) % texts.length);
         }
-      }, isDeleting ? 150 : 250);
+      }, isDeleting ? 100 : 150);
 
       return () => clearTimeout(timer);
-    }, charIndex === 0 && textIndex === 0 && !isDeleting ? 1000 : 0);
+    }, charIndex === 0 && textIndex === 0 && !isDeleting && hasMistake ? 1000 : 0);
 
     return () => clearTimeout(initialDelay);
-  }, [charIndex, isDeleting, textIndex, texts]);
+  }, [charIndex, isDeleting, textIndex, hasMistake]);
 
   return (
     <div className="hero-container">
       <h1 className="hero-title">
-        Hello, I'm <br/><span className="highlight typewriter">{displayedText}<span className="cursor">|</span></span>
+        Hello, I'm <br/><span className="highlight typewriter">
+          {displayedText}<span className="cursor">|</span></span>
       </h1>
-      <p className="hero-description">
-        Crafting beautiful and functional web experiences with modern technologies
-      </p>
-      <div className="hero-cta">
-        <button 
-          className="cta-button primary"
-          onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          View My Work
-        </button>
-        <button 
-          className="cta-button secondary"
-          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          Get In Touch
-        </button>
-      </div>
     </div>
   );
 };
 
-export default Hero
+export default Hero;
