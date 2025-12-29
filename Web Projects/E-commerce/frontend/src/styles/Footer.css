@@ -73,3 +73,37 @@ h1 {
     transform: translateY(-4px) scale(1.05);
     color: var(--primary-green);
 }
+
+@media screen and (max-width: 768px) {
+    footer {
+        height: auto;
+        grid-template-rows: auto auto;
+    }
+
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px 16px;
+    }
+
+    .banking-container {
+        flex-wrap: wrap;
+        padding-top: 16px;
+    }
+
+    .banking-icon {
+        font-size: 32px;
+    }
+
+    .social-icon {
+        font-size: 32px;
+    }
+
+    h1 {
+        font-size: 14px;
+    }
+
+    .website-link {
+        font-size: 20px;
+    }
+}
