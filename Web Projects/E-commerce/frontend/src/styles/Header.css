@@ -74,6 +74,7 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
+    color: var(--text-color);
 }
 
 @media screen and (max-width: 992px) {
@@ -144,5 +145,9 @@
     .hamburger-btn {
         font-size: 24px;
         margin: 12px;
+    }
+
+    .header-links.open {
+        margin-top: -4px;
     }
 }
