@@ -41,7 +41,7 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
+    <div className="app" >
       <div 
         className="cursor-light"
         style={{
@@ -50,20 +50,20 @@ function App() {
         }}
       />
       <Navigation activeSection={activeSection} />
-      <section id="hero" className="section">
+      <section id="hero" className="section" >
         <Hero />
       </section>
-      <section id="about" className="section">
+      <section id="about" className="section" >
         <About />
       </section>
-      <section id="projects" className="section">
+      <section id="projects" className="section" >
         <Projects />
       </section>
-      <section id="contact" className="section">
+      <section id="contact" className="section" >
         <Contact />
       </section>
     </div>
-  );
+  )
 }
 
 export default App
