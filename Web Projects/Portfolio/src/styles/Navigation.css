@@ -1,11 +1,11 @@
 .navigation {
   position: fixed;
   right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 25%;
+  transform: translateY(-75%);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 1000;
 }
 
@@ -19,7 +19,7 @@
   text-align: right;
   position: relative;
   transition: all 0.3s ease;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .nav-item::before {
@@ -44,4 +44,5 @@
   color: var(--accent_red);
   font-weight: bold;
   -webkit-box-reflect: below -18px linear-gradient(transparent,var(--accent_red));
+  transition: all 0.3s ease;
 }

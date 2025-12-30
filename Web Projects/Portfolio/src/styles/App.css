@@ -11,3 +11,20 @@
   justify-content: center;
   background-color: var(--background);
 }
+
+.cursor-light {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(233, 69, 96, 0.15) 0%,
+    rgba(233, 69, 96, 0.05) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+  transition: opacity 1.3s ease;
+}

@@ -8,6 +8,7 @@ import './styles/App.css';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,12 +27,28 @@ function App() {
       }
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   return (
     <div className="app">
+      <div 
+        className="cursor-light"
+        style={{
+          left: `${mousePosition.x}px`,
+          top: `${mousePosition.y}px`,
+        }}
+      />
       <Navigation activeSection={activeSection} />
       <section id="hero" className="section">
         <Hero />
