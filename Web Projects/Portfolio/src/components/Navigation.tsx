@@ -14,22 +14,24 @@ const Navigation = ({ activeSection }: NavigationProps) => {
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (element) {
+      element.scrollIntoView({ behavior: "auto", block: "start" });
+    }
   };
 
   return (
-    <nav className="navigation">
+    <nav className="navigation" >
       {sections.map((section) => (
         <button
           key={section.id}
           onClick={() => scrollToSection(section.id)}
-          className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
+          className={`nav-item ${activeSection === section.id ? "active" : ""}`}
         >
           {section.label}
         </button>
       ))}
     </nav>
-  );
-};
+  )
+}
 
 export default Navigation
