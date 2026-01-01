@@ -1,57 +1,84 @@
-Here is the link to a live demo of the project:
-https://meek-pie-435d7b.netlify.app/
+# 🎬 MovieApp
 
-# React + TypeScript + Vite
+A modern, sleek movie browsing application built with React and TypeScript.  Discover movies, manage your favorites, and keep track of what you want to watch.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔗 **[Live Demo](https://meek-pie-435d7b.netlify.app/)**
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.0.0-61dafb?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-3178c6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.2.0-646cff?logo=vite&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🎥 **Browse Movies** - Explore a vast collection of movies
+- ⭐ **Favorites** - Save your favorite movies for quick access
+- 📋 **Watchlist** - Keep track of movies you want to watch
+- 🎨 **Modern UI** - Clean and responsive design with FontAwesome icons
+- ⚡ **Fast Performance** - Built with Vite for lightning-fast development and builds
+- 🔍 **Type-Safe** - Full TypeScript support for better development experience
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+
+## 🛠️ Built With
+
+- **[React 19](https://react.dev/)** - A JavaScript library for building user interfaces
+- **[TypeScript](https://www.typescriptlang.org/)** - Typed superset of JavaScript
+- **[Vite](https://vitejs.dev/)** - Next generation frontend tooling
+- **[React Router](https://reactrouter.com/)** - Declarative routing for React
+- **[FontAwesome](https://fontawesome.com/)** - Icon library and toolkit
+
+## 📁 Project Structure
+
+```
+MovieApp/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── contexts/       # React context providers
+│   ├── css/           # Stylesheets
+│   ├── pages/         # Route pages (Home, Favourites, Watchlist)
+│   ├── services/      # API services
+│   ├── App.tsx        # Main application component
+│   └── main. tsx       # Application entry point
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Navigation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Home** - Browse and search for movies
+- **Favourites** - View your saved favorite movies
+- **Watchlist** - Manage your watchlist
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Managing Movies
+
+- Add movies to your favorites by clicking the favorite icon
+- Add movies to your watchlist for later viewing
+- Remove movies from either list as needed
+
+
+## 📝 License
+
+This project is part of a personal projects collection. 
+
+## 👤 Author
+
+**Justus Haataja**
+- GitHub: [@JustusHaataja](https://github.com/JustusHaataja)
+
+## 🙏 Acknowledgments
+
+- Movie data provided by [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api)
+- Icons by [FontAwesome](https://fontawesome.com/)
+
+---
+
+<div align="center">
+Made with ❤️
+</div>
