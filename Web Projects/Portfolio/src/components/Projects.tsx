@@ -5,6 +5,7 @@ interface Project {
   title: string;
   description: string;
   technologies: string[];
+  image: string;
   liveLink?: string;
   githubLink?: string;
 }
@@ -13,27 +14,30 @@ const Projects = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: 'Project One',
-      description: 'A full-stack web application built with React and Node.js',
-      technologies: ['React', 'Node.js', 'MongoDB'],
-      liveLink: '#',
-      githubLink: '#'
+      title: 'E-commerce platform',
+      description: 'Full-stack e-commerce platform featuring real product listings, shopping cart functionality. Built with modern web technologies and a PostgreSQL database for efficient data management.',
+      technologies: ['React', 'TypeScript', 'Python', 'PostgreSQL'],
+      image: '/public/E-commerce_preview.png',
+      liveLink: 'https://puhdistamo.netlify.app/',
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/E-commerce'
     },
     {
       id: 2,
-      title: 'Project Two',
-      description: 'Modern e-commerce platform with payment integration',
-      technologies: ['TypeScript', 'Express', 'PostgreSQL'],
-      liveLink: '#',
-      githubLink: '#'
+      title: 'Algorithm visualizer',
+      description: 'Interactive web application that visualizes popular sorting algorithms in real-time. Features customizable array sizes, and step-by-step execution to help understand algorithmic concepts.',
+      technologies: ['React', 'TypeScript', 'Python'],
+      image: '/public/Algorithms_preview.png',
+      liveLink: 'https://algorithmsbyjustus.netlify.app/',
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/Sorting%20Algorithms'
     },
     {
       id: 3,
-      title: 'Project Three',
-      description: 'Real-time chat application with WebSocket support',
-      technologies: ['React', 'Socket.io', 'Redis'],
-      liveLink: '#',
-      githubLink: '#'
+      title: 'Movie website',
+      description: 'Dynamic movie discovery platform utilizing external APIs to fetch and display movie information. Features search functionality, detailed movie pages.',
+      technologies: ['React', 'TypeScript'],
+      image: '/public/MovieApp_preview.png',
+      liveLink: 'https://meek-pie-435d7b.netlify.app/',
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/MovieApp'
     }
   ];
 
@@ -43,30 +47,35 @@ const Projects = () => {
       <div className="projects-grid">
         {projects.map((project) => (
           <div key={project.id} className="project-card">
-            <h3 className="project-title">{project.title}</h3>
-            <p className="project-description">{project.description}</p>
-            <div className="project-tech">
-              {project.technologies.map((tech) => (
-                <span key={tech} className="tech-tag">{tech}</span>
-              ))}
+            <div className="project-image-wrapper">
+              <img src={project.image} alt={project.title} className="project-image" />
             </div>
-            <div className="project-links">
-              {project.liveLink && (
-                <a href={project.liveLink} className="project-link" target="_blank" rel="noopener noreferrer">
-                  Live Demo
-                </a>
-              )}
-              {project.githubLink && (
-                <a href={project.githubLink} className="project-link" target="_blank" rel="noopener noreferrer">
-                  GitHub
-                </a>
-              )}
+            <div className="project-content">
+              <h3 className="project-title">{project.title}</h3>
+              <p className="project-description">{project.description}</p>
+              <div className="project-tech">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="tech-tag">{tech}</span>
+                ))}
+              </div>
+              <div className="project-links">
+                {project.liveLink && (
+                  <a href={project.liveLink} className="project-link" target="_blank" rel="noopener noreferrer">
+                    Live Demo
+                  </a>
+                )}
+                {project.githubLink && (
+                  <a href={project.githubLink} className="project-link" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Projects

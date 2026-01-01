@@ -13,16 +13,39 @@
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
 }
 
 .project-card {
   background-color: var(--dark_blue);
-  padding: 2rem;
   border-radius: 10px;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-image-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .project-card:hover {
@@ -42,6 +65,7 @@
   line-height: 1.6;
   margin-bottom: 1.5rem;
   opacity: 0.9;
+  flex-grow: 1;
 }
 
 .project-tech {
