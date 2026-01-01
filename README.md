@@ -1,62 +1,59 @@
-# Hi, I'm Justus Haataja 👋
+# Hi, I’m Justus Haataja 👋
 
-I'm a passionate **software engineering student** and developer with a strong interest in **web development**, **machine learning**, and **data analysis**. I enjoy turning complex ideas into smooth, beautiful, and functional solutions.  
+I’m a **software engineering student** focused on **full-stack web development** and continuous learning. I build practical, end-to-end applications where frontend usability, backend reliability, and clean architecture all matter.
 
----
+My goal is simple: **write maintainable software that solves real problems** and keep improving with every project.
 
-## 🌐 Web Development
-Creating **UI/UX-driven websites** that are visually appealing and highly **performant**.  
-
-**Key areas:**
-- Responsive and intuitive UI/UX
-- High-performance websites
-- Modern frontend stacks (React, TypeScript, HTML/CSS, JavaScript)
+🌐 **Portfolio:** https://justushaataja.netlify.app/
 
 ---
 
-## 🤖 Machine Learning
-Building models that **predict, recognize, and analyze** data with cutting-edge AI tools.  
+## 🧩 Full-Stack Development
+I design and implement complete web applications, from UI to database.
 
-**Key areas:**
-- Predictive modeling & insights
-- Computer vision and pattern recognition
-- AI integration in real projects
+**What I focus on:**
+- Clean, responsive, and accessible frontend interfaces
+- Well-structured backend APIs and data models
+- Clear separation of concerns and maintainable codebases
+- Turning requirements into working, production-ready solutions
 
----
-
-## 📊 Data Analysis
-Transforming **real-world big data** into insights that are **easy to read and interpret**.  
-
-**Key areas:**
-- Data cleaning, processing, and visualization
-- Statistical and predictive analysis
-- Python-based data pipelines
+**Typical stack:**
+- Frontend: React, TypeScript, JavaScript, HTML, CSS
+- Backend: Python (FastAPI), REST APIs
+- Databases: SQL (PostgreSQL, SQLite)
+- Tooling: Git, Vite, modern build tools
 
 ---
 
-## ⚡ Tools & Technologies
+## 📈 Continuous Learning Mindset
+I actively improve my skills by:
+- Building projects from scratch (not just tutorials)
+- Refactoring and revisiting older code to improve quality
+- Exploring new tools, patterns, and best practices
+- Studying topics like data handling, system design, and security fundamentals
+
+I care about **why** things work, not just how to make them run.
+
+---
+
+## ⚙️ Tools & Technologies
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square)
-![SQL](https://img.shields.io/badge/-SQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white)
-
----
 
 ## 🚀 AI Integration
 I actively integrate **modern AI tools** into projects to enhance functionality, performance, and user experience.
 
 ---
 
-## 💼 LinkedIn & Contact
-I am **open to work and collaborations** in software development, web, ML, and data projects. Feel free to connect or contact me via LinkedIn:  
+## 💼 Contact & Opportunities
+I’m interested in **internships, junior developer roles, and collaborative projects** where I can grow as a full-stack developer and contribute meaningfully.
+
+Connect with me on LinkedIn:  
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/justushaataja/)
-
-![Open to Work](https://img.shields.io/badge/Open%20to%20Work-Yes-brightgreen?style=flat-square)
-
----
 
 
 ✨ *"Turning data into insights, code into experiences, and AI into real-world solutions."*
