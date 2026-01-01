@@ -17,7 +17,7 @@ const Projects = () => {
       title: 'E-commerce platform',
       description: 'Full-stack e-commerce platform featuring real product listings, shopping cart functionality. Built with modern web technologies and a PostgreSQL database for efficient data management.',
       technologies: ['React', 'TypeScript', 'Python', 'PostgreSQL'],
-      image: '/public/E-commerce_preview.png',
+      image: '/E-commerce_preview.png',
       liveLink: 'https://puhdistamo.netlify.app/',
       githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/E-commerce'
     },
@@ -26,7 +26,7 @@ const Projects = () => {
       title: 'Algorithm visualizer',
       description: 'Interactive web application that visualizes popular sorting algorithms in real-time. Features customizable array sizes, and step-by-step execution to help understand algorithmic concepts.',
       technologies: ['React', 'TypeScript', 'Python'],
-      image: '/public/Algorithms_preview.png',
+      image: '/Algorithms_preview.png',
       liveLink: 'https://algorithmsbyjustus.netlify.app/',
       githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/Sorting%20Algorithms'
     },
@@ -35,7 +35,7 @@ const Projects = () => {
       title: 'Movie website',
       description: 'Dynamic movie discovery platform utilizing external APIs to fetch and display movie information. Features search functionality, detailed movie pages.',
       technologies: ['React', 'TypeScript'],
-      image: '/public/MovieApp_preview.png',
+      image: '/MovieApp_preview.png',
       liveLink: 'https://meek-pie-435d7b.netlify.app/',
       githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/MovieApp'
     }
