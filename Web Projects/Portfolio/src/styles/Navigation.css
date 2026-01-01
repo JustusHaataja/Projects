@@ -20,6 +20,7 @@
   position: relative;
   transition: all 0.3s ease;
   opacity: 0.8;
+  font-weight: 500;
 }
 
 .nav-item::before {
@@ -42,7 +43,6 @@
 .nav-item.active {
   opacity: 1;
   color: var(--accent_red);
-  font-weight: bold;
-  -webkit-box-reflect: below -18px linear-gradient(transparent,var(--accent_red));
-  transition: all 0.3s ease;
+  -webkit-box-reflect: below -18px linear-gradient(transparent, var(--accent_red));
+  transition: all 0.5s ease;
 }
