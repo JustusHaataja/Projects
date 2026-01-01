@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import '../styles/Contact.css';
 
 const Contact = () => {
@@ -8,21 +10,21 @@ const Contact = () => {
         I'm always open to new opportunities and collaborations. Feel free to reach out!
       </p>
       <div className="contact-links">
-        <a href="mailto:your.email@example.com" className="contact-link">
+        <a href="mailto:justus.haataja@hotmail.com" className="contact-link">
           <span className="link-icon">✉️</span>
           Email
         </a>
-        <a href="https://github.com/yourusername" className="contact-link" target="_blank" rel="noopener noreferrer">
-          <span className="link-icon">💻</span>
+        <a href="https://github.com/JustusHaataja/Projects" className="contact-link" target="_blank" rel="noopener noreferrer">
+          <FontAwesomeIcon icon={faSquareGithub} className="link-icon" />
           GitHub
         </a>
-        <a href="https://linkedin.com/in/yourusername" className="contact-link" target="_blank" rel="noopener noreferrer">
-          <span className="link-icon">💼</span>
+        <a href="https://linkedin.com/in/justushaataja" className="contact-link" target="_blank" rel="noopener noreferrer">
+          <FontAwesomeIcon icon={faLinkedin} className="link-icon" />
           LinkedIn
         </a>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Contact
