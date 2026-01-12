@@ -19,6 +19,14 @@
   scroll-snap-stop: always;
 }
 
+#hero,
+#about,
+#projects,
+#contact {
+  min-height: 100vh;
+  padding: 6rem 2rem;
+}
+
 .cursor-light {
   position: fixed;
   width: 200px;
