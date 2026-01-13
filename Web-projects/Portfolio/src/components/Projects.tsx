@@ -36,7 +36,7 @@ const Projects = () => {
       description: 'Dynamic movie discovery platform utilizing external APIs to fetch and display movie information. Features search functionality, detailed movie pages.',
       technologies: ['React', 'TypeScript'],
       image: '/MovieApp_preview.png',
-      liveLink: 'https://meek-pie-435d7b.netlify.app/',
+      liveLink: 'https://movies-by-justus.netlify.app/',
       githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/MovieApp'
     }
   ];
