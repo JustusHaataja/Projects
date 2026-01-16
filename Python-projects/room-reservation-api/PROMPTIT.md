@@ -1386,3 +1386,294 @@ if __name__ == "__main__":
 
 
 ---
+
+
+**Prompt (Ask):**
+
+If we wanted to make valid_room_ids easily changeable as a variable, how could we do that and how would it change the whole project?
+app/  booking_repository.py:14-15
+
+
+**Answer:**
+
+Great question! Here are several approaches to make `valid_room_ids` configurable:
+
+## Option 1: Environment Variables (Recommended for Production)
+
+````python
+from pydantic_settings import BaseSettings
+from typing import Set
+
+
+class Settings(BaseSettings):
+    """Application settings"""
+    
+    # Room configuration
+    valid_room_ids: Set[int] = {1, 2, 3, 4, 5}
+    min_room_id: int = 1
+    max_room_id: int = 5
+    
+    # API configuration
+    api_title: str = "Meeting Room Reservation API"
+    api_version: str = "1.0.0"
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+
+# Global settings instance
+settings = Settings()
+````
+
+Create `.env` file:
+````env
+VALID_ROOM_IDS=1,2,3,4,5
+MIN_ROOM_ID=1
+MAX_ROOM_ID=5
+````
+
+Update booking_repository.py:
+````python
+from datetime import datetime
+from typing import Dict, List, Optional
+import uuid
+from app.models import Booking
+from app.config import settings
+
+
+class BookingRepository:
+    """In-memory repository for managing bookings"""
+    
+    def __init__(self):
+        # Storage: booking_id -> Booking
+        self._bookings: Dict[str, Booking] = {}
+        
+        # Valid room IDs from settings
+        self._valid_room_ids = settings.valid_room_ids
+    
+    # ...existing code...
+````
+
+Update `booking.py`:
+````python
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field, field_validator
+from app.config import settings
+
+
+class BookingCreate(BaseModel):
+    """Request model for creating a booking"""
+    
+    room_id: int = Field(
+        ..., 
+        ge=settings.min_room_id, 
+        le=settings.max_room_id, 
+        description=f"Room ID ({settings.min_room_id}-{settings.max_room_id})"
+    )
+    start_time: datetime = Field(..., description="Start time of the booking")
+    end_time: datetime = Field(..., description="End time of the booking")
+    user_name: str = Field(..., min_length=1, max_length=100, description="Name of the person making the booking")
+    
+    @field_validator('room_id')
+    @classmethod
+    def validate_room_id(cls, v):
+        """Validate room ID is in valid room set"""
+        if v not in settings.valid_room_ids:
+            raise ValueError(
+                f"Room ID must be one of {sorted(settings.valid_room_ids)}. Got {v}."
+            )
+        return v
+    
+    @field_validator('start_time', 'end_time')
+    @classmethod
+    def validate_datetime(cls, v):
+        """Ensure datetime is timezone-aware or convert to UTC"""
+        if v.tzinfo is None:
+            return v.replace(tzinfo=None)
+        return v
+
+# ...existing code...
+````
+
+---
+
+## Option 2: Simple Constants File (Easiest)
+
+````python
+"""Application constants"""
+
+# Room configuration
+VALID_ROOM_IDS = {1, 2, 3, 4, 5}
+MIN_ROOM_ID = 1
+MAX_ROOM_ID = 5
+
+# Time configuration
+BOOKING_TIME_BLOCK_MINUTES = 15
+MIN_BOOKING_DURATION_MINUTES = 15
+````
+
+Then import everywhere:
+````python
+from app.constants import VALID_ROOM_IDS
+
+class BookingRepository:
+    def __init__(self):
+        self._bookings: Dict[str, Booking] = {}
+        self._valid_room_ids = VALID_ROOM_IDS
+````
+
+````python
+from app.constants import MIN_ROOM_ID, MAX_ROOM_ID, VALID_ROOM_IDS
+
+class BookingCreate(BaseModel):
+    room_id: int = Field(..., ge=MIN_ROOM_ID, le=MAX_ROOM_ID)
+    
+    @field_validator('room_id')
+    @classmethod
+    def validate_room_id(cls, v):
+        if v not in VALID_ROOM_IDS:
+            raise ValueError(f"Room ID must be one of {sorted(VALID_ROOM_IDS)}. Got {v}.")
+        return v
+````
+
+---
+
+## Option 3: Database/External Config (Most Flexible)
+
+Create a rooms table/collection and load dynamically:
+
+````python
+from pydantic import BaseModel
+
+
+class Room(BaseModel):
+    """Room model"""
+    id: int
+    name: str
+    capacity: int
+    features: list[str] = []
+````
+
+````python
+from typing import Dict, List, Optional
+from app.models.room import Room
+
+
+class RoomRepository:
+    """Repository for managing rooms"""
+    
+    def __init__(self):
+        # In production, this would come from a database
+        self._rooms: Dict[int, Room] = {
+            1: Room(id=1, name="Conference Room A", capacity=10, features=["projector", "whiteboard"]),
+            2: Room(id=2, name="Conference Room B", capacity=8, features=["tv"]),
+            3: Room(id=3, name="Small Meeting Room", capacity=4, features=["whiteboard"]),
+            4: Room(id=4, name="Executive Room", capacity=6, features=["projector", "video conference"]),
+            5: Room(id=5, name="Training Room", capacity=20, features=["projector", "whiteboard", "sound system"]),
+        }
+    
+    def get_all(self) -> List[Room]:
+        """Get all rooms"""
+        return list(self._rooms.values())
+    
+    def get_by_id(self, room_id: int) -> Optional[Room]:
+        """Get a room by ID"""
+        return self._rooms.get(room_id)
+    
+    def get_valid_room_ids(self) -> set[int]:
+        """Get all valid room IDs"""
+        return set(self._rooms.keys())
+````
+
+Update booking_repository.py:
+````python
+from datetime import datetime
+from typing import Dict, List, Optional
+import uuid
+from app.models import Booking
+from app.repositories.room_repository import RoomRepository
+
+
+class BookingRepository:
+    """In-memory repository for managing bookings"""
+    
+    def __init__(self, room_repository: Optional[RoomRepository] = None):
+        self._bookings: Dict[str, Booking] = {}
+        self._room_repository = room_repository or RoomRepository()
+    
+    def is_valid_room_id(self, room_id: int) -> bool:
+        """Check if room ID is valid"""
+        return room_id in self._room_repository.get_valid_room_ids()
+    
+    # ...existing code...
+````
+
+Add rooms endpoint in controller:
+````python
+from typing import List
+from fastapi import APIRouter, status, HTTPException
+
+from app.models.room import Room
+from app.repositories.room_repository import RoomRepository
+
+
+router = APIRouter(prefix="/api/v1", tags=["rooms"])
+
+_room_repository = RoomRepository()
+
+
+@router.get(
+    "/rooms",
+    response_model=List[Room],
+    status_code=status.HTTP_200_OK,
+    summary="Get all rooms",
+    description="Retrieve all available meeting rooms"
+)
+def get_all_rooms() -> List[Room]:
+    """Get all available rooms"""
+    return _room_repository.get_all()
+
+
+@router.get(
+    "/rooms/{room_id}",
+    response_model=Room,
+    status_code=status.HTTP_200_OK,
+    summary="Get a specific room",
+    description="Retrieve details for a specific room"
+)
+def get_room(room_id: int) -> Room:
+    """Get a specific room by ID"""
+    room = _room_repository.get_by_id(room_id)
+    if not room:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Room {room_id} not found"
+        )
+    return room
+````
+
+Register the router in `main.py`:
+````python
+from app.controllers import router as booking_router
+from app.controllers.room_controller import router as room_router
+
+app.include_router(booking_router)
+app.include_router(room_router)
+````
+
+---
+
+## Comparison
+
+| Approach | Pros | Cons | Best For |
+|----------|------|------|----------|
+| **Option 1: Environment Variables** | ✅ Production-ready<br>✅ Easy deployment changes<br>✅ No code changes needed | ❌ Requires pydantic-settings<br>❌ Type conversion needed | Production deployments |
+| **Option 2: Constants File** | ✅ Simplest<br>✅ No dependencies<br>✅ Centralized | ❌ Requires code changes<br>❌ Need to redeploy | Small projects, POCs |
+| **Option 3: Database/Repository** | ✅ Most flexible<br>✅ Can add room details<br>✅ Runtime changes | ❌ More complex<br>❌ Requires more code | Scalable applications |
+
+**My Recommendation:** Start with **Option 2 (Constants)** for simplicity, then move to **Option 1 (Environment Variables)** when you deploy, or **Option 3** if you need room management features.
+
+
+---
