@@ -24,6 +24,29 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 - Clear layer separation (controllers, services, repositories)
 - Interactive API documentation (Swagger UI)
 
+## Assumptions & Design Decisions
+
+### Assumptions
+1. **Time Format**: All times are in ISO 8601 format (e.g., `2026-01-17T14:00:00`)
+2. **Timezone**: Naive datetimes are treated as local time. For production, consider using timezone-aware datetimes.
+3. **Storage**: In-memory storage means data is lost when the server restarts
+4. **Concurrency**: No locking mechanism implemented for concurrent requests (suitable for POC only)
+5. **Room Capacity**: All 5 rooms are assumed to be available and identical in features
+
+### Design Decisions
+1. **15-Minute Blocks**: Enforced to simplify scheduling and avoid conflicts
+2. **Trust-Based**: No user authentication to keep the POC simple
+3. **UUID for Booking IDs**: Ensures uniqueness across all bookings
+4. **Singleton Repository**: Maintains state across requests within the same server instance
+5. **Explicit HTTP Status Codes**: Clear error codes make the API self-documenting
+
+### Limitations (POC)
+- ⚠️ Data lost on server restart (no persistent storage)
+- ⚠️ Not suitable for high-concurrency scenarios
+- ⚠️ No authentication or authorization
+- ⚠️ No logging or monitoring
+- ⚠️ No rate limiting
+
 ## Architecture
 
 The project follows a clean, layered architecture:
@@ -249,29 +272,6 @@ curl -X POST "http://localhost:8000/api/v1/bookings" \
     "user_name": "User B"
   }'
 ```
-
-## Assumptions & Design Decisions
-
-### Assumptions
-1. **Time Format**: All times are in ISO 8601 format (e.g., `2026-01-17T14:00:00`)
-2. **Timezone**: Naive datetimes are treated as local time. For production, consider using timezone-aware datetimes.
-3. **Storage**: In-memory storage means data is lost when the server restarts
-4. **Concurrency**: No locking mechanism implemented for concurrent requests (suitable for POC only)
-5. **Room Capacity**: All 5 rooms are assumed to be available and identical in features
-
-### Design Decisions
-1. **15-Minute Blocks**: Enforced to simplify scheduling and avoid conflicts
-2. **Trust-Based**: No user authentication to keep the POC simple
-3. **UUID for Booking IDs**: Ensures uniqueness across all bookings
-4. **Singleton Repository**: Maintains state across requests within the same server instance
-5. **Explicit HTTP Status Codes**: Clear error codes make the API self-documenting
-
-### Limitations (POC)
-- ⚠️ Data lost on server restart (no persistent storage)
-- ⚠️ Not suitable for high-concurrency scenarios
-- ⚠️ No authentication or authorization
-- ⚠️ No logging or monitoring
-- ⚠️ No rate limiting
 
 ## Development
 
