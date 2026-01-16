@@ -1,7 +1,7 @@
-## 🤖 Used AI tool: GitHub Copilot (Agent, Claude Sonnet 4.5)
+## 🤖 Used AI tool: GitHub Copilot (Claude Sonnet 4.5)
 
 
-**First prompt:**
+**First prompt (Agent):**
 
 Let's create a meeting room reservation REST API. We are going to use Python + FastAPI. 
 
@@ -134,7 +134,7 @@ The comprehensive README.md includes detailed API documentation, example request
 ---
 
 
-**Prompt:**
+**Prompt (Ask):**
 
 Where in the project do we define the API calls/endpoints?
 
@@ -176,7 +176,7 @@ All booking endpoints are prefixed with `/api/v1` and use FastAPI decorators (`@
 ---
 
 
-**Prompt:**
+**Prompt (Agent):**
 
 Please write a test cases that test the three main functionalities for the project:
 1. Book a room for a given time period
@@ -698,6 +698,147 @@ This comprehensive test suite includes:
 - ✓ Maximum username length (100 chars)
 
 Run with: `python test_api.py`
+
+
+---
+
+
+**Prompt (Ask):**
+
+We are getting error code 422 from pydantic when room_id is less than 1, for example 0 or -1. Can we handle the error 422 similarly to error 404? Can we add @field_validator('room_id') to the class BookingCreate? What's the best way to handle this error?
+app/  booking_service.py:26-31  booking_controller.py:57-58   booking.py
+
+
+**Answer:**
+
+Yes, you can handle this better! There are a few approaches:
+
+## Option 1: Use Pydantic validator (Recommended for API clarity)
+
+Add a `@field_validator` to `BookingCreate` to give more descriptive error messages:
+
+````python
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field, field_validator
+
+
+class BookingCreate(BaseModel):
+    """Request model for creating a booking"""
+    room_id: int = Field(..., ge=1, le=5, description="Room ID (1-5)")
+    start_time: datetime = Field(..., description="Start time of the booking")
+    end_time: datetime = Field(..., description="End time of the booking")
+    user_name: str = Field(..., min_length=1, max_length=100, description="Name of the person making the booking")
+    
+    @field_validator('room_id')
+    @classmethod
+    def validate_room_id(cls, v):
+        """Validate room ID is between 1 and 5"""
+        if v < 1 or v > 5:
+            raise ValueError(f"Room ID must be between 1 and 5. Got {v}.")
+        return v
+    
+    @field_validator('start_time', 'end_time')
+    @classmethod
+    def validate_datetime(cls, v):
+        """Ensure datetime is timezone-aware or convert to UTC"""
+        if v.tzinfo is None:
+            # Treat naive datetime as UTC
+            return v.replace(tzinfo=None)
+        return v
+````
+
+## Option 2: Custom exception handler (Best for consistent 404 responses)
+
+Add a custom exception handler in `main.py` to convert Pydantic validation errors for room_id into 404:
+
+````python
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+from app.controllers import router
+
+
+# Create FastAPI application
+app = FastAPI(
+    title="Meeting Room Reservation API",
+    description="REST API for booking meeting rooms",
+    version="1.0.0",
+    docs_url="/docs",
+)
+
+# Configure CORS (allow all origins for this POC)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# Custom exception handler for validation errors
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """
+    Handle validation errors and convert room_id validation to 404
+    """
+    errors = exc.errors()
+    
+    # Check if error is related to room_id
+    for error in errors:
+        if 'room_id' in error.get('loc', []):
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"detail": "Room not found. Valid rooms are 1-5."}
+            )
+    
+    # Default validation error response
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={"detail": errors}
+    )
+
+
+# Include routers
+app.include_router(router)
+
+
+@app.get("/", tags=["health"])
+def root():
+    """Root endpoint - API health check"""
+    return {
+        "status": "online",
+        "service": "Meeting Room Reservation API",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+
+@app.get("/health", tags=["health"])
+def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+````
+
+## Option 3: Combination (Most user-friendly)
+
+Use both - the validator for better error messages AND the exception handler for consistent 404 status codes.
+
+**My recommendation: Use Option 2 (Custom Exception Handler)** because:
+- ✅ Consistent 404 response for invalid rooms (matches your existing logic)
+- ✅ Cleaner separation - validation stays in Pydantic, business logic in service
+- ✅ Better API design - resource "not found" should be 404, not 422
+- ✅ Can be extended to handle other validation errors differently
+
+The `ge=1, le=5` in the Field definition already handles the validation, you just need to convert the 422 to 404 for better REST semantics.
 
 
 ---

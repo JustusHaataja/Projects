@@ -10,6 +10,14 @@ class BookingCreate(BaseModel):
     end_time: datetime = Field(..., description="End time of the booking")
     user_name: str = Field(..., min_length=1, max_length=100, description="Name of the person making the booking")
     
+    @field_validator('room_id')
+    @classmethod
+    def validate_room_id(cls, v):
+        """Validate room ID is between 1 and 5"""
+        if v < 1 or v > 5:
+            raise ValueError(f"Room ID must be between 1 and 5. Got {v}.")
+        return v
+    
     @field_validator('start_time', 'end_time')
     @classmethod
     def validate_datetime(cls, v):
