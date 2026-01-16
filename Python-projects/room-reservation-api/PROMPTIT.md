@@ -1677,3 +1677,165 @@ app.include_router(room_router)
 
 
 ---
+
+
+**Prompt (Ask):**
+
+What is the point of async in this application? Can we just do it without it to make this perform better?
+main.py:27-47
+
+
+**Answer:**
+
+Great question! The `async` keyword here is **not necessary and doesn't provide any benefit** in this case. Let me explain:
+
+## Current Code Analysis
+
+Your exception handler is `async`, but it doesn't perform any async operations:
+
+```python
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # No await calls, no I/O operations
+    # Just synchronous data processing
+```
+
+## When to Use Async vs Sync
+
+### Use `async/await` when you have:
+- ❌ Database queries (if using async drivers like `asyncpg`, `motor`)
+- ❌ External API calls (with `httpx.AsyncClient`)
+- ❌ File I/O with async libraries
+- ❌ WebSocket connections
+- ❌ Long-running I/O operations
+
+### Use regular sync functions when:
+- ✅ Simple data processing
+- ✅ In-memory operations (like your current repository)
+- ✅ Quick computations
+- ✅ No I/O operations
+
+## Recommended Changes
+
+````python
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+from app.controllers import router
+
+
+# Create FastAPI application
+app = FastAPI(
+    title = "Meeting Room Reservation API",
+    description = "REST API for booking meeting rooms",
+    version = "1.0.0",
+    docs_url = "/docs",
+)
+
+# Configure CORS (allow all origins for this POC)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["*"],
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"],
+)
+
+
+# Custom exception handler for validation errors
+@app.exception_handler(RequestValidationError)
+def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """
+    Handle validation errors and convert room_id validation to 404
+    """
+    errors = exc.errors()
+    
+    # Check if error is related to room_id
+    for error in errors:
+        if 'room_id' in error.get('loc', []):
+            return JSONResponse(
+                status_code = status.HTTP_404_NOT_FOUND,
+                content = {"detail": "Room not found. Valid rooms are 1-5."}
+            )
+    
+    # Default validation error response
+    return JSONResponse(
+        status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content = {"detail": errors}
+    )
+
+
+# Include routers
+app.include_router(router)
+
+
+@app.get("/", tags=["health"])
+def root():
+    """Root endpoint - API health check"""
+    
+    return {
+        "status": "online",
+        "service": "Meeting Room Reservation API",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+
+@app.get("/health", tags=["health"])
+def health_check():
+    """Health check endpoint"""
+    
+    return {"status": "healthy"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host = "0.0.0.0", port = 8000)
+````
+
+## Performance Impact
+
+**Removing `async` here will actually improve performance slightly** because:
+
+1. **Less overhead** - No need for event loop context switching
+2. **Simpler execution** - Direct function call instead of coroutine scheduling
+3. **Better for CPU-bound tasks** - Your validation is pure computation
+
+## When Your App WOULD Need Async
+
+If you later add a database:
+
+```python
+# Example with async database
+@router.post("/bookings")
+async def create_booking(
+    booking_data: BookingCreate,
+    service: BookingService = Depends(get_booking_service)
+):
+    # If service.create_booking() uses async DB calls
+    booking = await service.create_booking(booking_data)
+    return BookingResponse.model_validate(booking)
+```
+
+## Current State of Your App
+
+Your entire application is **synchronous**:
+- ✅ In-memory repository (no I/O)
+- ✅ Synchronous endpoint handlers
+- ✅ No database calls
+- ✅ No external API calls
+
+**Verdict:** Remove `async` from the exception handler. It's unnecessary and adds minimal overhead. Your app doesn't benefit from async/await since everything is in-memory and synchronous.
+
+If you later add a database (PostgreSQL, MongoDB, etc.), **then** you'd want to:
+1. Use async database drivers
+2. Make repository methods async
+3. Make service methods async
+4. Make endpoint handlers async
+
+But for now, keep it simple and synchronous! 🚀
+
+
+---

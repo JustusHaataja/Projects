@@ -26,7 +26,7 @@ app.add_middleware(
 
 # Custom exception handler for validation errors
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
+def validation_exception_handler(request: Request, exc: RequestValidationError):
     """
     Handle validation errors and convert room_id validation to 404
     """
