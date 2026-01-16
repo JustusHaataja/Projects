@@ -7,6 +7,9 @@ from datetime import datetime, timedelta
 
 BASE_URL = "http://localhost:8000"
 
+# Global variable to store a booking ID for cancellation tests
+_test_booking_id = None
+
 
 def test_health_check():
     """Test the health endpoint"""
@@ -19,10 +22,33 @@ def test_health_check():
     assert response.status_code == 200
 
 
+# ==================== HELPER FUNCTIONS ====================
+
+def create_booking_silently(room_id=1, hours_from_now=24, duration_hours=1):
+    """Helper function to create a booking without printing output"""
+    future_time = datetime.now() + timedelta(hours=hours_from_now)
+    start_time = future_time.replace(minute=0, second=0, microsecond=0)
+    end_time = start_time + timedelta(hours=duration_hours)
+    
+    booking_data = {
+        "room_id": room_id,
+        "start_time": start_time.isoformat(),
+        "end_time": end_time.isoformat(),
+        "user_name": "Test User"
+    }
+    
+    response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+    if response.status_code == 201:
+        return response.json()['id']
+    return None
+
+
 # ==================== BOOKING CREATION TESTS ====================
 
 def test_create_valid_booking():
     """Test creating a valid booking"""
+    global _test_booking_id
+    
     print("=" * 50)
     print("TEST: Create Valid Booking")
     print("=" * 50)
@@ -44,6 +70,7 @@ def test_create_valid_booking():
     assert response.status_code == 201, f"Expected 201, got {response.status_code}"
     
     booking = response.json()
+    _test_booking_id = booking['id']  # Store for later tests
     print(f"✓ Booking created: ID = {booking['id']}, Room = {booking['room_id']}")
     print(f"Response: {booking}\n")
     return booking['id']
@@ -72,14 +99,14 @@ def test_create_booking_past_time():
     print(f"✓ Correctly rejected: {response.json()['detail']}\n")
 
 
-def test_create_booking_invalid_time_blocks():
+def test_create_booking_invalid_time_blocks(minute: int = 1):
     """Test booking with invalid 15-minute blocks (should fail)"""
     print("=" * 50)
     print("TEST: Invalid 15-Minute Blocks (Should Fail)")
     print("=" * 50)
     
     tomorrow = datetime.now() + timedelta(days=1)
-    start_time = tomorrow.replace(hour=14, minute=13, second=0, microsecond=0)  # Invalid: 14:13
+    start_time = tomorrow.replace(hour=14, minute=minute, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
     booking_data = {
@@ -207,25 +234,33 @@ def test_create_minimum_duration_booking():
     print(f"Status: {response.status_code}")
     assert response.status_code == 201, f"Expected 201, got {response.status_code}"
     print(f"✓ 15-minute booking created successfully\n")
-    return response.json()['id']
+    
+    # Cleanup
+    requests.delete(f"{BASE_URL}/api/v1/bookings/{response.json()['id']}")
 
 
 # ==================== CANCELLATION TESTS ====================
 
 def test_cancel_existing_booking():
     """Test canceling an existing booking"""
+    global _test_booking_id
+    
     print("=" * 50)
     print("TEST: Cancel Existing Booking")
     print("=" * 50)
     
-    # Create a booking first
-    booking_id = test_create_valid_booking()
+    # Use the booking created in test_create_valid_booking, or create a new one
+    if not _test_booking_id:
+        _test_booking_id = create_booking_silently()
     
-    # Cancel it
-    response = requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+    print(f"Canceling booking: {_test_booking_id}")
+    response = requests.delete(f"{BASE_URL}/api/v1/bookings/{_test_booking_id}")
     print(f"Cancel status: {response.status_code}")
     assert response.status_code == 204, f"Expected 204, got {response.status_code}"
-    print(f"✓ Booking {booking_id} cancelled successfully\n")
+    print(f"✓ Booking cancelled successfully\n")
+    
+    # Clear the global variable
+    _test_booking_id = None
 
 
 def test_cancel_nonexistent_booking():
@@ -248,8 +283,11 @@ def test_cancel_already_cancelled_booking():
     print("TEST: Double Cancellation (Should Fail)")
     print("=" * 50)
     
-    # Create and cancel a booking
-    booking_id = test_create_valid_booking()
+    # Create a fresh booking for this test
+    booking_id = create_booking_silently(room_id=1, hours_from_now=48)
+    print(f"Created booking: {booking_id}")
+    
+    # First cancellation
     response1 = requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
     assert response1.status_code == 204
     print(f"First cancellation: {response1.status_code}")
@@ -447,7 +485,7 @@ if __name__ == "__main__":
         # Booking creation tests
         test_create_valid_booking()
         test_create_booking_past_time()
-        test_create_booking_invalid_time_blocks()
+        test_create_booking_invalid_time_blocks(minute=13)
         test_create_booking_end_before_start()
         test_create_booking_invalid_room()
         test_create_overlapping_bookings()
