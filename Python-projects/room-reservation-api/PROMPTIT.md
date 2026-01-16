@@ -1,5 +1,19 @@
 ## 🤖 Used AI tool: GitHub Copilot (Claude Sonnet 4.5)
 
+## Table of Contents
+
+1. [Initial Project Setup - FastAPI Room Reservation API](#initial-project-setup---fastapi-room-reservation-api)
+2. [Locating API Endpoints in Project Structure](#locating-api-endpoints-in-project-structure)
+3. [Writing Comprehensive Test Cases for API Functionalities](#writing-comprehensive-test-cases-for-api-functionalities)
+4. [Converting Pydantic 422 Errors to 404 for Invalid Room IDs](#converting-pydantic-422-errors-to-404-for-invalid-room-ids)
+5. [Refactoring Tests with Global Variables and Helper Functions](#refactoring-tests-with-global-variables-and-helper-functions)
+6. [Making Room IDs Configurable - Three Approaches](#making-room-ids-configurable---three-approaches)
+7. [Removing Unnecessary Async from Exception Handler](#removing-unnecessary-async-from-exception-handler)
+
+
+---
+
+## Initial Project Setup - FastAPI Room Reservation API
 
 **First prompt (Agent):**
 
@@ -133,6 +147,7 @@ The comprehensive README.md includes detailed API documentation, example request
 
 ---
 
+## Locating API Endpoints in Project Structure
 
 **Prompt (Ask):**
 
@@ -175,6 +190,8 @@ All booking endpoints are prefixed with `/api/v1` and use FastAPI decorators (`@
 
 ---
 
+
+## Writing Comprehensive Test Cases for API Functionalities
 
 **Prompt (Agent):**
 
@@ -703,6 +720,8 @@ Run with: `python test_api.py`
 ---
 
 
+## Converting Pydantic 422 Errors to 404 for Invalid Room IDs
+
 **Prompt (Ask):**
 
 We are getting error code 422 from pydantic when room_id is less than 1, for example 0 or -1. Can we handle the error 422 similarly to error 404? Can we add @field_validator('room_id') to the class BookingCreate? What's the best way to handle this error?
@@ -843,6 +862,8 @@ The `ge=1, le=5` in the Field definition already handles the validation, you jus
 
 ---
 
+
+## Refactoring Tests with Global Variables and Helper Functions
 
 **Prompt (Ask):**
 
@@ -1388,6 +1409,8 @@ if __name__ == "__main__":
 ---
 
 
+## Making Room IDs Configurable - Three Approaches
+
 **Prompt (Ask):**
 
 If we wanted to make valid_room_ids easily changeable as a variable, how could we do that and how would it change the whole project?
@@ -1678,6 +1701,8 @@ app.include_router(room_router)
 
 ---
 
+
+## Removing Unnecessary Async from Exception Handler
 
 **Prompt (Ask):**
 
