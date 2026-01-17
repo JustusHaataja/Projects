@@ -42,7 +42,7 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 
 ### Limitations (POC)
 - ⚠️ Data lost on server restart (no persistent storage)
-- ⚠️ Not suitable for high-concurrency scenarios
+- ⚠️ Thread-safe for concurrent requests, but in-memory storage limits scalability
 - ⚠️ No authentication or authorization
 - ⚠️ No logging or monitoring
 - ⚠️ No rate limiting
