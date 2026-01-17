@@ -9,6 +9,7 @@
 5. [Refactoring Tests with Global Variables and Helper Functions](#refactoring-tests-with-global-variables-and-helper-functions)
 6. [Making Room IDs Configurable - Three Approaches](#making-room-ids-configurable---three-approaches)
 7. [Removing Unnecessary Async from Exception Handler](#removing-unnecessary-async-from-exception-handler)
+8. [Implementing Thread-Safety for Concurrent API Requests](#Implementing-Thread-Safety-for-Concurrent-API-Requests)
 
 
 ---
@@ -1861,6 +1862,261 @@ If you later add a database (PostgreSQL, MongoDB, etc.), **then** you'd want to:
 4. Make endpoint handlers async
 
 But for now, keep it simple and synchronous! 🚀
+
+
+---
+
+
+## Implementing Thread-Safety for Concurrent API Requests
+
+**Prompt (Ask):**
+
+Should we add Thread-safety to this? I think we might run into issues if multiple similar API calls are made at the same time. Shouldn't Thread-safety handle this issue?
+booking_repository.py
+
+
+**Answer:**
+
+Yes, you're absolutely right! The current in-memory storage is **not thread-safe**, which can cause issues with concurrent requests. Here are the solutions:
+
+## Option 1: Add Thread Locks (Simple, for POC)
+
+````python
+from datetime import datetime
+from typing import Dict, List, Optional
+import uuid
+import threading
+from app.models import Booking
+
+
+class BookingRepository:
+    """Thread-safe in-memory repository for managing bookings"""
+    
+    def __init__(self):
+        # Storage: booking_id -> Booking
+        self._bookings: Dict[str, Booking] = {}
+        
+        # Valid room IDs
+        self._valid_room_ids = {1, 2, 3, 4, 5}
+        
+        # Thread lock for concurrent access
+        self._lock = threading.RLock()
+    
+
+    def create(self, booking_data: dict) -> Booking:
+        """Create a new booking"""
+        
+        with self._lock:
+            booking_id = str(uuid.uuid4())
+            
+            booking = Booking(
+                id = booking_id,
+                **booking_data,
+                created_at = datetime.now()
+            )
+            
+            self._bookings[booking_id] = booking
+            
+            return booking
+    
+
+    def get_by_id(self, booking_id: str) -> Optional[Booking]:
+        """Get a booking by ID"""
+        
+        with self._lock:
+            return self._bookings.get(booking_id)
+    
+
+    def get_by_room(self, room_id: int, from_time: Optional[datetime] = None) -> List[Booking]:
+        """Get all bookings for a specific room, optionally filtered by time"""
+        
+        with self._lock:
+            bookings = [
+                booking for booking in self._bookings.values()
+                if booking.room_id == room_id
+            ]
+            
+            if from_time:
+                bookings = [
+                    booking for booking in bookings
+                    if booking.end_time >= from_time
+                ]
+            
+            # Sort by start time
+            bookings.sort(key = lambda b: b.start_time)
+            
+            return bookings
+    
+
+    def get_overlapping_bookings(
+        self, 
+        room_id: int, 
+        start_time: datetime, 
+        end_time: datetime,
+        exclude_booking_id: Optional[str] = None
+    ) -> List[Booking]:
+        """
+        Find bookings that overlap with the given time range for a specific room.
+        Two bookings overlap if: start1 < end2 AND start2 < end1
+        """
+        
+        with self._lock:
+            overlapping = []
+            
+            for booking in self._bookings.values():
+                if booking.room_id != room_id:
+                    continue
+                
+                if exclude_booking_id and booking.id == exclude_booking_id:
+                    continue
+                
+                # Check for overlap: start1 < end2 AND start2 < end1
+                if booking.start_time < end_time and start_time < booking.end_time:
+                    overlapping.append(booking)
+            
+            return overlapping
+    
+
+    def delete(self, booking_id: str) -> bool:
+        """Delete a booking by ID. Returns True if deleted, False if not found"""
+        
+        with self._lock:
+            if booking_id in self._bookings:
+                del self._bookings[booking_id]
+                return True
+            
+            return False
+    
+
+    def is_valid_room_id(self, room_id: int) -> bool:
+        """Check if room ID is valid"""
+        
+        # Read-only operation, no lock needed
+        return room_id in self._valid_room_ids
+    
+
+    def get_all(self) -> List[Booking]:
+        """Get all bookings"""
+        
+        with self._lock:
+            return list(self._bookings.values())
+````
+
+## Option 2: Use AsyncIO Locks (Better for async FastAPI)
+
+````python
+from datetime import datetime
+from typing import Dict, List, Optional
+import uuid
+import asyncio
+from app.models import Booking
+
+
+class BookingRepository:
+    """Async-safe in-memory repository for managing bookings"""
+    
+    def __init__(self):
+        # Storage: booking_id -> Booking
+        self._bookings: Dict[str, Booking] = {}
+        
+        # Valid room IDs
+        self._valid_room_ids = {1, 2, 3, 4, 5}
+        
+        # Async lock for concurrent access
+        self._lock = asyncio.Lock()
+    
+
+    async def create(self, booking_data: dict) -> Booking:
+        """Create a new booking"""
+        
+        async with self._lock:
+            booking_id = str(uuid.uuid4())
+            
+            booking = Booking(
+                id = booking_id,
+                **booking_data,
+                created_at = datetime.now()
+            )
+            
+            self._bookings[booking_id] = booking
+            
+            return booking
+    
+
+    async def get_overlapping_bookings(
+        self, 
+        room_id: int, 
+        start_time: datetime, 
+        end_time: datetime,
+        exclude_booking_id: Optional[str] = None
+    ) -> List[Booking]:
+        """Find overlapping bookings"""
+        
+        async with self._lock:
+            overlapping = []
+            
+            for booking in self._bookings.values():
+                if booking.room_id != room_id:
+                    continue
+                
+                if exclude_booking_id and booking.id == exclude_booking_id:
+                    continue
+                
+                if booking.start_time < end_time and start_time < booking.end_time:
+                    overlapping.append(booking)
+            
+            return overlapping
+    
+    # Add async to other methods similarly...
+````
+
+## Option 3: Production-Ready with Database (Recommended)
+
+For production, use a proper database with transaction support:
+
+````python
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, and_
+
+class BookingRepository:
+    """Database-backed repository with transaction support"""
+    
+    def __init__(self, db: AsyncSession):
+        self._db = db
+    
+    async def create(self, booking_data: dict) -> Booking:
+        """Create with automatic transaction handling"""
+        booking = Booking(**booking_data)
+        self._db.add(booking)
+        await self._db.commit()
+        await self._db.refresh(booking)
+        return booking
+````
+
+## My Recommendation for Your POC:
+
+**Use Option 1 (Threading Locks)** because:
+- ✅ Simple to implement
+- ✅ Works with your current sync code
+- ✅ Sufficient for POC/testing
+- ✅ No need to refactor to async
+
+**Add this to README.md:**
+
+````markdown
+// ...existing code...
+
+### Limitations (POC)
+- ⚠️ Data lost on server restart (no persistent storage)
+- ⚠️ Thread-safe for concurrent requests, but in-memory storage limits scalability
+- ⚠️ No authentication or authorization
+- ⚠️ No logging or monitoring
+- ⚠️ No rate limiting
+
+// ...existing code...
+````
+
+The threading lock prevents race conditions where two requests try to book the same room at the same time!
 
 
 ---
