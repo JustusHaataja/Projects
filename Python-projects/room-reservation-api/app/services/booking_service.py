@@ -43,8 +43,8 @@ class BookingService:
         # Rule 3: Start time must be before end time
         if booking_data.start_time >= booking_data.end_time:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Start time must be before end time."
+                status_code = status.HTTP_400_BAD_REQUEST,
+                detail = "Start time must be before end time."
             )
         
         # Rule 5: (Optional) Validate 15-minute blocks
