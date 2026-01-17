@@ -12,7 +12,7 @@ app = FastAPI(
     description = "REST API for booking meeting rooms",
     version = "1.0.0",
     docs_url = "/docs",
-    default_response_class=ORJSONResponse,
+    default_response_class = ORJSONResponse,
 )
 
 # Configure CORS (allow all origins for this POC)
