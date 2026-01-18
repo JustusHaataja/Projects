@@ -14,11 +14,11 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 - ✅ No past bookings - all reservations must be in the future
 - ✅ Valid time ranges - start time must be before end time
 - ✅ 5 rooms available - rooms are identified by IDs 1-5
-- ✅ Trust-based system - no authentication required
-- ✅ 15-minute blocks - bookings must start and end at :00, :15, :30, or :45
-- ✅ Minimum duration - bookings must be at least 15 minutes long
 
 ### Additional Features
+- Trust-based system - no authentication required
+- 15-minute blocks - bookings must start and end at :00, :15, :30, or :45
+- Minimum duration - bookings must be at least 15 minutes long
 - Filter bookings with `from_now` parameter to show only upcoming reservations
 - Proper HTTP status codes (200, 201, 204, 400, 404, 409)
 - Clear layer separation (controllers, services, repositories)
