@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 from fastapi import HTTPException, status
 
@@ -33,7 +33,7 @@ class BookingService:
             )
         
         # Rule 2: Start time cannot be in the past
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         if booking_data.start_time < now:
             raise HTTPException(
                 status_code = status.HTTP_400_BAD_REQUEST,
@@ -89,7 +89,7 @@ class BookingService:
                 detail = f"Room {room_id} not found. Valid rooms are 1-5."
             )
         
-        from_time = datetime.now() if from_now else None
+        from_time = datetime.now(timezone.utc) if from_now else None
         
         return self.repository.get_by_room(room_id, from_time)
     
@@ -104,7 +104,7 @@ class BookingService:
         all_bookings = self.repository.get_all()
 
         if from_now:
-            current_time = datetime.now()
+            current_time = datetime.now(timezone.utc)
             all_bookings = [
                 booking for booking in all_bookings
                 if booking.start_time > current_time

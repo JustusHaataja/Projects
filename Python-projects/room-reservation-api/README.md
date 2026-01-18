@@ -22,6 +22,8 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 - Minimum duration - bookings must be at least 15 minutes long
 - Filter bookings with `from_now` parameter to show only upcoming reservations
 - Global bookings view - see all reservations across all rooms for dashboard/calendar views
+- UTC timezone handling - all times are stored and compared in UTC
+- Thread-safe operations - concurrent requests are handled safely with locking mechanisms
 - Proper HTTP status codes (200, 201, 204, 400, 404, 409)
 - Clear layer separation (controllers, services, repositories)
 - Interactive API documentation (Swagger UI)
@@ -29,22 +31,23 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 ## Assumptions & Design Decisions
 
 ### Assumptions
-1. **Time Format**: All times are in ISO 8601 format (e.g., `2026-01-17T14:00:00`)
-2. **Timezone**: Naive datetimes are treated as local time. For production, consider using timezone-aware datetimes.
+1. **Time Format**: All times must be in ISO 8601 format with timezone information (e.g., `2026-01-17T14:00:00Z` or `2026-01-17T14:00:00+00:00`)
+2. **Timezone**: All datetimes must be timezone-aware (UTC). Naive datetimes are rejected to prevent ambiguity.
 3. **Storage**: In-memory storage means data is lost when the server restarts
-4. **Concurrency**: No locking mechanism implemented for concurrent requests (suitable for POC only)
-5. **Room Capacity**: All 5 rooms are assumed to be available and identical in features
+4. **Room Capacity**: All 5 rooms are assumed to be available and identical in features
 
 ### Design Decisions
-1. **15-Minute Blocks**: Enforced to simplify scheduling and avoid conflicts
-2. **Trust-Based**: No user authentication to keep the POC simple
-3. **UUID for Booking IDs**: Ensures uniqueness across all bookings
-4. **Singleton Repository**: Maintains state across requests within the same server instance
-5. **Explicit HTTP Status Codes**: Clear error codes make the API self-documenting
+1. **UTC Timezone Enforcement**: All incoming datetimes are validated to be timezone-aware and converted to UTC for consistent storage and comparison
+2. **Thread-Safety**: Repository operations use `RLock` to handle concurrent requests safely
+3. **15-Minute Blocks**: Enforced to simplify scheduling and avoid conflicts
+4. **Trust-Based**: No user authentication to keep the POC simple
+5. **UUID for Booking IDs**: Ensures uniqueness across all bookings
+6. **Singleton Repository**: Maintains state across requests within the same server instance
+7. **Explicit HTTP Status Codes**: Clear error codes make the API self-documenting
 
 ### Limitations (POC)
 - ⚠️ Data lost on server restart (no persistent storage)
-- ⚠️ Thread-safe for concurrent requests, but in-memory storage limits scalability
+- ⚠️ In-memory storage limits scalability (not suitable for distributed systems)
 - ⚠️ No authentication or authorization
 - ⚠️ No logging or monitoring
 - ⚠️ No rate limiting

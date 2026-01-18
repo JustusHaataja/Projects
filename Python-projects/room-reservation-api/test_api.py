@@ -3,7 +3,7 @@ Comprehensive API functionality tests
 Run this while the server is running (uvicorn app.main:app --reload)
 """
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 BASE_URL = "http://localhost:8000"
 
@@ -26,7 +26,7 @@ def test_health_check():
 
 def create_booking_silently(room_id=1, hours_from_now=24, duration_hours=1):
     """Helper function to create a booking without printing output"""
-    future_time = datetime.now() + timedelta(hours=hours_from_now)
+    future_time = datetime.now(timezone.utc) + timedelta(hours=hours_from_now)
     start_time = future_time.replace(minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=duration_hours)
     
@@ -53,7 +53,7 @@ def test_create_valid_booking():
     print("TEST: Create Valid Booking")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=14, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -82,7 +82,7 @@ def test_create_booking_past_time():
     print("TEST: Create Booking in Past (Should Fail)")
     print("=" * 50)
     
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
     start_time = yesterday.replace(hour=14, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -105,7 +105,7 @@ def test_create_booking_invalid_time_blocks(minute: int = 1):
     print("TEST: Invalid 15-Minute Blocks (Should Fail)")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=14, minute=minute, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -128,7 +128,7 @@ def test_create_booking_end_before_start():
     print("TEST: End Time Before Start Time (Should Fail)")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=15, minute=0, second=0, microsecond=0)
     end_time = tomorrow.replace(hour=14, minute=0, second=0, microsecond=0)  # Before start!
     
@@ -151,7 +151,7 @@ def test_create_booking_invalid_room():
     print("TEST: Invalid Room ID (Should Fail)")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=14, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -176,7 +176,7 @@ def test_create_overlapping_bookings():
     print("TEST: Overlapping Bookings (Should Fail)")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=10, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=2)
     
@@ -219,7 +219,7 @@ def test_create_minimum_duration_booking():
     print("TEST: Minimum Duration Booking (15 minutes)")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=9, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(minutes=15)  # Exactly 15 minutes
     
@@ -324,7 +324,7 @@ def test_list_bookings_with_data():
     
     # Create multiple bookings
     booking_ids = []
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     
     for hour in [9, 11, 14]:
         start_time = tomorrow.replace(hour=hour, minute=0, second=0, microsecond=0)
@@ -367,7 +367,7 @@ def test_list_bookings_from_now():
     print("=" * 50)
     
     # Create a booking for tomorrow
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=16, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -392,7 +392,7 @@ def test_list_bookings_from_now():
     # All bookings should be in the future
     for booking in bookings:
         booking_end = datetime.fromisoformat(booking['end_time'].replace('Z', '+00:00'))
-        assert booking_end > datetime.now(), "Found past booking in upcoming list!"
+        assert booking_end > datetime.now(timezone.utc), "Found past booking in upcoming list!"
         print(f"  - {booking['user_name']}: {booking['start_time']}")
     
     print(f"✓ Only upcoming bookings returned\n")
@@ -436,7 +436,7 @@ def test_get_all_bookings_multiple_rooms():
     
     # Create bookings in different rooms
     booking_ids = []
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     
     bookings_data = [
         (1, 9, "Room 1 User A"),
@@ -493,7 +493,7 @@ def test_get_all_bookings_from_now():
     
     # Create bookings for different rooms in the future
     booking_ids = []
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     
     for room_id in [1, 2, 3]:
         start_time = tomorrow.replace(hour=10 + room_id, minute=0, second=0, microsecond=0)
@@ -519,7 +519,7 @@ def test_get_all_bookings_from_now():
     print(f"Found {len(upcoming_bookings)} upcoming bookings across all rooms")
     
     # Verify all bookings are in the future
-    current_time = datetime.now()
+    current_time = datetime.now(timezone.utc)
     for booking in upcoming_bookings:
         booking_start = datetime.fromisoformat(booking['start_time'].replace('Z', '+00:00'))
         assert booking_start > current_time, f"Found past booking: {booking['user_name']}"
@@ -540,7 +540,7 @@ def test_get_all_bookings_sorted_by_time():
     
     # Create bookings in random order
     booking_ids = []
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     
     # Create bookings at different times in non-sequential order
     hours = [14, 9, 16, 11, 13]
@@ -594,7 +594,7 @@ def test_booking_at_midnight():
     print("TEST: Booking at Midnight")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=0, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
@@ -623,7 +623,7 @@ def test_long_username():
     print("TEST: Maximum Length Username")
     print("=" * 50)
     
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
     start_time = tomorrow.replace(hour=13, minute=0, second=0, microsecond=0)
     end_time = start_time + timedelta(hours=1)
     
