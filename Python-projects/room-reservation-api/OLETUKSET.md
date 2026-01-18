@@ -1,5 +1,29 @@
 # Projektin oletukset ja suunnittelupäätökset
 
+## Sisällysluettelo
+
+- [Tehdyt oletukset (POC-tasolla)](#tehdyt-oletukset-poc-tasolla)
+  - [1. Käyttäjätunnistus ja autentikaatio](#1-käyttäjätunnistus-ja-autentikaatio)
+  - [2. Tiedon pysyvyys](#2-tiedon-pysyvyys)
+  - [3. Huoneiden määrä ja ominaisuudet](#3-huoneiden-määrä-ja-ominaisuudet)
+  - [4. Aikavyöhykkeet ja aikamäärittelyt](#4-aikavyöhykkeet-ja-aikamäärittelyt)
+  - [5. Varausaikablokit](#5-varausaikablokit)
+  - [6. Rinnakkaisuus ja suorituskyky](#6-rinnakkaisuus-ja-suorituskyky)
+  - [7. Virheenkäsittely ja validointi](#7-virheenkäsittely-ja-validointi)
+  - [8. API-dokumentaatio](#8-api-dokumentaatio)
+- [Muutokset Prototype/MVP-tasolla](#muutokset-prototypemvp-tasolla-postgresql-tietokannalla)
+  - [1. Tietokantakerros](#1-tietokantakerros)
+  - [2. Käyttäjähallinta ja autentikaatio](#2-käyttäjähallinta-ja-autentikaatio)
+  - [3. Huoneiden hallinta ja metatiedot](#3-huoneiden-hallinta-ja-metatiedot)
+  - [4. Joustavammat varausajat ja toistuvat varaukset](#4-joustavammat-varausajat-ja-toistuvat-varaukset)
+  - [5. Lokitus, monitorointi ja analytiikka](#5-lokitus-monitorointi-ja-analytiikka)
+  - [6. Suorituskyvyn optimointi ja skaalautuvuus](#6-suorituskyvyn-optimointi-ja-skaalautuvuus)
+  - [7. Tietoturva ja compliance](#7-tietoturva-ja-compliance)
+- [Yhteenveto: POC vs. MVP/Prototype](#yhteenveto-poc-vs-mvpprototype)
+
+---
+
+
 ## Tehdyt oletukset (POC-tasolla)
 
 ### 1. Käyttäjätunnistus ja autentikaatio
