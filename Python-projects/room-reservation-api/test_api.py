@@ -334,7 +334,7 @@ def test_list_bookings_with_data():
             "room_id": 5,
             "start_time": start_time.isoformat(),
             "end_time": end_time.isoformat(),
-            "user_name": f"User {hour}:00"
+            "user_name": f"User@{hour}.00"
         }
         
         response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)

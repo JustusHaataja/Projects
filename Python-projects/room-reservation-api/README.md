@@ -117,37 +117,83 @@ Create a new room reservation.
 ```json
 {
   "room_id": 1,
-  "start_time": "2026-01-17T14:00:00",
-  "end_time": "2026-01-17T15:00:00",
-  "user_name": "John Doe"
+  "start_time": "2026-01-17T14:00:00Z",
+  "end_time": "2026-01-17T15:00:00Z",
+  "user_name": "john.doe@company.com"
 }
 ```
+
+**Field Requirements:**
+
+- `room_id`: Integer between 1-5
+- `start_time`: ISO 8601 datetime with timezone (must be in the future)
+- `end_time`: ISO 8601 datetime with timezone (must be after start_time)
+- `user_name`: User identifier (1-100 characters)
+  - Accepts: emails, usernames, display names, or user IDs
+  - Allowed characters: letters, numbers, `@`, `.`, `_`, `-`, `+`, and spaces
+  - Examples: `"john.doe@company.com"`, `"john_doe_123"`, `"John Doe"`, `"user-id-12345"`
+
+**Important:** All datetime values must include timezone information. Accepted formats:
+- ISO 8601 with UTC: `"2026-01-17T14:00:00Z"`
+- ISO 8601 with offset: `"2026-01-17T14:00:00+00:00"`
+- Other timezones: `"2026-01-17T15:00:00+01:00"` (automatically converted to UTC)
+
+**Naive datetimes are rejected:** Datetime values without timezone information (e.g., `"2026-01-17T14:00:00"`) will return a 400 Bad Request error.
 
 **Success Response (201 Created):**
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "room_id": 1,
-  "start_time": "2026-01-17T14:00:00",
-  "end_time": "2026-01-17T15:00:00",
-  "user_name": "John Doe",
-  "created_at": "2026-01-16T10:30:00"
+  "start_time": "2026-01-17T14:00:00+00:00",
+  "end_time": "2026-01-17T15:00:00+00:00",
+  "user_name": "john.doe@company.com",
+  "created_at": "2026-01-16T10:30:00+00:00"
 }
 ```
 
 **Error Responses:**
-- `400 Bad Request`: Invalid time (past, wrong order, not in 15-min blocks)
-- `404 Not Found`: Invalid room ID
+- `400 Bad Request`: Invalid input
+  - Start time in the past
+  - Start time after or equal to end time
+  - Times not in 15-minute blocks (:00, :15, :30, :45)
+  - Booking duration less than 15 minutes
+  - Missing timezone information in datetime
+  - Empty or whitespace-only `user_name`
+  - `user_name` exceeds 100 characters
+  - `user_name` contains invalid characters
+- `404 Not Found`: Invalid room ID (must be 1-5)
 - `409 Conflict`: Room already booked for that time
 
 **Example cURL:**
 ```bash
+# Booking with email
 curl -X POST "http://localhost:8000/api/v1/bookings" \
   -H "Content-Type: application/json" \
   -d '{
     "room_id": 1,
-    "start_time": "2026-01-17T14:00:00",
-    "end_time": "2026-01-17T15:00:00",
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "john.doe@company.com"
+  }'
+
+# Booking with username
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "john_doe_123"
+  }'
+
+# Booking with display name
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
     "user_name": "John Doe"
   }'
 ```
@@ -167,18 +213,18 @@ Get all bookings for a specific room.
   {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "room_id": 1,
-    "start_time": "2026-01-17T14:00:00",
-    "end_time": "2026-01-17T15:00:00",
-    "user_name": "John Doe",
-    "created_at": "2026-01-16T10:30:00"
+    "start_time": "2026-01-17T14:00:00+00:00",
+    "end_time": "2026-01-17T15:00:00+00:00",
+    "user_name": "john.doe@company.com",
+    "created_at": "2026-01-16T10:30:00+00:00"
   },
   {
     "id": "660e8400-e29b-41d4-a716-446655440001",
     "room_id": 1,
-    "start_time": "2026-01-17T16:00:00",
-    "end_time": "2026-01-17T17:30:00",
+    "start_time": "2026-01-17T16:00:00+00:00",
+    "end_time": "2026-01-17T17:30:00+00:00",
     "user_name": "Jane Smith",
-    "created_at": "2026-01-16T11:00:00"
+    "created_at": "2026-01-16T11:00:00+00:00"
   }
 ]
 ```
@@ -210,26 +256,26 @@ Get all bookings across all rooms. Useful for dashboard views, calendar displays
   {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "room_id": 1,
-    "start_time": "2026-01-17T14:00:00",
-    "end_time": "2026-01-17T15:00:00",
-    "user_name": "John Doe",
-    "created_at": "2026-01-16T10:30:00"
+    "start_time": "2026-01-17T14:00:00+00:00",
+    "end_time": "2026-01-17T15:00:00+00:00",
+    "user_name": "john.doe@company.com",
+    "created_at": "2026-01-16T10:30:00+00:00"
   },
   {
     "id": "660e8400-e29b-41d4-a716-446655440001",
     "room_id": 3,
-    "start_time": "2026-01-17T16:00:00",
-    "end_time": "2026-01-17T17:30:00",
+    "start_time": "2026-01-17T16:00:00+00:00",
+    "end_time": "2026-01-17T17:30:00+00:00",
     "user_name": "Jane Smith",
-    "created_at": "2026-01-16T11:00:00"
+    "created_at": "2026-01-16T11:00:00+00:00"
   },
   {
     "id": "770e8400-e29b-41d4-a716-446655440002",
     "room_id": 2,
-    "start_time": "2026-01-18T09:00:00",
-    "end_time": "2026-01-18T10:30:00",
+    "start_time": "2026-01-18T09:00:00+00:00",
+    "end_time": "2026-01-18T10:30:00+00:00",
     "user_name": "Alice Johnson",
-    "created_at": "2026-01-16T12:00:00"
+    "created_at": "2026-01-16T12:00:00+00:00"
   }
 ]
 ```
@@ -267,9 +313,23 @@ curl -X DELETE "http://localhost:8000/api/v1/bookings/550e8400-e29b-41d4-a716-44
 | 200 | OK - Request successful |
 | 201 | Created - Booking created successfully |
 | 204 | No Content - Booking deleted successfully |
-| 400 | Bad Request - Invalid input (past time, wrong time order, invalid time blocks) |
+| 400 | Bad Request - Invalid input (see error details below) |
 | 404 | Not Found - Room or booking not found |
 | 409 | Conflict - Overlapping reservation detected |
+
+### Common 400 Bad Request Errors
+
+**Datetime Validation:**
+- Missing timezone: `"Invalid datetime format. All datetime values must include timezone information..."`
+- Past booking: `"Cannot book in the past. Start time must be in the future."`
+- Invalid time order: `"Start time must be before end time."`
+- Invalid time blocks: `"Start time must be in 15-minute blocks (00, 15, 30, or 45 minutes)."`
+- Too short duration: `"Booking duration must be at least 15 minutes."`
+
+**user_name Validation:**
+- Empty: `"user_name is required and cannot be empty."`
+- Too long: `"user_name exceeds maximum length of 100 characters. Provided length: XXX."`
+- Invalid characters: `"user_name contains invalid characters: 'X'. Allowed: letters, numbers, @, ., _, -, +, space"`
 
 ## Example Usage Scenarios
 
@@ -280,8 +340,8 @@ curl -X POST "http://localhost:8000/api/v1/bookings" \
   -H "Content-Type: application/json" \
   -d '{
     "room_id": 2,
-    "start_time": "2026-01-17T09:00:00",
-    "end_time": "2026-01-17T10:30:00",
+    "start_time": "2026-01-17T09:00:00Z",
+    "end_time": "2026-01-17T10:30:00Z",
     "user_name": "Alice Johnson"
   }'
 ```
@@ -316,8 +376,8 @@ curl -X POST "http://localhost:8000/api/v1/bookings" \
   -H "Content-Type: application/json" \
   -d '{
     "room_id": 1,
-    "start_time": "2026-01-17T14:00:00",
-    "end_time": "2026-01-17T15:00:00",
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
     "user_name": "User A"
   }'
 
@@ -326,9 +386,103 @@ curl -X POST "http://localhost:8000/api/v1/bookings" \
   -H "Content-Type: application/json" \
   -d '{
     "room_id": 1,
-    "start_time": "2026-01-17T14:30:00",
-    "end_time": "2026-01-17T15:30:00",
+    "start_time": "2026-01-17T14:30:00Z",
+    "end_time": "2026-01-17T15:30:00Z",
     "user_name": "User B"
+  }'
+```
+
+### Scenario 6: Timezone handling (different timezone input)
+
+```bash
+# Booking with CET timezone (UTC+1) - automatically converted to UTC
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 3,
+    "start_time": "2026-01-17T15:00:00+01:00",
+    "end_time": "2026-01-17T16:00:00+01:00",
+    "user_name": "European User"
+  }'
+
+# Returns booking with times converted to UTC (14:00:00 and 15:00:00)
+```
+
+### Scenario 7: Handle validation errors
+
+```bash
+# Missing timezone - returns 400 Bad Request
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00",
+    "end_time": "2026-01-17T15:00:00",
+    "user_name": "john.doe@company.com"
+  }'
+
+# Empty user_name - returns 400 Bad Request
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": ""
+  }'
+
+# Invalid characters in user_name - returns 400 Bad Request
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "user#123$"
+  }'
+```
+
+### Scenario 8: Different user_name formats
+
+```bash
+# Email address
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "alice.smith@company.com"
+  }'
+
+# Username with underscore
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 2,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "alice_smith_dev"
+  }'
+
+# UUID-style user ID
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 3,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "user-550e8400-e29b"
+  }'
+
+# Regular display name
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 4,
+    "start_time": "2026-01-17T14:00:00Z",
+    "end_time": "2026-01-17T15:00:00Z",
+    "user_name": "Alice Smith"
   }'
 ```
 

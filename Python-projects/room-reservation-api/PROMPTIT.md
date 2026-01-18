@@ -12,6 +12,9 @@
 8. [Implementing Thread-Safety for Concurrent API Requests](#Implementing-Thread-Safety-for-Concurrent-API-Requests)
 9. [Adding Global Bookings Endpoint for Frontend Dashboard Support](#adding-global-bookings-endpoint-for-frontend-dashboard-support)
 10. [Writing Integration Tests for Global Bookings Endpoint](#writing-integration-tests-for-global-bookings-endpoint)
+11. [Handling Naive Datetime Errors with Proper HTTP Status Codes](#handling-naive-datetime-errors-with-proper-http-status-codes)
+12. [Refactoring Validation Logic from Main.py to Pydantic Models](#refactoring-validation-logic-from-mainpy-to-pydantic-models)
+
 
 ---
 
@@ -2499,6 +2502,420 @@ Run the tests with the server running:
 ```bash
 python test_api.py
 ```
+
+
+---
+
+
+## Handling Naive Datetime Errors with Proper HTTP Status Codes
+
+**Prompt (Ask):**
+
+Now the app is timezone-aware and can convert to UTC, but if Request body input contains datetime in format "2026-01-19T12:00:00" we will get TypeError: Type is not JSON serializable: ValueError. This will lead to API/HTTP error code 500 Internal Server Error and that doesnt describe the real problem. How can we solve this issue? We want to handle this error with proper error coding like 400
+app/
+
+
+**Answer:**
+
+The issue is that when a naive datetime is provided, the Pydantic validator raises a `ValueError`, but the custom exception handler tries to serialize it with `orjson`, which fails. Here's how to fix it:
+
+## Solution: Update the Validation Exception Handler
+
+````python
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import ORJSONResponse
+
+from app.controllers import router
+
+
+# Create FastAPI application
+app = FastAPI(
+    title = "Meeting Room Reservation API",
+    description = "REST API for booking meeting rooms",
+    version = "1.0.0",
+    docs_url = "/docs",
+    default_response_class = ORJSONResponse,
+)
+
+# Configure CORS (allow all origins for this POC)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["*"],
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"],
+)
+
+
+# Custom exception handler for validation errors
+@app.exception_handler(RequestValidationError)
+def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """
+    Handle validation errors with proper error messages and status codes
+    
+    Converts:
+    - room_id validation errors to 404 (Room not found)
+    - datetime validation errors to 400 (Bad request with clear message)
+    - Other validation errors to 422 (Unprocessable entity)
+    """
+    errors = exc.errors()
+    
+    # Check if error is related to room_id
+    for error in errors:
+        if 'room_id' in error.get('loc', []):
+            return ORJSONResponse(
+                status_code = status.HTTP_404_NOT_FOUND,
+                content = {"detail": "Room not found. Valid rooms are 1-5."}
+            )
+    
+    # Check for datetime validation errors (naive datetime)
+    for error in errors:
+        error_location = error.get('loc', [])
+        error_message = str(error.get('msg', ''))
+        
+        # Check if it's a datetime field validation error
+        if any(field in error_location for field in ['start_time', 'end_time']):
+            # Check if it's our custom timezone validation error
+            if 'timezone-aware' in error_message or 'Datetime must be' in error_message:
+                return ORJSONResponse(
+                    status_code = status.HTTP_400_BAD_REQUEST,
+                    content = {
+                        "detail": "Invalid datetime format. All datetime values must include timezone information (e.g., '2026-01-19T12:00:00Z' or '2026-01-19T12:00:00+00:00')."
+                    }
+                )
+    
+    # Format validation errors safely to avoid orjson serialization issues
+    formatted_errors = []
+    for error in errors:
+        formatted_errors.append({
+            "loc": list(error["loc"]),
+            "msg": str(error["msg"]),  # Convert to string to avoid serialization issues
+            "type": error["type"]
+        })
+    
+    # Default validation error response (422)
+    return ORJSONResponse(
+        status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content = {"detail": formatted_errors}
+    )
+
+
+# Include routers
+app.include_router(router)
+
+
+@app.get("/", tags=["health"])
+def root():
+    """Root endpoint - API health check"""
+    
+    return {
+        "status": "online",
+        "service": "Meeting Room Reservation API",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+
+@app.get("/health", tags=["health"])
+def health_check():
+    """Health check endpoint"""
+    
+    return {"status": "healthy"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host = "0.0.0.0", port = 8000)
+````
+
+## What This Does:
+
+1. ✅ **Checks for datetime validation errors** - Specifically looks for `start_time` or `end_time` in the error location
+2. ✅ **Returns 400 Bad Request** - Instead of 500 Internal Server Error
+3. ✅ **Provides clear error message** - Tells users exactly what format is expected
+4. ✅ **Safely formats all errors** - Converts error messages to strings to avoid orjson serialization issues
+5. ✅ **Maintains existing behavior** - Still converts room_id errors to 404
+
+## Test It:
+
+```bash
+# This will now return 400 instead of 500
+curl -X POST "http://localhost:8000/api/v1/bookings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "room_id": 1,
+    "start_time": "2026-01-19T12:00:00",
+    "end_time": "2026-01-19T13:00:00",
+    "user_name": "Test User"
+  }'
+```
+
+**Response:**
+```json
+{
+  "detail": "Invalid datetime format. All datetime values must include timezone information (e.g., '2026-01-19T12:00:00Z' or '2026-01-19T12:00:00+00:00')."
+}
+```
+
+**Status Code:** `400 Bad Request` ✅
+
+This gives users a much clearer error message and the correct HTTP status code!
+
+
+---
+
+
+## Refactoring Validation Logic from Main.py to Pydantic Models
+
+**Prompt (Ask):**
+
+I think this method of handling status codes in the main.py isn't the most professional or best way to handle these issues. Am I correct? We should do it in other part of the app!
+app/
+
+
+**Answer:**
+
+You're absolutely correct! The current approach has several issues:
+
+## Problems with Current Approach:
+
+1. **Violates Single Responsibility** - main.py shouldn't know about domain-specific validation logic
+2. **Hard to Maintain** - Adding new fields requires modifying the exception handler
+3. **Tight Coupling** - Business logic mixed with HTTP layer
+4. **Not Scalable** - Gets messy as the API grows
+5. **Fragile String Matching** - Checking for "timezone-aware" in error messages is brittle
+
+## Better Solution: Handle in Pydantic Models
+
+Move validation logic to where it belongs - in the models themselves:
+
+````python
+from datetime import datetime, timezone
+from pydantic import BaseModel, Field, field_validator, ValidationError
+from fastapi import HTTPException, status
+
+
+class BookingCreate(BaseModel):
+    """Request model for creating a booking"""
+
+    room_id: int = Field(..., ge=1, le=5, description="Room ID (1-5)")
+    start_time: datetime = Field(..., description="Start time of the booking (UTC)")
+    end_time: datetime = Field(..., description="End time of the booking (UTC)")
+    user_name: str = Field(..., min_length=1, max_length=100, description="Name of the person making the booking")
+
+    @field_validator('room_id')
+    @classmethod
+    def validate_room_id(cls, value):
+        """Validate room ID is between 1 and 5"""
+        if value < 1 or value > 5:
+            # Raise HTTPException directly for domain-specific error
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Room {value} not found. Valid rooms are 1-5."
+            )
+        return value
+    
+    @field_validator('start_time', 'end_time')
+    @classmethod
+    def validate_datetime(cls, value: datetime) -> datetime:
+        """Ensure datetime is timezone-aware and convert to UTC"""
+        
+        if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
+            # Raise HTTPException with appropriate status code
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid datetime format. All datetime values must include timezone information (e.g., '2026-01-19T12:00:00Z' or '2026-01-19T12:00:00+00:00')."
+            )
+        
+        # Convert to UTC
+        return value.astimezone(timezone.utc)
+    
+    @field_validator('user_name')
+    @classmethod
+    def validate_user_name(cls, value: str) -> str:
+        """Validate and sanitize user name"""
+        
+        value = value.strip()
+        
+        if not value:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="user_name cannot be empty"
+            )
+        
+        # Validate allowed characters
+        if not all(c.isalnum() or c in " -'." for c in value):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="user_name contains invalid characters. Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed."
+            )
+        
+        return value
+
+
+class Booking(BookingCreate):
+    """Internal booking model with ID"""
+    
+    id: str = Field(..., description="Unique booking ID")
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="When the booking was created (UTC)"
+    )
+
+
+class BookingResponse(BaseModel):
+    """Response model for booking operations"""
+    
+    id: str
+    room_id: int
+    start_time: datetime
+    end_time: datetime
+    user_name: str
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+````
+
+## Simplified main.py
+
+````python
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import ORJSONResponse
+
+from app.controllers import router
+
+
+# Create FastAPI application
+app = FastAPI(
+    title="Meeting Room Reservation API",
+    description="REST API for booking meeting rooms",
+    version="1.0.0",
+    docs_url="/docs",
+    default_response_class=ORJSONResponse,
+)
+
+# Configure CORS (allow all origins for this POC)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(router)
+
+
+@app.get("/", tags=["health"])
+def root():
+    """Root endpoint - API health check"""
+    
+    return {
+        "status": "online",
+        "service": "Meeting Room Reservation API",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+
+@app.get("/health", tags=["health"])
+def health_check():
+    """Health check endpoint"""
+    
+    return {"status": "healthy"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+````
+
+## Why This is Better:
+
+1. ✅ **Single Responsibility** - Each layer handles its own concerns
+2. ✅ **Clean main.py** - No domain-specific logic
+3. ✅ **Self-Documenting** - Validation errors are defined where the fields are
+4. ✅ **Type Safe** - Validators know exactly what field they're validating
+5. ✅ **Maintainable** - Add new fields without touching main.py
+6. ✅ **Testable** - Can unit test validators independently
+
+## Even Better: Custom Exceptions (Professional Approach)
+
+For production, create custom exception classes:
+
+````python
+from fastapi import status
+
+class RoomReservationException(Exception):
+    """Base exception for room reservation errors"""
+    def __init__(self, status_code: int, detail: str):
+        self.status_code = status_code
+        self.detail = detail
+        super().__init__(detail)
+
+
+class RoomNotFoundException(RoomReservationException):
+    """Raised when room ID is invalid"""
+    def __init__(self, room_id: int):
+        super().__init__(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Room {room_id} not found. Valid rooms are 1-5."
+        )
+
+
+class InvalidDateTimeException(RoomReservationException):
+    """Raised when datetime format is invalid"""
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid datetime format. All datetime values must include timezone information (e.g., '2026-01-19T12:00:00Z')."
+        )
+
+
+class InvalidUserNameException(RoomReservationException):
+    """Raised when user name is invalid"""
+    def __init__(self, reason: str):
+        super().__init__(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid user_name: {reason}"
+        )
+````
+
+Then use them in your models and add a global exception handler:
+
+````python
+from fastapi import FastAPI, Request
+from fastapi.responses import ORJSONResponse
+
+from app.exceptions import RoomReservationException
+
+# ...existing code...
+
+@app.exception_handler(RoomReservationException)
+async def reservation_exception_handler(request: Request, exc: RoomReservationException):
+    """Handle custom room reservation exceptions"""
+    return ORJSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail}
+    )
+````
+
+## Summary
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| **String matching in main.py** ❌ | Quick to implement | Fragile, not scalable, violates SRP |
+| **HTTPException in validators** ✅ | Clean, self-contained | HTTPException in models (couples HTTP to domain) |
+| **Custom exceptions** ⭐ | Professional, testable, clean separation | More boilerplate |
+
+**Recommendation:** For a POC, use **HTTPException in validators** (second approach). For production, use **custom exceptions** (third approach).
+
+Your instinct was correct - the current approach isn't professional. The validators should handle their own validation errors!
 
 
 ---
