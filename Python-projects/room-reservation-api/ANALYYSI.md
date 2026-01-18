@@ -19,7 +19,7 @@ Tekoäly toimi tehokkaasti koko projektin perusrungon luomisessa. Annoin sille a
 Erityisen arvokasta oli se, että tekoäly osasi perustella tekemiään ehdotuksia ja selittää, miksi jokin ratkaisu oli parempi kuin toinen. Tämä auttoi oppimaan parhaita käytäntöjä FastAPI:n ja Pythonin kanssa.
 
 
-## 2. Mitä tekoäly tei huonosti?
+## 2. Mitä tekoäly teki huonosti?
 
 Vaikka kokonaisuus oli laadukas, tekoäly ei aina arvioinut ratkaisuja käytännön näkökulmasta tai huomannut hienovaraisempia ongelmia:
 
