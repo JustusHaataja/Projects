@@ -31,6 +31,14 @@ def get_room_bookings(
     return service.get_room_bookings(room_id, from_now)
 
 
+@router.get("/bookings", response_model = List[BookingResponse])
+def get_all_bookings(
+    from_now: bool = Query(False),
+    service: BookingService = Depends(get_service),
+):
+    return service.get_all_bookings(from_now = from_now)
+
+
 @router.delete("/bookings/{booking_id}", status_code = status.HTTP_204_NO_CONTENT)
 def cancel_booking(
     booking_id: str,

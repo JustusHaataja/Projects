@@ -413,6 +413,179 @@ def test_list_bookings_invalid_room():
     print(f"✓ Correctly rejected: {response.json()['detail']}\n")
 
 
+def test_get_all_bookings_empty():
+    """Test getting all bookings when database is empty"""
+    print("=" * 50)
+    print("TEST: Get All Bookings (Empty)")
+    print("=" * 50)
+    
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    bookings = response.json()
+    print(f"Found {len(bookings)} total bookings across all rooms")
+    print(f"✓ Successfully retrieved all bookings\n")
+
+
+def test_get_all_bookings_multiple_rooms():
+    """Test getting all bookings across multiple rooms"""
+    print("=" * 50)
+    print("TEST: Get All Bookings from Multiple Rooms")
+    print("=" * 50)
+    
+    # Create bookings in different rooms
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    bookings_data = [
+        (1, 9, "Room 1 User A"),
+        (2, 10, "Room 2 User B"),
+        (3, 11, "Room 3 User C"),
+        (1, 14, "Room 1 User D"),
+        (2, 15, "Room 2 User E"),
+    ]
+    
+    for room_id, hour, user_name in bookings_data:
+        start_time = tomorrow.replace(hour=hour, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": user_name
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get all bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    all_bookings = response.json()
+    print(f"Total bookings found: {len(all_bookings)}")
+    assert len(all_bookings) >= 5, f"Expected at least 5 bookings, found {len(all_bookings)}"
+    
+    # Verify bookings are from different rooms
+    rooms_in_response = set(b['room_id'] for b in all_bookings)
+    print(f"Rooms with bookings: {sorted(rooms_in_response)}")
+    
+    # Display some bookings
+    for booking in all_bookings[:5]:
+        print(f"  - Room {booking['room_id']}: {booking['user_name']} at {booking['start_time'][:16]}")
+    
+    print(f"✓ All bookings from multiple rooms retrieved correctly\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
+def test_get_all_bookings_from_now():
+    """Test getting only upcoming bookings across all rooms"""
+    print("=" * 50)
+    print("TEST: Get All Upcoming Bookings (from_now=true)")
+    print("=" * 50)
+    
+    # Create bookings for different rooms in the future
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    for room_id in [1, 2, 3]:
+        start_time = tomorrow.replace(hour=10 + room_id, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": f"Future User Room {room_id}"
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get only upcoming bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings?from_now=true")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    upcoming_bookings = response.json()
+    print(f"Found {len(upcoming_bookings)} upcoming bookings across all rooms")
+    
+    # Verify all bookings are in the future
+    current_time = datetime.now()
+    for booking in upcoming_bookings:
+        booking_start = datetime.fromisoformat(booking['start_time'].replace('Z', '+00:00'))
+        assert booking_start > current_time, f"Found past booking: {booking['user_name']}"
+        print(f"  - Room {booking['room_id']}: {booking['user_name']} at {booking['start_time'][:16]}")
+    
+    print(f"✓ Only upcoming bookings returned across all rooms\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
+def test_get_all_bookings_sorted_by_time():
+    """Test that all bookings are sorted by start time"""
+    print("=" * 50)
+    print("TEST: All Bookings Sorted by Start Time")
+    print("=" * 50)
+    
+    # Create bookings in random order
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    # Create bookings at different times in non-sequential order
+    hours = [14, 9, 16, 11, 13]
+    rooms = [1, 2, 3, 1, 2]
+    
+    for hour, room_id in zip(hours, rooms):
+        start_time = tomorrow.replace(hour=hour, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": f"User {hour}:00"
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get all bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    assert response.status_code == 200
+    
+    all_bookings = response.json()
+    
+    # Verify they are sorted by start_time
+    previous_time = None
+    print("Bookings in order:")
+    for booking in all_bookings:
+        current_time = datetime.fromisoformat(booking['start_time'].replace('Z', '+00:00'))
+        
+        if previous_time:
+            assert current_time >= previous_time, "Bookings are not sorted by start time!"
+        
+        print(f"  - {booking['start_time'][:16]} - Room {booking['room_id']}: {booking['user_name']}")
+        previous_time = current_time
+    
+    print(f"✓ All {len(all_bookings)} bookings are correctly sorted by start time\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
 # ==================== EDGE CASE TESTS ====================
 
 def test_booking_at_midnight():
@@ -501,6 +674,12 @@ if __name__ == "__main__":
         test_list_bookings_with_data()
         test_list_bookings_from_now()
         test_list_bookings_invalid_room()
+        
+        # Global bookings tests
+        test_get_all_bookings_empty()
+        test_get_all_bookings_multiple_rooms()
+        test_get_all_bookings_from_now()
+        test_get_all_bookings_sorted_by_time()
         
         # Edge cases
         test_booking_at_midnight()

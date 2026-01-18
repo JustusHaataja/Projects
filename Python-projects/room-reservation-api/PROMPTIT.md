@@ -10,7 +10,8 @@
 6. [Making Room IDs Configurable - Three Approaches](#making-room-ids-configurable---three-approaches)
 7. [Removing Unnecessary Async from Exception Handler](#removing-unnecessary-async-from-exception-handler)
 8. [Implementing Thread-Safety for Concurrent API Requests](#Implementing-Thread-Safety-for-Concurrent-API-Requests)
-
+9. [Adding Global Bookings Endpoint for Frontend Dashboard Support](#adding-global-bookings-endpoint-for-frontend-dashboard-support)
+10. [Writing Integration Tests for Global Bookings Endpoint](#writing-integration-tests-for-global-bookings-endpoint)
 
 ---
 
@@ -2117,6 +2118,387 @@ class BookingRepository:
 ````
 
 The threading lock prevents race conditions where two requests try to book the same room at the same time!
+
+
+---
+
+
+## Adding Global Bookings Endpoint for Frontend Dashboard Support
+
+**Prompt (Ask):**
+
+Should we add API endpoint to show_all_bookings that shows all bookings in all rooms? I think it would be good bonus if we need to start making frontend for this project.
+/app
+
+
+**Answer:**
+
+Yes, that's a great idea! Having a `GET /bookings` endpoint to see all bookings across all rooms would be very useful for a frontend dashboard. Here's how to add it:
+
+## Add the Endpoint
+
+````python
+// ...existing code...
+
+@router.get("/bookings", response_model=List[BookingResponse], tags=["bookings"])
+def get_all_bookings(from_now: bool = False):
+    """
+    Get all bookings across all rooms
+    
+    - **from_now**: If True, only return future bookings (default: False)
+    """
+    
+    bookings = booking_service.get_all_bookings(from_now=from_now)
+    
+    return bookings
+
+// ...existing code...
+````
+
+## Add Service Method
+
+````python
+// ...existing code...
+
+def get_all_bookings(self, from_now: bool = False) -> List[Booking]:
+    """Get all bookings across all rooms, optionally filtered to future bookings"""
+    
+    from datetime import datetime
+    
+    all_bookings = self._repository.get_all()
+    
+    if from_now:
+        current_time = datetime.now()
+        all_bookings = [
+            booking for booking in all_bookings
+            if booking.start_time > current_time
+        ]
+    
+    # Sort by start time
+    return sorted(all_bookings, key=lambda b: b.start_time)
+
+// ...existing code...
+````
+
+## Update Repository (if needed)
+
+Your repository already has `get_all()` method, so no changes needed there!
+
+## Example Usage
+
+```bash
+# Get all bookings
+curl http://localhost:8000/bookings
+
+# Get only upcoming bookings
+curl http://localhost:8000/bookings?from_now=true
+```
+
+## Benefits for Frontend:
+
+1. **Dashboard View** - Show all room occupancy at a glance
+2. **Calendar View** - Display all bookings in a calendar format
+3. **Statistics** - Calculate room utilization rates
+4. **Search/Filter** - Frontend can filter by room, date, user, etc.
+
+## Example Response:
+
+```json
+[
+  {
+    "id": "abc123",
+    "room_id": 1,
+    "start_time": "2026-01-18T14:00:00",
+    "end_time": "2026-01-18T15:00:00",
+    "user_name": "John Doe",
+    "created_at": "2026-01-17T10:30:00"
+  },
+  {
+    "id": "def456",
+    "room_id": 3,
+    "start_time": "2026-01-18T15:00:00",
+    "end_time": "2026-01-18T16:30:00",
+    "user_name": "Jane Smith",
+    "created_at": "2026-01-17T11:00:00"
+  }
+]
+```
+
+This endpoint makes your API much more frontend-friendly! 🎉
+
+
+---
+
+
+## Writing Integration Tests for Global Bookings Endpoint
+
+**Prompt (Ask):**
+
+Lets add tests to check if the endpoint to get all bookings work as intended!
+test_api.py
+
+
+**Answer:**
+
+````python
+// ...existing code...
+
+def test_list_bookings_invalid_room():
+    """Test listing bookings for invalid room (should fail)"""
+    print("=" * 50)
+    print("TEST: List Bookings for Invalid Room (Should Fail)")
+    print("=" * 50)
+    
+    response = requests.get(f"{BASE_URL}/api/v1/rooms/99/bookings")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 404, f"Expected 404, got {response.status_code}"
+    print(f"✓ Correctly rejected: {response.json()['detail']}\n")
+
+
+def test_get_all_bookings_empty():
+    """Test getting all bookings when database is empty"""
+    print("=" * 50)
+    print("TEST: Get All Bookings (Empty)")
+    print("=" * 50)
+    
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    bookings = response.json()
+    print(f"Found {len(bookings)} total bookings across all rooms")
+    print(f"✓ Successfully retrieved all bookings\n")
+
+
+def test_get_all_bookings_multiple_rooms():
+    """Test getting all bookings across multiple rooms"""
+    print("=" * 50)
+    print("TEST: Get All Bookings from Multiple Rooms")
+    print("=" * 50)
+    
+    # Create bookings in different rooms
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    bookings_data = [
+        (1, 9, "Room 1 User A"),
+        (2, 10, "Room 2 User B"),
+        (3, 11, "Room 3 User C"),
+        (1, 14, "Room 1 User D"),
+        (2, 15, "Room 2 User E"),
+    ]
+    
+    for room_id, hour, user_name in bookings_data:
+        start_time = tomorrow.replace(hour=hour, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": user_name
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get all bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    all_bookings = response.json()
+    print(f"Total bookings found: {len(all_bookings)}")
+    assert len(all_bookings) >= 5, f"Expected at least 5 bookings, found {len(all_bookings)}"
+    
+    # Verify bookings are from different rooms
+    rooms_in_response = set(b['room_id'] for b in all_bookings)
+    print(f"Rooms with bookings: {sorted(rooms_in_response)}")
+    
+    # Display some bookings
+    for booking in all_bookings[:5]:
+        print(f"  - Room {booking['room_id']}: {booking['user_name']} at {booking['start_time'][:16]}")
+    
+    print(f"✓ All bookings from multiple rooms retrieved correctly\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
+def test_get_all_bookings_from_now():
+    """Test getting only upcoming bookings across all rooms"""
+    print("=" * 50)
+    print("TEST: Get All Upcoming Bookings (from_now=true)")
+    print("=" * 50)
+    
+    # Create bookings for different rooms in the future
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    for room_id in [1, 2, 3]:
+        start_time = tomorrow.replace(hour=10 + room_id, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": f"Future User Room {room_id}"
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get only upcoming bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings?from_now=true")
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200
+    
+    upcoming_bookings = response.json()
+    print(f"Found {len(upcoming_bookings)} upcoming bookings across all rooms")
+    
+    # Verify all bookings are in the future
+    current_time = datetime.now()
+    for booking in upcoming_bookings:
+        booking_start = datetime.fromisoformat(booking['start_time'].replace('Z', '+00:00'))
+        assert booking_start > current_time, f"Found past booking: {booking['user_name']}"
+        print(f"  - Room {booking['room_id']}: {booking['user_name']} at {booking['start_time'][:16]}")
+    
+    print(f"✓ Only upcoming bookings returned across all rooms\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
+def test_get_all_bookings_sorted_by_time():
+    """Test that all bookings are sorted by start time"""
+    print("=" * 50)
+    print("TEST: All Bookings Sorted by Start Time")
+    print("=" * 50)
+    
+    # Create bookings in random order
+    booking_ids = []
+    tomorrow = datetime.now() + timedelta(days=1)
+    
+    # Create bookings at different times in non-sequential order
+    hours = [14, 9, 16, 11, 13]
+    rooms = [1, 2, 3, 1, 2]
+    
+    for hour, room_id in zip(hours, rooms):
+        start_time = tomorrow.replace(hour=hour, minute=0, second=0, microsecond=0)
+        end_time = start_time + timedelta(hours=1)
+        
+        booking_data = {
+            "room_id": room_id,
+            "start_time": start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "user_name": f"User {hour}:00"
+        }
+        
+        response = requests.post(f"{BASE_URL}/api/v1/bookings", json=booking_data)
+        if response.status_code == 201:
+            booking_ids.append(response.json()['id'])
+    
+    # Get all bookings
+    response = requests.get(f"{BASE_URL}/api/v1/bookings")
+    assert response.status_code == 200
+    
+    all_bookings = response.json()
+    
+    # Verify they are sorted by start_time
+    previous_time = None
+    print("Bookings in order:")
+    for booking in all_bookings:
+        current_time = datetime.fromisoformat(booking['start_time'].replace('Z', '+00:00'))
+        
+        if previous_time:
+            assert current_time >= previous_time, "Bookings are not sorted by start time!"
+        
+        print(f"  - {booking['start_time'][:16]} - Room {booking['room_id']}: {booking['user_name']}")
+        previous_time = current_time
+    
+    print(f"✓ All {len(all_bookings)} bookings are correctly sorted by start time\n")
+    
+    # Cleanup
+    for booking_id in booking_ids:
+        requests.delete(f"{BASE_URL}/api/v1/bookings/{booking_id}")
+
+
+// ...existing code...
+
+# ==================== MAIN TEST RUNNER ====================
+
+if __name__ == "__main__":
+    print("\n" + "=" * 50)
+    print("COMPREHENSIVE ROOM RESERVATION API TESTS")
+    print("=" * 50 + "\n")
+    
+    try:
+        # Health check
+        test_health_check()
+        
+        # Booking creation tests
+        test_create_valid_booking()
+        test_create_booking_past_time()
+        test_create_booking_invalid_time_blocks(minute=13)
+        test_create_booking_end_before_start()
+        test_create_booking_invalid_room()
+        test_create_overlapping_bookings()
+        test_create_minimum_duration_booking()
+        
+        # Cancellation tests
+        test_cancel_existing_booking()
+        test_cancel_nonexistent_booking()
+        test_cancel_already_cancelled_booking()
+        
+        # Listing tests
+        test_list_bookings_empty_room()
+        test_list_bookings_with_data()
+        test_list_bookings_from_now()
+        test_list_bookings_invalid_room()
+        
+        # Global bookings tests
+        test_get_all_bookings_empty()
+        test_get_all_bookings_multiple_rooms()
+        test_get_all_bookings_from_now()
+        test_get_all_bookings_sorted_by_time()
+        
+        # Edge cases
+        test_booking_at_midnight()
+        test_long_username()
+        
+        print("\n" + "=" * 50)
+        print("✓ ALL TESTS PASSED!")
+        print("=" * 50 + "\n")
+        
+    except AssertionError as e:
+        print(f"\n✗ TEST FAILED: {e}\n")
+    except Exception as e:
+        print(f"\n✗ ERROR: {e}\n")
+````
+
+**Added 4 new test functions:**
+
+1. **`test_get_all_bookings_empty()`** - Tests getting all bookings when database might be empty
+2. **`test_get_all_bookings_multiple_rooms()`** - Tests retrieving bookings from multiple rooms at once
+3. **`test_get_all_bookings_from_now()`** - Tests the `from_now=true` parameter for global bookings
+4. **`test_get_all_bookings_sorted_by_time()`** - Verifies bookings are sorted by start time
+
+**Key test coverage:**
+- ✅ Empty response handling
+- ✅ Multiple rooms data aggregation
+- ✅ Future-only filtering with `from_now` parameter
+- ✅ Correct sorting by start time
+- ✅ Proper cleanup after each test
+
+Run the tests with the server running:
+```bash
+python test_api.py
+```
 
 
 ---

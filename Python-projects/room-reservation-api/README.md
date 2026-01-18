@@ -8,6 +8,7 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 - **Book a room**: Reserve a meeting room for a specific time period
 - **Cancel a booking**: Remove an existing reservation
 - **List bookings**: View all reservations for a particular room
+- **View all bookings**: See all reservations across all rooms
 
 ### Business Rules
 - ✅ No double bookings - same room cannot be booked twice for overlapping times
@@ -20,6 +21,7 @@ A clean, modular REST API for booking meeting rooms built with Python and FastAP
 - 15-minute blocks - bookings must start and end at :00, :15, :30, or :45
 - Minimum duration - bookings must be at least 15 minutes long
 - Filter bookings with `from_now` parameter to show only upcoming reservations
+- Global bookings view - see all reservations across all rooms for dashboard/calendar views
 - Proper HTTP status codes (200, 201, 204, 400, 404, 409)
 - Clear layer separation (controllers, services, repositories)
 - Interactive API documentation (Swagger UI)
@@ -190,7 +192,55 @@ curl "http://localhost:8000/api/v1/rooms/1/bookings"
 curl "http://localhost:8000/api/v1/rooms/1/bookings?from_now=true"
 ```
 
-### 3. Cancel a Booking
+### 3. Get All Bookings
+
+**GET** `/api/v1/bookings`
+
+Get all bookings across all rooms. Useful for dashboard views, calendar displays, and statistics.
+
+**Query Parameters:**
+- `from_now` (optional, boolean): If `true`, only return upcoming bookings. Default: `false`
+
+**Success Response (200 OK):**
+```json
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "room_id": 1,
+    "start_time": "2026-01-17T14:00:00",
+    "end_time": "2026-01-17T15:00:00",
+    "user_name": "John Doe",
+    "created_at": "2026-01-16T10:30:00"
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "room_id": 3,
+    "start_time": "2026-01-17T16:00:00",
+    "end_time": "2026-01-17T17:30:00",
+    "user_name": "Jane Smith",
+    "created_at": "2026-01-16T11:00:00"
+  },
+  {
+    "id": "770e8400-e29b-41d4-a716-446655440002",
+    "room_id": 2,
+    "start_time": "2026-01-18T09:00:00",
+    "end_time": "2026-01-18T10:30:00",
+    "user_name": "Alice Johnson",
+    "created_at": "2026-01-16T12:00:00"
+  }
+]
+```
+
+**Example cURL:**
+```bash
+# Get all bookings across all rooms
+curl "http://localhost:8000/api/v1/bookings"
+
+# Get only upcoming bookings across all rooms
+curl "http://localhost:8000/api/v1/bookings?from_now=true"
+```
+
+### 4. Cancel a Booking
 
 **DELETE** `/api/v1/bookings/{booking_id}`
 
@@ -239,7 +289,13 @@ curl -X POST "http://localhost:8000/api/v1/bookings" \
 curl "http://localhost:8000/api/v1/rooms/3/bookings?from_now=true"
 ```
 
-### Scenario 3: Cancel a meeting
+### Scenario 3: View all upcoming bookings across all rooms (Dashboard view)
+
+```bash
+curl "http://localhost:8000/api/v1/bookings?from_now=true"
+```
+
+### Scenario 4: Cancel a meeting
 
 ```bash
 # First, get the booking ID from the list of bookings
@@ -249,7 +305,7 @@ curl "http://localhost:8000/api/v1/rooms/2/bookings"
 curl -X DELETE "http://localhost:8000/api/v1/bookings/YOUR_BOOKING_ID_HERE"
 ```
 
-### Scenario 4: Handle a conflict (double booking attempt)
+### Scenario 5: Handle a conflict (double booking attempt)
 
 ```bash
 # First booking succeeds

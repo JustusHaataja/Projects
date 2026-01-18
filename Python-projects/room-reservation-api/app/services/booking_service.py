@@ -94,6 +94,26 @@ class BookingService:
         return self.repository.get_by_room(room_id, from_time)
     
 
+    def get_all_bookings(self, from_now: bool = False) -> List[Booking]:
+        """
+        Get all bookings across all rooms, optionally filtered to future bookings
+        """
+
+        from datetime import datetime
+
+        all_bookings = self.repository.get_all()
+
+        if from_now:
+            current_time = datetime.now()
+            all_bookings = [
+                booking for booking in all_bookings
+                if booking.start_time > current_time
+            ]
+        
+        # Sort by start time
+        return sorted(all_bookings, key=lambda b: b.start_time)
+    
+
     def cancel_booking(self, booking_id: str) -> None:
         """
         Cancel a booking
