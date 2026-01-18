@@ -75,7 +75,7 @@ class BookingCreate(BaseModel):
             invalid_chars = ''.join(dict.fromkeys(invalid))
             raise HTTPException(
                 status_code = status.HTTP_400_BAD_REQUEST,
-                detail = f"user_id contains invalid characters: '{invalid_chars}'. Allowed: letters, numbers, @, ., _, -, +"
+                detail = f"uuser_id contains invalid characters: '{invalid_chars}'. Allowed: letters, numbers, @, ., _, -, +"
             )
         
         return value
