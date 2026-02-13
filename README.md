@@ -21,7 +21,7 @@ I design and implement complete web applications, from UI to database.
 - Frontend: React, TypeScript, JavaScript, HTML, CSS
 - Backend: Python (FastAPI), REST APIs
 - Databases: SQL (PostgreSQL, SQLite)
-- Tooling: Git, Vite, modern build tools
+- Tooling: Docker, Git, Vite, modern build tools
 
 ---
 
@@ -42,6 +42,7 @@ I care about **why** things work, not just how to make them run.
 ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square)
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white)
 
 ## 🚀 AI Integration
