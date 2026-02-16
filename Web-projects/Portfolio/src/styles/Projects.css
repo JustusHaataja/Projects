@@ -86,6 +86,7 @@
 .project-links {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .project-link {
@@ -99,4 +100,19 @@
 
 .project-link:hover {
   background-color: var(--accent_red);
+}
+
+.project-link svg {
+  font-size: 2rem;
+  border: none;
+}
+
+.project-link:has(svg) {
+  border: none;
+  padding: 0;
+}
+
+.project-link:has(svg):hover {
+  background-color: transparent;
+  color: var(--accent_red);
 }

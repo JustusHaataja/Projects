@@ -1,4 +1,6 @@
 import '../styles/Projects.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 interface Project {
   id: number;
@@ -19,7 +21,7 @@ const Projects = () => {
       technologies: ['React', 'TypeScript', 'Python', 'PostgreSQL'],
       image: '/E-commerce_preview.png',
       liveLink: 'https://puhdistamo.netlify.app/',
-      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/E-commerce'
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web-projects/E-commerce'
     },
     {
       id: 2,
@@ -28,7 +30,7 @@ const Projects = () => {
       technologies: ['React', 'TypeScript', 'Python'],
       image: '/Algorithms_preview.png',
       liveLink: 'https://algorithmsbyjustus.netlify.app/',
-      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/Sorting%20Algorithms'
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web-projects/Sorting%20Algorithms'
     },
     {
       id: 3,
@@ -37,7 +39,7 @@ const Projects = () => {
       technologies: ['React', 'TypeScript'],
       image: '/MovieApp_preview.png',
       liveLink: 'https://movies-by-justus.netlify.app/',
-      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web%20Projects/MovieApp'
+      githubLink: 'https://github.com/JustusHaataja/Projects/tree/main/Web-projects/MovieApp'
     }
   ];
 
@@ -66,7 +68,7 @@ const Projects = () => {
                 )}
                 {project.githubLink && (
                   <a href={project.githubLink} className="project-link" target="_blank" rel="noopener noreferrer">
-                    GitHub
+                    <FontAwesomeIcon icon={faGithub} />
                   </a>
                 )}
               </div>
