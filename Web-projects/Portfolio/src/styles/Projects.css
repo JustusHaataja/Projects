@@ -18,10 +18,11 @@
 }
 
 .project-card {
-  background-color: var(--dark_blue);
+  background-color: var(--background);
   border-radius: 10px;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  /* border: 0.5px solid var(--light_text); */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -80,6 +81,7 @@
   padding: 0.4rem 0.8rem;
   border-radius: 5px;
   font-size: 0.85rem;
+  font-weight: 600;
   color: var(--accent_red);
 }
 
@@ -100,6 +102,7 @@
 
 .project-link:hover {
   background-color: var(--accent_red);
+  transform: translateY(-5px);
 }
 
 .project-link svg {

@@ -5,6 +5,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
 import Studies from './components/Studies';
+import BackgroundVideo from './components/BackgroundVideo';
 import './styles/App.css';
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
 
   return (
     <div className="app" ref={appRef}>
+      <BackgroundVideo />
       <div 
         className="cursor-light"
         style={{

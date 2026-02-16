@@ -26,7 +26,7 @@
 }
 
 .study-card {
-  background-color: var(--dark_blue);
+  background-color: var(--background);
   padding: 30px;
   border-radius: 8px;
   border-left: 4px solid var(--accent_red);

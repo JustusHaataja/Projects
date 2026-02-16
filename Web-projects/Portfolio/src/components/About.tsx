@@ -37,7 +37,11 @@ const About = () => {
         <div className="skills-grid">
           {skills.map((skill) => (
             <div key={skill.name} className="skill-item">
-              <img src={skill.icon} alt={skill.name} className="skill-icon" />
+              <img 
+                src={skill.icon} 
+                alt={skill.name} 
+                className={skill.name === 'GitHub' ? 'skill-icon light' : 'skill-icon'} 
+              />
             </div>
           ))}
         </div>

@@ -17,7 +17,7 @@ const Projects = () => {
     {
       id: 1,
       title: 'E-commerce platform',
-      description: 'Full-stack e-commerce platform featuring real product listings, shopping cart functionality. Built with modern web technologies and a PostgreSQL database for efficient data management.',
+      description: 'Full-stack E-commerce platform featuring scraped real product listings. Built with modern web technologies and a PostgreSQL database for efficient data management.',
       technologies: ['React', 'TypeScript', 'Python', 'PostgreSQL'],
       image: '/E-commerce_preview.png',
       liveLink: 'https://puhdistamo.netlify.app/',
