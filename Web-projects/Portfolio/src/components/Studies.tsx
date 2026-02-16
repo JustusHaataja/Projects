@@ -25,7 +25,9 @@ const Studies = () => {
             </div>
             <h3 className="degree">Exchange Semester</h3>
             <p className="description">
-              International exchange program expanding technical knowledge and cultural perspectives.<br/> Studied advanced computer science topics while experiencing the American academic system and building cross-cultural collaboration skills.
+              International exchange program expanding technical knowledge and cultural perspectives.<br/>
+              Studied advanced computer science topics while experiencing the American academic system and building cross-cultural collaboration skills.<br/>
+              Team Member of Vandals Soccer Club ⚽
             </p>
           </div>
         </div>
