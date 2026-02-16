@@ -9,6 +9,7 @@
 .studies-container {
   max-width: 1200px;
   width: 100%;
+  cursor: default;
 }
 
 .studies-title {
