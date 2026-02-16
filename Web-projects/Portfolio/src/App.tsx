@@ -4,6 +4,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
+import Studies from './components/Studies';
 import './styles/App.css';
 
 function App() {
@@ -13,13 +14,14 @@ function App() {
     hero: 1,
     about: 1,
     projects: 1,
+    studies: 1,
     contact: 1
   });
   const appRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'projects', 'contact'];
+      const sections = ['hero', 'about', 'projects', 'studies', 'contact'];
       const newOpacities: { [key: string]: number } = {};
 
       for (const sectionId of sections) {
@@ -93,6 +95,9 @@ function App() {
       </section>
       <section id="projects" className="section" style={{ opacity: sectionOpacities.projects }}>
         <Projects />
+      </section>
+      <section id="studies" className="section" style={{ opacity: sectionOpacities.studies }}>
+        <Studies />
       </section>
       <section id="contact" className="section" style={{ opacity: sectionOpacities.contact }}>
         <Contact />
