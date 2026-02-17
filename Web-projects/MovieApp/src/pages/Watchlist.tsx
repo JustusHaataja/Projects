@@ -1,4 +1,4 @@
-import "../css/Watchlist.css";
+import "../styles/Watchlist.css";
 import { useMovieContext } from "../services/useMovieContext";
 import MovieCard from "../components/MovieCard";
 

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { useMovieContext } from '../services/useMovieContext';
-import '../css/MovieCard.css';
+import '../styles/MovieCard.css';
 
 function MovieCard({ movie }:
     { movie: { id: number, title: string, release_date: string, poster_path?: string } }) {

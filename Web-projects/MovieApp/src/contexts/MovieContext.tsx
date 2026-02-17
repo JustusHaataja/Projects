@@ -92,4 +92,4 @@ const MovieProvider: React.FC<MovieProviderProps> = ({children}) => {
     )
 }
 
-export { MovieProvider, MovieContext };
+export { MovieProvider, MovieContext }
