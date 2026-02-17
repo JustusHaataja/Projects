@@ -13,3 +13,9 @@ export const searchMovies = async (query: string) => {
     const data = await response.json();
     return data.results;
 }
+
+export const getTrendingMovies = async () => {
+    const response = await fetch(`${BASE_URL}/trending/movie?api_key=${API_KEY}`);
+    const data = await response.json();
+    return data.results;
+}
