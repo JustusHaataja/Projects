@@ -4,7 +4,14 @@ import { useMovieContext } from '../services/useMovieContext';
 import '../styles/MovieCard.css';
 
 function MovieCard({ movie }:
-    { movie: { id: number, title: string, release_date: string, poster_path?: string } }) {
+    { movie: { 
+        id: number,
+        title: string,
+        release_date: string,
+        poster_path?: string,
+        overview?: string;
+        vote_average: number;    
+    } }) {
 
     const { isFavourite, addToFavourites, removeFromFavourites,
         isOnWatchlist, addToWatchlist, removeFromWatchlist } = useMovieContext();
@@ -30,7 +37,10 @@ function MovieCard({ movie }:
         <div className="movie-card">
             <div className="movie-poster">
                 {movie.poster_path ? (
-                    <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+                    <img 
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title} 
+                    />
                 ) : (
                     <div className="no-poster">
                         No Poster
@@ -50,7 +60,8 @@ function MovieCard({ movie }:
             </div>
             <div className="movie-info">
                 <h3>{movie.title}</h3>
-                <p>{month}/{year}</p>
+                <p>{month}.{year}</p>
+                <p>{movie.vote_average.toFixed(1)}</p>
             </div>
         </div>
     )
