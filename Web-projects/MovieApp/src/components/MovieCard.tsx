@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faListCheck } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faListCheck, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useMovieContext } from '../services/useMovieContext';
 import '../styles/MovieCard.css';
 
@@ -61,10 +61,10 @@ function MovieCard({ movie }:
             <div className="movie-info">
                 <h3>{movie.title}</h3>
                 <p>{month}.{year}</p>
-                <p>{movie.vote_average.toFixed(1)} ⭐</p>
+                <p>{movie.vote_average.toFixed(1)} <FontAwesomeIcon icon={faStar}/></p>
             </div>
         </div>
     )
 }
 
-export default MovieCard;
+export default MovieCard
