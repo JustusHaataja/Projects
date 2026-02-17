@@ -61,7 +61,7 @@ function MovieCard({ movie }:
             <div className="movie-info">
                 <h3>{movie.title}</h3>
                 <p>{month}.{year}</p>
-                <p>{movie.vote_average.toFixed(1)}</p>
+                <p>{movie.vote_average.toFixed(1)} ⭐</p>
             </div>
         </div>
     )
