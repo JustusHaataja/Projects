@@ -7,7 +7,7 @@ interface NavigationProps {
 const Navigation = ({ activeSection }: NavigationProps) => {
   const sections = [
     { id: 'hero', label: 'Home' },
-    { id: 'about', label: 'About' },
+    { id: 'about', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'studies', label: 'Education' },
     { id: 'contact', label: 'Contact' },
