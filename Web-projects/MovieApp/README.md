@@ -2,7 +2,7 @@
 
 A modern, sleek movie browsing application built with React and TypeScript.  Discover movies, manage your favorites, and keep track of what you want to watch.
 
-🔗 **[Live Demo](https://meek-pie-435d7b.netlify.app/)**
+🔗 **[Live Demo](https://topmoviesbyjustus.netlify.app/)**
 
 ![React](https://img.shields.io/badge/React-19.0.0-61dafb?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-3178c6?logo=typescript&logoColor=white)
