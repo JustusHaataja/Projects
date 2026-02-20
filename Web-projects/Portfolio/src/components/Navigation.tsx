@@ -15,8 +15,10 @@ const Navigation = ({ activeSection }: NavigationProps) => {
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    const appElement = document.querySelector('.app');
+    if (element && appElement) {
+      const elementTop = element.offsetTop;
+      appElement.scrollTo({ top: elementTop, behavior: "smooth" });
     }
   };
 

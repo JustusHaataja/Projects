@@ -31,8 +31,11 @@ const Hero = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const appElement = document.querySelector('.app');
+    if (appElement) {
+      appElement.addEventListener('scroll', handleScroll);
+      return () => appElement.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   useEffect(() => {

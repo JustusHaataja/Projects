@@ -1,6 +1,8 @@
 :root {
+    --background_base: rgba(10, 10, 15);
     --background: rgba(10, 10, 15, 0.75);
     --accent_red: #E94560;
+    --light_blue: #6C9BD1;
     --light_text: #F9F9F9;
 }
 
@@ -17,4 +19,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--light_text);
+  background-color: var(--background_base);
 }

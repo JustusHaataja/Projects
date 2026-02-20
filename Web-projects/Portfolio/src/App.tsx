@@ -18,9 +18,13 @@ function App() {
     studies: 1,
     contact: 1
   });
+  const [isLoading, setIsLoading] = useState(true);
   const appRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Only set up scroll handling after loading is complete
+    if (isLoading) return;
+
     const handleScroll = () => {
       const sections = ['hero', 'about', 'projects', 'studies', 'contact'];
       const newOpacities: { [key: string]: number } = {};
@@ -76,7 +80,23 @@ function App() {
       }
       window.removeEventListener('mousemove', handleMouseMove);
     };
+  }, [isLoading]); // Add isLoading as dependency
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <img src="/JH_logo_noBG.png" alt="Loading" className="loading-logo" />
+      </div>
+    );
+  }
 
   return (
     <div className="app" ref={appRef}>

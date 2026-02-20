@@ -9,7 +9,6 @@
 
 .section {
   height: 100vh;
-  /* min-height: 100vh; */
   padding: 4rem 2rem;
   display: flex;
   align-items: center;
@@ -42,4 +41,61 @@
   transform: translate(-50%, -50%);
   z-index: 9;
   transition: opacity 1.3s ease;
+}
+
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background_base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeOutScreen 1s ease-out 2s forwards;
+}
+
+.loading-logo {
+  width: 400px;
+  height: auto;
+  opacity: 0;
+  animation: fadeInLogo 0.5s ease-in forwards, pulse 1.5s ease-in-out 0.5s infinite;
+}
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeOutScreen {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes fadeInApp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
