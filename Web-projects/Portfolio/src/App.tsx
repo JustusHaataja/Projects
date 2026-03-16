@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Hero from './components/Hero';
-import About from './components/About';
+import Aboutme from './components/Aboutme';
+import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
@@ -14,6 +15,7 @@ function App() {
   const [sectionOpacities, setSectionOpacities] = useState({
     hero: 1,
     about: 1,
+    skills: 1,
     projects: 1,
     studies: 1,
     contact: 1
@@ -26,7 +28,7 @@ function App() {
     if (isLoading) return;
 
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'projects', 'studies', 'contact'];
+      const sections = ['hero', 'about', 'skills', 'projects', 'studies', 'contact'];
       const newOpacities: { [key: string]: number } = {};
 
       for (const sectionId of sections) {
@@ -113,7 +115,10 @@ function App() {
         <Hero />
       </section>
       <section id="about" className="section" style={{ opacity: sectionOpacities.about }}>
-        <About />
+        <Aboutme />
+      </section>
+      <section id="skills" className="section" style={{ opacity: sectionOpacities.skills }}>
+        <Skills />
       </section>
       <section id="projects" className="section" style={{ opacity: sectionOpacities.projects }}>
         <Projects />

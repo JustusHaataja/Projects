@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
-import '../styles/About.css';
+import '../styles/Skills.css';
 
-const About = () => {
+const Skills = () => {
   const skills = [
     { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
     { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
@@ -78,4 +78,4 @@ const About = () => {
   )
 }
 
-export default About
+export default Skills

@@ -20,7 +20,9 @@
 
 #hero,
 #about,
+#skills,
 #projects,
+#studies,
 #contact {
   min-height: 100vh;
   padding: 6rem 2rem;
